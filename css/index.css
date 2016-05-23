@@ -29,6 +29,10 @@ body {
 	border-bottom: 1px solid black;
 }
 
+#errorBtn {
+	display: none;
+}
+
 a {
 	text-decoration: none;
 	color: white;
