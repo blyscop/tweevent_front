@@ -30,6 +30,7 @@
             }
         });
     }
+    
     </script>
 		</head>
 <body class="">
@@ -62,6 +63,7 @@
 		<h1>Bienvenue sur<br>Tweevent</h1>
         <div class="about">
             <h3><a href="#inscriptionModal" role="button" data-toggle="modal">S'inscrire</a> </h3>
+             <h3><a href="#errorModal" id="errorBtn" role="button" data-toggle="modal">S'inscrire</a> </h3>
         </div>
 		
 	</div>
@@ -72,6 +74,15 @@
 			    if (window.jQuery) {  
 			        $("#validationInscription").trigger("click");
 			    } 
+                if(window.location.hash) {
+                    var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+                    if(hash="login_error")
+                    {
+                        $("#errorBtn").trigger("click");
+                    }
+                } else {
+                    // No hash found
+                }
 			}
 		</script><!-- Validation inscription modal -->
 
@@ -109,6 +120,17 @@
 			  </div>	
 	      </div>
      
+  </div>
+  </div>
+</div>
+<!--error modal-->
+<div id="errorModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h5>Oups, il semble qu'aucun utilisateur corresponde aux données renseignées ;(</h5>
+      </div>
   </div>
   </div>
 </div>
