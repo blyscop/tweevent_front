@@ -2,9 +2,6 @@
     session_start();
     if(isset($_POST['username']) && isset($_POST['password']))
     {
-        $url = 'http://localhost/Tweevent_Front/tweevent_front/test.php?action=test_user&username='.$_POST['username'].'&password='.$_POST['password'];
-        $obj = json_decode(file_get_contents($url), true);
-        echo $obj;
         if(test_user($_POST['username'],$_POST['password']))
         {
             $_SESSION['username'] = $_POST['username'];
@@ -28,12 +25,12 @@
 
     function test_user($_usr,$_pwd)
     {
-        $url = 'http://localhost/Tweevent_Front/tweevent_front/test.php?action=test_user&username='.$_POST['username'].'&password='.$_POST['password'];
+        $url = 'http://martinfrouin.fr/projets/tweevent/q/req.php?action=Utilisateur_SELECT&username='.$_POST['username'].'&password='.$_POST['password'];
         $obj = json_decode(file_get_contents($url), true);
-        if($obj==1)
+        if($obj["message"]=="Utilisateur recupere !")
         {
             return true;
-        }
+        };
         return false;
     }
     

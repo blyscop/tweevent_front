@@ -16,17 +16,37 @@
     {
         var _pseudo=$('#pseudo').val();
         var _password=$('#password').val();
-        var _action="PUT_Utilisateur";
+        var _action="Utilisateur_ADD";
         var _chk="enregistrer";
 
         $.ajax({
             type: "POST",
-            url: "http://188.166.64.172/app/api/q/actions.php",
+            url: "http://martinfrouin.fr/projets/tweevent/q/req.php",
             data: {pseudo:_pseudo,password:_password,action:_action,chk:_chk},
             success: function(msg) {
                 var msg = $.parseJSON(msg);
-                $('#content_inscription').empty();	
-                $('#content_inscription').append(msg.message);
+                if(msg.utilisateur!=null) {
+                    console.log(msg.utilisateur);
+                    connect(_pseudo,_password)
+                }
+                else
+                {
+                    $('#info_inscription').empty();	
+                    $('#info_inscription').append('<div class="form-group col-sm-12"><label for="pseudo" class="col-sm-3 control-label">Information : </label><div class="col-sm-6"><p style="color:red;">'+msg.message+'</p></div></div>');
+                }
+               
+            }
+        });
+    }
+    function connect(_username,_pwd)
+    {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost/master/session.php",
+            data: {username:_username,password:_pwd},
+            success: function(msg) {
+                console.log(msg);
+                document.location.replace("Actualite.php");
             }
         });
     }
@@ -94,13 +114,16 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h5>Formulaire d'inscription</h5>
       </div>
+      <div id="info_inscription">
+        
+      </div>
       <form class="form-horizontal" id="register_form" action="" method="post">
 	      <div id="content_inscription" class="form-group modal-body">
 	          
 					<div class="form-group">
 						<label for="pseudo" class="col-sm-3 control-label">Pseudo</label>
 						<div class="col-sm-4">
-							<input class="form-control" type="text" id="pseudo" name="pseudo" value=""/>
+							<input class="form-control" type="email" id="pseudo" name="pseudo" value=""/>
 						</div>
 					</div>
 					<div class="form-group">
