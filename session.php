@@ -10,11 +10,15 @@
             $_SESSION['username'] = $_POST['username'];
             $_SESSION['user_type']   = 'regular';
             $_SESSION['time']     = time();
-            header('Location: Actualite.php'); 
+            echo '<script language="Javascript">
+                    document.location.replace("Actualite.php");
+                </script>';
         }
         else
         {
-            header("Location: index.html#login_error");
+            echo '<script language="Javascript">
+                    document.location.replace("index.html#login_error");
+                    </script>';
         }
     }
     else
