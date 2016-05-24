@@ -27,7 +27,7 @@
     {
         $url = 'http://martinfrouin.fr/projets/tweevent/q/req.php?action=Utilisateur_SELECT&username='.$_POST['username'].'&password='.$_POST['password'];
         $obj = json_decode(file_get_contents($url), true);
-        if($obj["message"]=="Utilisateur recupere !")
+        if($obj["message"]=="Utilisateur recuperer !")
         {
             return true;
         };
