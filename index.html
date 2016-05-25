@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- saved from url=(0041)http://localhost/projeti4Save/actions.php -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	
+
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Tweevent</title>
@@ -31,10 +31,10 @@
                 }
                 else
                 {
-                    $('#info_inscription').empty();	
+                    $('#info_inscription').empty();
                     $('#info_inscription').append('<div class="form-group col-sm-12"><label for="pseudo" class="col-sm-3 control-label">Information : </label><div class="col-sm-6"><p style="color:red;">'+msg.message+'</p></div></div>');
                 }
-               
+
             }
         });
     }
@@ -42,7 +42,7 @@
     {
         $.ajax({
             type: "POST",
-            url: "http://localhost/master/session.php",
+            url: "session.php",
             data: {username:_username,password:_pwd},
             success: function(msg) {
                 console.log(msg);
@@ -50,14 +50,14 @@
             }
         });
     }
-    
+
     </script>
 		</head>
 <body class="">
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
 		<div class="container">
 			<div class="navbar-header">
-				<a class="navbar-toggle"> 
+				<a class="navbar-toggle">
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
@@ -85,15 +85,15 @@
             <h3><a href="#inscriptionModal" role="button" data-toggle="modal">S'inscrire</a> </h3>
              <h3><a href="#errorModal" id="errorBtn" role="button" data-toggle="modal">S'inscrire</a> </h3>
         </div>
-		
+
 	</div>
 </div>
 
 		<script>
 			window.onload = function() {
-			    if (window.jQuery) {  
+			    if (window.jQuery) {
 			        $("#validationInscription").trigger("click");
-			    } 
+			    }
                 if(window.location.hash) {
                     var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
                     if(hash="login_error")
@@ -112,14 +112,14 @@
   <div class="modal-content">
       <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h5>Formulaire d'inscription </h5>
+			<h5>Formulaire d'inscription</h5>
       </div>
       <div id="info_inscription">
-        
+
       </div>
       <form class="form-horizontal" id="register_form" action="" method="post">
 	      <div id="content_inscription" class="form-group modal-body">
-	          
+
 					<div class="form-group">
 						<label for="pseudo" class="col-sm-3 control-label">Pseudo</label>
 						<div class="col-sm-4">
@@ -133,16 +133,16 @@
 						</div>
 					</div>
 					 <input type="hidden" id="action" name="action" value="PUT_Utilisateur">
-				
+
 	      </div>
      </form>
 	      <div class="modal-footer">
 	          <div>
 	          <input onclick="inscription()" class="btn btn-default" type="submit" name="chk" value="Valider"/>
 	            <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-			  </div>	
+			  </div>
 	      </div>
-     
+
   </div>
   </div>
 </div>
@@ -172,7 +172,7 @@ $(document).ready(function () {
     //stick in the fixed 100% height behind the navbar but don't wrap it
     $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
 
-    $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));  
+    $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));
 
     // Enter your ids or classes
     var toggler = '.navbar-toggle';
@@ -206,7 +206,7 @@ $(document).ready(function () {
     	$('#page-content, .navbar, body, .navbar-header').toggleClass('slide-active');
     });
     var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
-    
+
     $(window).on("resize", function () {
     	if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
     		$(selected).removeClass('slide-active');
