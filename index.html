@@ -10,34 +10,10 @@
     <link rel="stylesheet" href="./css/jquery-ui.css">
     <script src="./js/jquery-1.10.2.js"></script><style type="text/css"></style>
     <script src="./js/jquery-ui.js"></script>
+		<script src="./js/functions.js"></script>
 
     <script>
-    function inscription()
-    {
-        var _pseudo=$('#pseudo').val();
-        var _password=$('#password').val();
-        var _action="Utilisateur_ADD";
-        var _chk="enregistrer";
 
-        $.ajax({
-            type: "POST",
-            url: "http://martinfrouin.fr/projets/tweevent/q/req.php",
-            data: {pseudo:_pseudo,password:_password,action:_action,chk:_chk},
-            success: function(msg) {
-                var msg = $.parseJSON(msg);
-                if(msg.utilisateur!=null) {
-                    console.log(msg.utilisateur);
-                    connect(_pseudo,_password)
-                }
-                else
-                {
-                    $('#info_inscription').empty();
-                    $('#info_inscription').append('<div class="form-group col-sm-12"><label for="pseudo" class="col-sm-3 control-label">Information : </label><div class="col-sm-6"><p style="color:red;">'+msg.message+'</p></div></div>');
-                }
-
-            }
-        });
-    }
     function connect(_username,_pwd)
     {
         $.ajax({
