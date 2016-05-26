@@ -1,4 +1,5 @@
 var salt="bonjour";
+var host="http://martinfrouin.fr";
 
 function getPreferencesTypes(type)
 {
@@ -44,7 +45,7 @@ function inscription()
 
     $.ajax({
         type: "POST",
-        url: "http://martinfrouin.fr/projets/tweevent/q/req.php",
+        url: "http://martinfrouin.fr/projets/tweevent/q/req.php?",
         data: {pseudo:_pseudo,password:_password,action:_action,chk:_chk},
         success: function(msg) {
             var msg = $.parseJSON(msg);
@@ -74,6 +75,47 @@ function connect(_username,_pwd)
         success: function(msg) {
             console.log(msg);
             document.location.replace("Actualite.php");
+        }
+    });
+}
+ function ReceiptPost()
+ {
+   .ajax({
+       type: "GET",
+       url: "http://martinfrouin.fr/projets/tweevent/q/???.php",
+       data: { get_param: 'img', 'post', 'evenement' },
+       dataType: 'json',
+       success: function (data) {
+           $.each(data, function(index, element) {
+               console.log(element);
+               if (element.img) {
+                 $(divID).append("<div class='cd-timeline-block'>
+                    <div class='cd-timeline-img cd-picture'>
+                        <img src='"+element.img_url+"' alt='"+element.+"'>
+                 "+element.img_url+"</div></div>");
+               }else if(element.post){
+
+               }
+               $(divID).append("<div class='cd-timeline-block'>
+               <div class='cd-timeline-img cd-picture'>
+               <img src='./img/cd-icon-picture.svg' alt='Picture'>
+               </div> <!-- cd-timeline-img -->"+element.libelle+"</div>");
+           });
+       }
+   });
+ }
+
+
+function send_post()
+{
+    var _idUser=$("#id_utilisateur").val();
+    var _message=$("#post_area").val();
+    $.ajax({
+        type: "POST",
+        url: host+"/projets/tweevent/q/req.php",
+        data: {action:"Post_ADD",id_utilisateur:_idUser,message:_message},
+        success: function(msg) {
+            $("#close_post_area").trigger("click");
         }
     });
 }
