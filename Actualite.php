@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php include("functions.php"); check_session(); ?>
 <!DOCTYPE html>
 <!-- saved from url=(0041)http://localhost/projeti4Save/actions.php -->
 <html class="no-js">
@@ -45,7 +45,7 @@
           </a>
         </li>
         <li>
-          <a href="./Calendrier.html">
+          <a href="Calendrier.php">
             <i class="glyphicon glyphicon-list"></i>
             Calendrier
           </a>

@@ -23,6 +23,7 @@ include('../dilasys/biblio/tweevent_user.inc.php');
 include('../dilasys/biblio/tweevent_img.inc.php');
 include('../dilasys/biblio/tweevent_event.inc.php');
 include('../dilasys/biblio/tweevent_post.inc.php');
+include('../dilasys/biblio/tweevent_user_event.inc.php');
 
 //==================================================================================
 // Initialisation des variables globals qui seront utilis?es dans les actions
@@ -50,7 +51,7 @@ function Utilisateur_ADD($data_in = array())
             if(empty($tweevent_user)) {
                 $utilisateur_add = new Tweevent_user();
                 $utilisateur_add->pseudo_tweevent_user = $data_in['pseudo'];
-                $utilisateur_add->password_tweevent_user = $data_in['password'];
+                $utilisateur_add->password_tweevent_user = md5($data_in['password']);
                 $utilisateur_add->ADD();
 
                 if($utilisateur_add) {
@@ -159,8 +160,7 @@ function Utilisateur_SELECT($data_in = array())
         $tweevent_user = Tweevent_users_chercher($args_tweevent_user);
 
         if(!empty($tweevent_user)) {
-
-            if($tweevent_user['password_tweevent_user'] == $data_in['password']) {
+            if($tweevent_user['password_tweevent_user'] == md5($data_in['password'])) {
                 $return['confirmation'] = true;
                 $return['message'] = "Utilisateur recupere !";
                 $return['utilisateur'] = $tweevent_user;
@@ -204,6 +204,47 @@ function Utilisateur_Posts_SELECT($data_in = array())
     }
     else
         $return['message'] = "Aucun id_utilisateur fourni";
+
+    header('Access-Control-Allow-Origin: *');
+    echo json_encode($return);
+}
+
+function Utilisateur_Calendrier_SELECT_ALL($data_in = array())
+{
+    Lib_myLog("action: " . $data_in['action']);
+    foreach ($GLOBALS['tab_globals'] as $global) global $$global;
+
+    $return = array();
+
+    if(Lib_frToEn($data_in['start']) == "0000-00-00" || Lib_frToEn($data_in['end']) == '0000-00-00' && !$data_in['utilisateur_id'])
+        $return['message'] = "Il manque un paramètre dans la requête!";
+    else {
+        // Recherche d'évenements que l'utilisateur a sélectionné
+        $args_evenements['id_tweevent_user'] = $data_in['utilisateur_id'];
+        $liste_evenements_user = Tweevent_user_events_chercher($args_evenements);
+
+        if(empty($liste_evenements_user))
+            $return['message'] = "L'utilisateur a adherer a aucun evenement pour ce mois";
+
+        if(!empty($liste_evenements_user)) {
+            // Recherche d'evenements pour le mois actuel du calendrier
+            $args_evenements['tri_pour_calendrier'] = true;
+            $args_evenements['tab_ids_tweevent_events'] = Lib_getValCol($liste_evenements_user, 'id_tweevent_event');
+            $args_evenements['date_debut_tweevent_event'] = Lib_enToFr($data_in['start']);
+            $args_evenements['date_fin_tweevent_event'] = Lib_enToFr($data_in['end']);
+            $liste_evenements = Tweevent_events_chercher($args_evenements);
+
+            if(!empty($liste_evenements)) {
+                // Construction du tableau final
+                $i = 0;
+                foreach($liste_evenements as $id_evenement => $evenement) {
+                    $return[$i] = $evenement;
+                }
+
+            }
+        }
+
+    }
 
     header('Access-Control-Allow-Origin: *');
     echo json_encode($return);

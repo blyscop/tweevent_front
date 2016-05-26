@@ -65,7 +65,7 @@ function Tweevent_event()
 }
 
 /**
-Cette fonction retourne un tableau correspondant aux différents attributs de Tweevent_event.
+Cette fonction retourne un tableau correspondant aux diffï¿½rents attributs de Tweevent_event.
 */
 function getTab()
 {
@@ -86,7 +86,7 @@ function getTab()
 }
 
 /**
-Cette fonction ajoute un element de la table tweevent_event à la BDD. 
+Cette fonction ajoute un element de la table tweevent_event ï¿½ la BDD. 
 */
 function ADD()
 {
@@ -127,7 +127,7 @@ function ADD()
 }
 
 /**
-Cette fonction modifie un élément de la table tweevent_event dans la BDD. 
+Cette fonction modifie un ï¿½lï¿½ment de la table tweevent_event dans la BDD. 
 */
 function UPD()
 {
@@ -177,7 +177,7 @@ function DEL()
 }
 
 /** 
-Cette fonction transforme les attributs en chaine de caractères.
+Cette fonction transforme les attributs en chaine de caractï¿½res.
 */
 function toStr()
 {
@@ -201,8 +201,8 @@ function toStr()
 }
 
 /**
-Recupère toutes les données relatives à un tweevent_event suivant son identifiant
-et retourne la coquille "Tweevent_event" remplie avec les informations récupérées
+Recupï¿½re toutes les donnï¿½es relatives ï¿½ un tweevent_event suivant son identifiant
+et retourne la coquille "Tweevent_event" remplie avec les informations rï¿½cupï¿½rï¿½es
 de la base.
 @param id_tweevent_event.
 */
@@ -297,20 +297,31 @@ function Tweevent_events_chercher($args)
 	} else {
 		if ($result && Sql_errorCode($result) === "00000") {
 			while($row = Sql_fetch($result)) {
-				$id = $row['id_tweevent_event'];
-				$tab_result[$id]["id_tweevent_event"]				= $id;
-				$tab_result[$id]["nom_tweevent_event"]				= Sql_prepareTexteAffichage($row['nom_tweevent_event']);
-				$tab_result[$id]["id_img_tweevent_event"]			= $row['id_img_tweevent_event'];
-				$tab_result[$id]["id_img2_tweevent_event"]		= $row['id_img2_tweevent_event'];
-				$tab_result[$id]["ids_posts_tweevent_event"]		= Sql_prepareTexteAffichage($row['ids_posts_tweevent_event']);
-				$tab_result[$id]["date_debut_tweevent_event"]	= Lib_enToFr($row['date_debut_tweevent_event']);
-				$tab_result[$id]["date_fin_tweevent_event"]		= Lib_enToFr($row['date_fin_tweevent_event']);
-				$tab_result[$id]["lieu_tweevent_event"]			= Sql_prepareTexteAffichage($row['lieu_tweevent_event']);
-				$tab_result[$id]["infos_tweevent_event"]			= Sql_prepareTexteAffichage($row['infos_tweevent_event']);
-				$tab_result[$id]["etat"]								= $row['etat'];
-				$tab_result[$id]["date_add"]							= $row['date_add'];
-				$tab_result[$id]["date_upd"]							= $row['date_upd'];
-				$tab_result[$id]["info_tweevent_event"]			= Sql_prepareTexteAffichage($row['info_tweevent_event']);
+				if($args['tri_pour_calendrier']) {
+					$id = $row['id_tweevent_event'];
+					$tab_result[$id]["allDay"] = "";
+					$tab_result[$id]["id"] = $id;
+					$tab_result[$id]["title"] = Sql_prepareTexteAffichage($row['nom_tweevent_event']);
+					$tab_result[$id]["start"] = $row['date_debut_tweevent_event']." 00:00:00";
+					$tab_result[$id]["end"] = $row['date_fin_tweevent_event']." 00:00:00";
+
+				}
+				else {
+					$id = $row['id_tweevent_event'];
+					$tab_result[$id]["id_tweevent_event"]				= $id;
+					$tab_result[$id]["nom_tweevent_event"]				= Sql_prepareTexteAffichage($row['nom_tweevent_event']);
+					$tab_result[$id]["id_img_tweevent_event"]			= $row['id_img_tweevent_event'];
+					$tab_result[$id]["id_img2_tweevent_event"]		= $row['id_img2_tweevent_event'];
+					$tab_result[$id]["ids_posts_tweevent_event"]		= Sql_prepareTexteAffichage($row['ids_posts_tweevent_event']);
+					$tab_result[$id]["date_debut_tweevent_event"]	= Lib_enToFr($row['date_debut_tweevent_event']);
+					$tab_result[$id]["date_fin_tweevent_event"]		= Lib_enToFr($row['date_fin_tweevent_event']);
+					$tab_result[$id]["lieu_tweevent_event"]			= Sql_prepareTexteAffichage($row['lieu_tweevent_event']);
+					$tab_result[$id]["infos_tweevent_event"]			= Sql_prepareTexteAffichage($row['infos_tweevent_event']);
+					$tab_result[$id]["etat"]								= $row['etat'];
+					$tab_result[$id]["date_add"]							= $row['date_add'];
+					$tab_result[$id]["date_upd"]							= $row['date_upd'];
+					$tab_result[$id]["info_tweevent_event"]			= Sql_prepareTexteAffichage($row['info_tweevent_event']);
+				}
 			}
 		}
 
