@@ -1,3 +1,4 @@
+var host="http://martinfrouin.fr";
 function getPreferencesTypes(type)
 {
     var action="";
@@ -41,7 +42,7 @@ function inscription()
 
     $.ajax({
         type: "POST",
-        url: "http://martinfrouin.fr/projets/tweevent/q/req.php",
+        url: "http://martinfrouin.fr/projets/tweevent/q/req.php?",
         data: {pseudo:_pseudo,password:_password,action:_action,chk:_chk},
         success: function(msg) {
             var msg = $.parseJSON(msg);
@@ -71,6 +72,7 @@ function connect(_username,_pwd)
         }
     });
 }
+<<<<<<< HEAD
  function ReceiptPost()
  {
    .ajax({
@@ -97,3 +99,19 @@ function connect(_username,_pwd)
        }
    });
  }
+=======
+
+function send_post()
+{
+    var _idUser=$("#id_utilisateur").val();
+    var _message=$("#post_area").val();
+    $.ajax({
+        type: "POST",
+        url: host+"/projets/tweevent/q/req.php",
+        data: {action:"Post_ADD",id_utilisateur:_idUser,message:_message},
+        success: function(msg) {
+            $("#close_post_area").trigger("click");
+        }
+    });
+}
+>>>>>>> 4182c996853b616b4e9739df11de920d0a2291b7
