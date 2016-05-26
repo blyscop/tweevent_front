@@ -164,7 +164,7 @@
 
               <header>
                 <img class="bloc-round" src="./img/profilpic.jpg"/>
-                <h1>Bonjour <?php echo $_SESSION['username']; ?></h1>
+                <h1>Bonjour <?php echo ucfirst($_SESSION['username']); ?></h1>
               </header>
               <section id="cd-timeline" class="cd-container">
                 <div class="cd-timeline-block">

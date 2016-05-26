@@ -1,3 +1,5 @@
+var salt="bonjour";
+
 function getPreferencesTypes(type)
 {
     var action="";
@@ -36,6 +38,7 @@ function inscription()
 {
     var _pseudo=$('#pseudo').val();
     var _password=$('#password').val();
+    _password = md5(salt.concat(_password));
     var _action="Utilisateur_ADD";
     var _chk="enregistrer";
 
@@ -54,13 +57,16 @@ function inscription()
                 $('#info_inscription').empty();
                 $('#info_inscription').append('<div class="form-group col-sm-12"><label for="pseudo" class="col-sm-3 control-label">Information : </label><div class="col-sm-6"><p style="color:red;">'+msg.message+'</p></div></div>');
             }
-
         }
     });
 }
 
 function connect(_username,_pwd)
 {
+    console.log(_pwd);
+    _pwd = md5(salt.concat(_pwd));
+    console.log(_pwd);
+
     $.ajax({
         type: "POST",
         url: "session.php",

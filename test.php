@@ -1,8 +1,9 @@
 <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "test";
+    $servername = "martinfrpc3351.mysql.db";
+    $username = "martinfrpc3351";
+    $password = "Lamato33";
+    $dbname = "martinfrpc3351";
+    $salt = "bonjour";
 
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -31,7 +32,7 @@
     //FONCTIONS
     function test_user($_usr,$_pwd,$conn)
     {
-        $sql = "SELECT id, username,password FROM user where username='".$_usr."' and password='".$_pwd."'";
+        $sql = "SELECT id_tweevent_user, pseudo_tweevent_user, password_tweevent_user FROM app_tweevent_user where pseudo_tweevent_user='".$_usr."' and password_tweevent_user='".$salt.$_pwd."'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
