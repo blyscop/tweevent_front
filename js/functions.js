@@ -81,6 +81,8 @@ function send_post()
         type: "POST",
         url: host+"/projets/tweevent/q/req.php",
         data: {action:"Post_ADD",id_utilisateur:_idUser,message:_message},
-        success: function(msg) {alert(msg);}
+        success: function(msg) {
+            $("#close_post_area").trigger("click");
+        }
     });
 }
