@@ -101,7 +101,7 @@
          <!-- main right col -->
          <div class="column col-sm-10 col-xs-11" id="main">
           <!-- top nav -->
-          <div class="navbar navbar-blue navbar-static-top">  
+          <div class="navbar navbar-blue navbar-static-top">
             <div class="navbar-header">
               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle</span>
@@ -131,7 +131,7 @@
                 </li>
                 <li>
                   <a href="http://localhost/projeti4Save/actions.php#postModal" role="button" data-toggle="modal">
-                    <i class="glyphicon glyphicon-plus"></i> 
+                    <i class="glyphicon glyphicon-plus"></i>
                     Post
                   </a>
                 </li>
@@ -144,7 +144,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                   <a href="http://localhost/projeti4Save/actions.php#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="glyphicon glyphicon-user"></i> 
+                    <i class="glyphicon glyphicon-user"></i>
                     &nbsp;&nbsp;&nbsp;
                   </a>
                   <ul class="dropdown-menu">
@@ -155,9 +155,9 @@
               </ul>
             </nav>
           </div>
-          <!-- /top nav -->              
+          <!-- /top nav -->
           <div class="full-actu col-sm-12">
-            <!-- content -->                      
+            <!-- content -->
             <div class="row">
 
 
@@ -263,9 +263,9 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              Update Status
+              Mettre un post
             </div>
-            <form class="form center-block" method="post" action="http://localhost/projeti4Save/actions.php">
+            <form class="form center-block" method="post" action="">
               <div class="modal-body">
           <!--<form class="form center-block">
             <div class="form-group">
@@ -274,7 +274,9 @@
             </div>
           </form>-->
           <div class="form-group">
-            <textarea class="form-control input-lg" name="post" autofocus="" placeholder="What do you want to share?"></textarea>
+            <textarea class="form-control input-lg" name="post" autofocus="" placeholder="">
+                sdsdsddssdds
+            </textarea>
           </div>
           <input type="hidden" name="action" value="Publier_Statut" />
         </div>
@@ -282,7 +284,7 @@
           <div>
             <button type="submit" class="btn btn-primary">Publier</button>
             <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-          </div>	
+          </div>
         </div>
       </form>
     </div>

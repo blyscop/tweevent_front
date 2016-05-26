@@ -71,3 +71,29 @@ function connect(_username,_pwd)
         }
     });
 }
+ function ReceiptPost()
+ {
+   .ajax({
+       type: "GET",
+       url: "http://martinfrouin.fr/projets/tweevent/q/???.php",
+       data: { get_param: 'img', 'post', 'evenement' },
+       dataType: 'json',
+       success: function (data) {
+           $.each(data, function(index, element) {
+               console.log(element);
+               if (element.img) {
+                 $(divID).append("<div class='cd-timeline-block'>
+                    <div class='cd-timeline-img cd-picture'>
+                        <img src='"+element.img_url+"' alt='"+element.+"'>
+                 "+element.img_url+"</div></div>");
+               }else if(element.post){
+                 
+               }
+               $(divID).append("<div class='cd-timeline-block'>
+               <div class='cd-timeline-img cd-picture'>
+               <img src='./img/cd-icon-picture.svg' alt='Picture'>
+               </div> <!-- cd-timeline-img -->"+element.libelle+"</div>");
+           });
+       }
+   });
+ }
