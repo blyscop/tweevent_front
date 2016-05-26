@@ -19,11 +19,11 @@
     </head>
     <body>
       <script>
-        window.onload = function() {
-            getPreferencesTypes("music");
-            getPreferencesTypes("drink");
-            getPreferencesTypes("food");
-        }
+//        window.onload = function() {
+//            getPreferencesTypes("music");
+//            getPreferencesTypes("drink");
+//            getPreferencesTypes("food");
+//        }
       </script>
       <div class="wrapper">
         <div class="box">
@@ -265,7 +265,6 @@
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
               Update Status
             </div>
-            <form class="form center-block" method="post" action="http://localhost/projeti4Save/actions.php">
               <div class="modal-body">
           <!--<form class="form center-block">
             <div class="form-group">
@@ -273,18 +272,43 @@
               <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
             </div>
           </form>-->
+          <script>
+            window.onload = function() {
+//                $('#post_area').change(function(){
+//                    try{
+//                        $.ajax({
+//                              url: $('#post_area').val(),
+//                              complete: function(data) {
+//                                alert(data.responseText);
+//                              }
+//                        });
+//                    }
+//                    catch (e)
+//                    {
+//                    }
+//                    try{
+//                        var r = /:\/\/(.[^/]+)/;
+//                        var infos =  $('#post_area').val().match(r)[1];
+//                        console.log(infos);
+//                    }
+//                    catch (e)
+//                    {
+//                    }
+//                });
+                
+            }
+          </script>
           <div class="form-group">
-            <textarea class="form-control input-lg" name="post" autofocus="" placeholder="What do you want to share?"></textarea>
+            <textarea id="post_area" class="form-control input-lg" name="post" autofocus="" placeholder="What do you want to share?"></textarea>
           </div>
           <input type="hidden" name="action" value="Publier_Statut" />
         </div>
         <div class="modal-footer">
           <div>
-            <button type="submit" class="btn btn-primary">Publier</button>
+            <button type="submit"  onclick="send_post();" class="btn btn-primary">Publier</button>
             <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
           </div>	
         </div>
-      </form>
     </div>
   </div>
 </div>
@@ -318,6 +342,6 @@
   <script src="./js/jquery.min.js"></script>
   <script src="./js/bootstrap.min.js"></script>
   <script src="./js/scripts.js"></script>
-
+  <input type="hidden" value="<?php echo $_SESSION['id_utilisateur']; ?>" id="id_utilisateur" />
 </body>
 </html>

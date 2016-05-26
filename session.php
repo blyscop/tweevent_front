@@ -1,5 +1,6 @@
 <?php
     session_start();
+    
     if(isset($_POST['username']) && isset($_POST['password']))
     {
         if(test_user($_POST['username'],$_POST['password']))
@@ -29,8 +30,10 @@
         $obj = json_decode(file_get_contents($url), true);
         if($obj["message"]=="Utilisateur recupere !")
         {
+            $id_utilisateur_session = $obj['utilisateur']['id_tweevent_user'];
+            $_SESSION['id_utilisateur'] = $id_utilisateur_session;
             return true;
-        };
+        }
         return false;
     }
     
