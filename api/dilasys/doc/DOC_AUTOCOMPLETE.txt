@@ -1,0 +1,59 @@
+<xmp>
+L'avantage de cet autocomplete est qu'il n'est pas conditionné par le DOCTYPE du document HTML.
+
+scripts
+=======
+Vérifier la présence du répertoire suivant dans le répertoire scripts: autoComplete
+Vérifier la présence du fichier suivant dans le répertoire style: autocomplete.css
+
+annuaire.php
+==================
+Le paramètre "Extra" a été rajouté pour que l'autocomplete ne renseigne pas directement le champ de saisie avec le résultat sélectionné.
+On peut alors effectuer les opérations souhaitées avec un "onclick" dans le div du résultat, par exemple, pré-remplir tous les champs
+d'un formulaire.
+
+<link href="../style/autocomplete.css" rel="stylesheet" type="text/css"/>
+
+<script type="text/javascript" src="../scripts/autoComplete/autoCompleteur.js"></script>
+
+<input name="nom" id="nom" type="text" />
+<div class="ajax_class" id="liste_noms" style="text-align:left; background: #FFFFFF;"></div>
+<script type="text/javascript">
+new AutoCompleteur('nom', 'liste_noms', 'actions.php?action=AUTO_ListeNoms_ADD&form=frm_fiche_add', {Ajax: {paramName:'nom'}, Extra: {afterValidate: Function()} });
+</script>
+
+actions.php
+===========
+case "AUTO_ListeNoms_ADD":
+{
+	// Action utilisée pour la saisie semi-automatique et appelée par la fonction AJAX
+	/*=============*/ Lib_myLog("Recherche des fiches");
+	$args_fiche['nom'] = $data_in['nom'].'%';
+	$args_fiche['prenom'] = $data_in['prenom'].'%';
+	$data_out['liste_fiches'] = Fiches_chercher($args_fiche);
+
+	/*=============*/ Lib_myLog("Retour");
+	$data_out['page'] = 'annuaire_auto_noms_add.php';
+}
+break;
+
+
+annuaire_auto_noms_add.php
+==========================
+<ul>
+<? foreach ($data_out['liste_fiches'] as $fiche) { ?>
+	<li id="<?=$fiche['id_fiche']?>" class="ajaxComplete">
+		<div class="reponse" onclick="
+    document.frm_fiche_add.nom.value='<?=addslashes($fiche['nom'])?>'; 
+    document.frm_fiche_add.prenom.value='<?=addslashes($fiche['prenom'])?>';
+    document.frm_fiche_add.adresse1.value='<?=$fiche['adresse1']?>';
+    document.frm_fiche_add.adresse2.value='<?=$fiche['adresse2']?>';
+    document.frm_fiche_add.adresse3.value='<?=$fiche['adresse3']?>';
+    document.frm_fiche_add.ville.value='<?=$fiche['ville']?>';
+    document.frm_fiche_add.email.value='<?=$fiche['email']?>';">
+		<?=$fiche['nom']?> <?=$fiche['prenom']?>
+		</div>
+	</li>
+<? } ?>
+</ul>
+</xmp>

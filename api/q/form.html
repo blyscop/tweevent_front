@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire</title>
+    <script type="text/javascript" >
+        function checkForm() {
+            var chk = false;
+            var msg = '';
+            var pseudo = document.getElementById("pseudo").value;
+            var password = document.getElementById("password").value;
+
+            if (pseudo != '' && password != '') {
+                chk = true;
+            }
+            else {
+                if (pseudo == '')
+                    msg += "merci de verifier votre pseudo";
+                if (password == '')
+                    msg += "merci de verifier votre password";
+            }
+
+            if (chk)
+                return true;
+            else
+                alert(msg);
+        }
+    </script>
+
+
+</head>
+<body>
+<form name="test" action="actions.php" method="post" onsubmit="checkForm();">
+    <input type="text" name="pseudo" id="pseudo" value=""/>
+    <br/>
+    <input type="password" name="password" id="password" value=""/>
+    <br/>
+    <input type="hidden" name="action" value="PUT_Utilisateur">
+    <input type="submit" name="chk" value="enregistrer"/>
+
+</form>
+</body>
+
+</html>

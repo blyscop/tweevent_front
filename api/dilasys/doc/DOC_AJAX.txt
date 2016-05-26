@@ -1,0 +1,106 @@
+<xmp>
+annuaire.php
+============
+<script type="text/javascript" src='../scripts/ajax.js'></script>
+
+<script language="JavaScript" type="text/JavaScript">
+function fiche_upd(id_fiche){
+	var httpRequest = getXMLHTTP();
+	var url = 'actions.php?action=BLOC_Fiche_UPD';
+	url += '&id_fiche='+id_fiche;
+	document.getElementById('divDetails').innerHTML = '';
+	envoi_AJAX(httpRequest, url, 'divDetails', true);
+}
+</script>
+
+<a href="javascript: fiche_upd(<?=$fiche['id_fiche']?>);">[%%modifier%%]</a>
+
+<div id="ID_MENUModifFiche_WD" style="position:absolute;
+		top:100px;
+		left:350px;
+		width:600px;
+		z-index:1;
+		padding:8px;
+		display:none">
+    <div id="ID_MENUModifFiche" style="top:100px; left:350px;">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+		  <tr>
+			 <td width="30" height="30"
+			  style="background:url(../img/div_ht_G.gif) left no-repeat; cursor:move">&nbsp;</td>
+		 <td align="center" class="TitreDivBlc"
+			  style="background:url(../img/div_ht_M.gif); cursor:move">%%modif_fiche%%</td>
+			 <td width="30" align="center" valign="middle"
+			  style="background:url(../img/div_ht_D.gif) right no-repeat">
+			  <a href="#" onClick="Disp('ModifFiche_WD')" ><img
+			   src="../img/close1.gif" border="0" /></a></td>
+		  </tr>
+		</table>
+		</div>  
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" bgcolor="#f1f6f8">
+		  <tr>
+			 <td width="4" style="background:url(../img/div_m_G.gif) repeat-y">&nbsp;</td>
+			 <td align="center">
+			 <div id="div_modif_fiche"></div>
+		  </td>
+		<td width="4" style="background:url(../img/div_m_D.gif) repeat-y">&nbsp;</td>
+		  </tr>
+		  <tr>
+			 <td height="4" style="background:url(../img/div_b_G.gif) no-repeat"><img
+			  src="../img/point.gif" width="4" height="4" /></td>
+			 <td style="background:url(../img/div_b_M.gif) repeat-x"><img
+			  src="../img/point.gif" width="4" height="4" /></td>
+			 <td style="background:url(../img/div_b_D.gif) no-repeat"><img
+			  src="../img/point.gif" width="4" height="4" /></td>
+		  </tr>
+		</table>
+</div>
+
+actions.php
+===========
+case "AJAX_ModifFiche":
+{
+	/*=============*/ Lib_myLog("Recuperation de la fiche");
+	$args_fiche['id_fiche'] = $data_in['id_fiche'];
+	$data_out = Fiches_chercher($args_fiche);
+
+	$data_out['page'] = 'fiche_popup_modif_fiche.php';
+}
+break;
+
+fiche_popup_modif_fiche.php
+===========================
+<form action="actions.php?tmsp=<?=time()?>" method="post" name="frm_modif_fiche" onSubmit="return check_fiche('frm_modif_fiche');">
+<table width="550" border="0" cellpadding="0" cellspacing="1" bgcolor="#FFFFFF">
+<tr>
+	<td align="right">%%nom%% :</td>
+	<td>
+		<input name="nom" id="nom" type="text" value="<?=$data_out['nom']?>" />
+	</td>
+	<td align="right">%%prenom%% :</td>
+	<td><input name="prenom" type="text" value="<?=$data_out['prenom']?>" /></td>
+</tr>
+<tr>
+  <td align="right">%%adresse1%% :</td>
+  <td><input name="adresse1" type="text" value="<?=$data_out['adresse1']?>" /></td>
+  <td align="right">%%adresse2%% :</td>
+  <td><input name="adresse2" type="text" value="<?=$data_out['adresse2']?>" /></td>
+</tr>
+<tr>
+  <td align="right">%%adresse3%% :</td>
+	<td><input name="adresse3" type="text" value="<?=$data_out['adresse3']?>" /></td>
+  <td align="right">%%cp%% :</td>
+	<td><input name="code_postal" type="text" value="<?=$data_out['code_postal']?>" onChange="valideField(this, 'CP')" /></td>
+</tr>
+<tr>
+  <td align="right">%%ville%% :</td>
+  <td><input name="ville" type="text" value="<?=$data_out['ville']?>" /></td>
+  <td align="right">%%email%% :</td>
+  <td><input name="email" type="text" value="<?=$data_out['email']?>" onChange="valideField(this, 'EMAIL')" /></td>
+</tr>
+</table>
+<input type="hidden" name="id_fiche" value="<?=$data_out['id_fiche']?>" />
+<input type="hidden" name="action" value="Fiche_PreUPD" />
+<input type="hidden" name="timestamp" value="<?=time();?>" />
+<input type="submit" name="Submit1" value="Envoyer" />
+</form>
+</xmp>

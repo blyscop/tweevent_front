@@ -1,0 +1,42 @@
+<xmp>
+actions.php
+===========
+case "Fiches_XL":
+{
+	/*=============*/ Lib_myLog("Generation du fichier XL");
+	$args_fiches['id_fiche'] = '*';
+	$liste_fiches = Fiches_chercher($args_fiches);
+
+	$time = time();
+	$file = ("../exports/extraction_".$time.".csv");// le fichier doit déjà exister
+	if(!$myfile = fopen($file, "w")) {
+		/*=============*/ Lib_myLog("Erreur lors de la creation du fichier $file");
+		exit;
+	} else {
+		/*=============*/ Lib_myLog("Creation du fichier $file");
+	}
+
+	$header.= "Nom\t ";
+	$header.= "Prenom\t ";
+	$header.= "\n";
+	fputs($myfile,$header);
+
+	foreach($liste as $fiche) {
+		$body.= utf8_decode($fiche['nom'])."\t";
+		$body.= utf8_decode($fiche['prenom'])."\t";
+		$body.="\n";
+	}
+
+	fputs($myfile,$body);
+	fclose($myfile);	//on ferme le fichier
+
+	$size=filesize($file); 
+	header("Content-Type: application/octet-stream"); 
+	header("Content-Length: $size"); 
+	header("Content-Disposition: attachment; filename=extraction_".$time.".csv"); 
+	header("Content-Transfer-Encoding: binary"); 
+	$fh = fopen($file, "r"); 
+	fpassthru($fh); 
+}
+break;
+</xmp>

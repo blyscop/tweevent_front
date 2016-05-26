@@ -1,0 +1,150 @@
+============
+INTRODUCTION
+============
+
+DESCRIPTION SOMMAIRE DU FRAMEWORK
+---------------------------------
+
+Le framework est un systeme de type MVC (Modele, Vue, Controleur) permettant de construire des applications en ligne.
+Le systeme est de type MVC dans le sens ou on peut distinguer 3 grands parties:
+- une partie qui accede a la base de donnees (Modele)
+- une partie qui effectue tous les traitements (Controleur)
+- une partie qui affiche les donnees (Vue)
+
+Le framework est une infrastructure incluant :
+- une administration du systeme avec gestion des utilisateurs, des groupes d'utilisateurs, des sauvegardes, des autorisations d'acces
+- une gestion integree des traces, des controles d'acces
+- une gestion multi-langues
+- une gestion de base MySql et SQLLite (environnements PHP5)
+- une installation simplifiee
+- une structure modulaire pour pouvoir etendre les fonctionnalites du systeme
+- tout un ensemble de fonctions JavaScript pour l'integration de fontionnalites AJAX, controles de saisie, popups integres...
+
+Le framework fonctionne a partir de php4 et mysql3.
+
+FONCTIONNEMENT DU FRAMEWORK
+---------------------------
+
+Le framework comprend un dossier dilasys qui constitue le noyau du systeme.
+
+Viennent s'ajouter les modules complementaires. Ces modules sont regroupes par dossier. 4 grands types de fichiers sont 
+essentiellement manipules dans chaque module:
+
+- Les fichiers inc.php (nommes les fichiers "inc") presents dans les repertoires biblio. Ces fichiers permettent de "discuter" 
+  avec la base de donnees et font partie de ce que l'on appelle la couche "Modele". On ne trouve jamais (sauf necessite absolue) 
+  de traitement SQL dans les autres fichiers du systeme.
+- Les fichiers actions.php (nommes fichiers "action") presents dans chaque unite fonctionnelle du systeme, 
+  sont les fichiers contenant la "logique" metier et font partie de ce que l'on appelle la couche "Controleur". Ce sont eux 
+  qui recuperent les donnees de la base en utilisant les fichiers "inc", 
+  les traitent et envoient le resultat a l'affichage. Tous les fichiers actions.php se ressemblent et sont un gros "switch". 
+- Le fichier messages.php (nomme fichier "langue"). Ce fichier contient les messages qui sont affiches par le systeme dans les differentes
+  langues. La langue par defaut est le francais mais peut etre changee des la fenetre de login.
+- Tous les autres fichiers php utilises pour l'affichage et qui font partie de ce que l'on appelle la couche "Vue". Ce sont des fichiers 
+  de type HTML contenant des instructions php. Ces instructions n'effectuent en general pas de traitement et ne font que restituer 
+  des informations fournies par les fichiers "action".
+
+=========================
+INSTALLATION DU FRAMEWORK
+=========================
+
+Decompresser le ZIP sous le répertoire www de l'environnement AMP (Apache, Mysql, Php)
+Vérifier que le fichier conf.php sous le répertoire admin/dilasys n'existe pas. Le supprimer si c'est le cas. Ce fichier sera construit
+par le processus d'installation.
+Saisir l'URL http://localhost/cms/admin/ pour installer le système.
+Une interface d'installation apparait. Modifier les valeurs par defaut si necessaire.
+Une fois le framework installe, on peut rentrer dans le systeme en saisissant admin/admin dans l'interface de connexion.
+
+=======================
+DESCRIPTION D'UN MODULE
+=======================
+
+Le tutoriel qui suit explique comment est construit l'annuaire basique fourni avec le framework.
+Cet annuaire est accessible en utilisant l'url "http://localhost/cms/annuaire/actions.php"
+L'annuaire est compose de fiches comportant un nom, prenom, une adresse e-mail, 3 champs d'adresse, un code postal et une ville.
+La page d'affichage se presente comme un tableau minimum avec la possibilite d'ouvrir la fiche correspondante.
+Lors de l'ouverture d'une fiche, il est possible de la modifier ou de la supprimer.
+La creation d'une fiche fait appel a un "auto-complete" dans le champ nom afin de signaler les doublons potentiels.
+
+FICHIERS COMPOSANT LE MODULE
+----------------------------
+
+- Le module est installe dans le repertoire "<admin>/annuaire". Ce repertoire se trouve au meme niveau que le repertoire "dilasys".
+  Sauf exception tous les modules sont installes au meme niveau.
+- Le module comporte dans le repertoire "annuaire":
+  un fichier "actions.php"
+  un fichier "messages.php" 
+  un fichier d'affichage "annuaire.php" (page "mere")
+  des fichiers AJAX d'affichage des blocs dans la page mere : "annuaire_bloc_fiche.php"
+  des fichiers AJAX pour les Autocomplete : "annuaire_auto_noms_add.php"
+  des fichiers AJAX pour les select : "annuaire_select_type_fiches.php"
+- Le module comporte dans le repertoire biblio:
+  un fichier fiche.inc.php qui permet au fichier actions.php de "discuter" avec la table "cms_fiche"
+
+DESCRIPTION DES FICHIERS
+------------------------
+
+- Le fichier langue "annuaire_messages.php":
+  Ce fichier contient tous les textes pouvant etre affiches par le module. 
+  Les textes sont saisis sous la forme: 
+                  $MSG['fr']['%%ajout_fiche%%'] = "Ajouter une fiche"
+  Si le systeme est prevu pour gerer la langue anglaise, il faudra traduire toutes les lignes et les saisir sous la forme:
+                  $MSG['en']['%%ajout_fiche%%'] = "Add an entry"
+  Il faudra rajouter autant de lignes que l'application gere de langues.
+  Ces textes seront alors accessibles dans les pages d'affichage sous la forme:
+                  %%ajout_fiche%%
+  Le framework affichera les textes en fonction de la langue selectionnee au moment de la connexion.
+
+- Le fichier "actions.php":
+  Ce fichier comporte plusieurs blocs dont l'utilite est commentee dans le fichier lui-meme.
+  Les seules parties qui changent dans ce fichier sont les cas composant le "switch($action)" de la fonction ExecActions et
+  l'inclusion des fichiers necessaires pour discuter avec la base de donnes (par exemple include('../biblio/fiche.inc.php')).
+  Les differents blocs "case" sont appeles par les pages d'affichage. On les retrouve dans les pages d'affichage dans les champs de type hidden
+  ayant pour nom "action" dans les formulaires (par exemple "<input type="hidden" name="action" value="Fiche_PreADD" />") 
+  ou dans les appels par methode GET (par exemple <a href="../dilasys/actions.php?action=Login_Quitter">[%%deconnexion%%]</a>).
+  Ces blocs accedent en general a la base de donnees, effectuent un traitement et renvoient le resultat a une page d'affichage.  
+  Par exemple, le cas "AJAX_ModifFiche" permet de recuperer dans la base de donnees les informations concernant une fiche
+  et fournit les informations à la page d'affichage "AJAX_ModifFiche.php".
+
+- Le fichier d'affichage "annuaire.php":
+  Les fichiers d'affichage comportent toujours une premiere ligne sous la forme
+                  <? include('../dilasys/pre.php'); ?>
+  Si une personne essaye d'acceder a cette page sans etre connectee au systeme elle se vera automatiquement renvoyee a la page de connexion
+
+  Les fichiers d'affichage comportent en general les appels aux scripts de type javascript suivants:
+                  <script type="text/javascript" src='../scripts/ajax.js'></script>
+                  <script type="text/javascript" src='../scripts/saisie.js'></script>
+                  <script type="text/javascript" src='../scripts/app-disp.js'></script>
+                  <script type="text/javascript" src='../scripts/drag.js'></script>
+  ajax.js est un script permettant le declenchement d'actions sur le serveur sans que l'utilisateur soit oblige de changer de page (phenomene
+  de "clignotement". C'est ce que l'on appelle AJAX (Asynchronous Javascript Action And Xml). Dans le module on l'utilise notamment pour
+  recuperer les donnees d'une fiche existant (voir la fonction javascript fiche_upd()).
+  saisie.js est un script permettant le controle des donnees saisies dans les champs.
+  app-disp.js est un script permettant l'affichage des fenetres "pop-up". Il s'agit en fait de faux pop-up geres par la page elle-meme
+
+  Les popup sont declarees a la fin de la page et ont un nom de la forme "ID_MENUModifFiche_WD". Il est necessaire de les initialiser
+  dans un bloc present en toute fin de page sous la forme:
+                 Drag.init(document.getElementById("ID_MENUModifFiche_WD"));
+  Ces popups sont appelees dans la page sous la forme:
+                 App('ModifFiche_WD');
+
+- Le fichier d'affichage "annuaire_bloc_fiche.php":
+  Il s'agit d'un morceau de page appele par les fonctions AJAX et qui permet d'eviter le "clignotement" de l'affichage
+
+- Le fichier "annuaire_auto_noms_add.php":
+  Ce fichier est utilise par l'autocomplete pour afficher le resultat de la recherche sur le nom
+
+- Le fichier "fiche.inc.php":
+  Ce fichier se trouve dans le repertoire "biblio" et permet d'acceder a la table "fiches" dans la base de donnees.
+  Le fichier est une classe contenant les fonctions suivantes:
+  - ADD : permet l'ajout d'une nouvelle fiche
+  - UPD : permet la mise a jour d'une fiche
+  - DEL : permet la suppression d'une fiche
+  - Fiche_recuperer($id_fiche) : permet de recuperer les informations concernant une fiche et construit l'objet
+  - Fiches_chercher($args) : permet de passer des arguments de recherche pour recuperer un resultat sous forme de tableau
+  
+=======================
+EXERCICES
+=======================
+1- Rajouter un champ "tel" à la fiche.
+2- Compléter le bloc de gauche pour pouvoir gérer des mémos par fiche.
+3- Compléter le bloc de droite (la fiche elle-même) pour avoir un onglet "Fiche" et un nouvel onglet "Mémos" dans lequel se trouveront les mémos de la fiche.

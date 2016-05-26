@@ -1,0 +1,84 @@
+23/05/2016 13:32:29 NORM  FILE:  /home/martinfrpc/www/projets/tweevent/dilasys/actions.php
+23/05/2016 13:32:29 NORM  IN:  
+array (
+  "Entrer" => Travailler,
+  "lang" => fr,
+)
+
+23/05/2016 13:32:29 NORM  action: Login_AfficheLogin 
+23/05/2016 13:32:29 NORM  IN:  
+array (
+  "Entrer" => Travailler,
+  "lang" => fr,
+  "action" => Login_AfficheLogin,
+)
+
+23/05/2016 13:32:29 NORM  FILE:  /home/martinfrpc/www/projets/tweevent/dilasys/actions_login.php
+23/05/2016 13:32:29 NORM  OUT:  
+array (
+  "message" => ,
+)
+
+23/05/2016 13:32:46 ERR   include(../dilasys/biblio/cle_api.inc.php): failed to open stream: No such file or directory  (pre.php:28)
+23/05/2016 13:32:46 ERR   include(../dilasys/biblio/cle_api.inc.php): failed to open stream: No such file or directory  (pre.php:28)
+23/05/2016 13:32:46 ERR   include(): Failed opening '../dilasys/biblio/cle_api.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (pre.php:28)
+23/05/2016 13:32:46 NORM  FILE:  /home/martinfrpc/www/projets/tweevent/q/actions.php
+23/05/2016 13:32:46 NORM  IN:  
+23/05/2016 13:32:46 ERR   include(../dilasys/biblio/post.inc.php): failed to open stream: No such file or directory  (actions.php:22)
+23/05/2016 13:32:46 ERR   include(../dilasys/biblio/post.inc.php): failed to open stream: No such file or directory  (actions.php:22)
+23/05/2016 13:32:46 ERR   include(): Failed opening '../dilasys/biblio/post.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (actions.php:22)
+23/05/2016 13:32:46 ERR   include(../dilasys/biblio/post_auteur.inc.php): failed to open stream: No such file or directory  (actions.php:23)
+23/05/2016 13:32:46 ERR   include(../dilasys/biblio/post_auteur.inc.php): failed to open stream: No such file or directory  (actions.php:23)
+23/05/2016 13:32:46 ERR   include(): Failed opening '../dilasys/biblio/post_auteur.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (actions.php:23)
+23/05/2016 13:32:46 ERR   include(../dilasys/biblio/post_categorie.inc.php): failed to open stream: No such file or directory  (actions.php:24)
+23/05/2016 13:32:46 ERR   include(../dilasys/biblio/post_categorie.inc.php): failed to open stream: No such file or directory  (actions.php:24)
+23/05/2016 13:32:46 ERR   include(): Failed opening '../dilasys/biblio/post_categorie.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (actions.php:24)
+23/05/2016 13:32:46 ERR   include(../dilasys/biblio/post_type.inc.php): failed to open stream: No such file or directory  (actions.php:25)
+23/05/2016 13:32:46 ERR   include(../dilasys/biblio/post_type.inc.php): failed to open stream: No such file or directory  (actions.php:25)
+23/05/2016 13:32:46 ERR   include(): Failed opening '../dilasys/biblio/post_type.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (actions.php:25)
+23/05/2016 13:32:46 ERR   include(../dilasys/biblio/tweevent_user.inc.php): failed to open stream: No such file or directory  (actions.php:26)
+23/05/2016 13:32:46 ERR   include(../dilasys/biblio/tweevent_user.inc.php): failed to open stream: No such file or directory  (actions.php:26)
+23/05/2016 13:32:46 ERR   include(): Failed opening '../dilasys/biblio/tweevent_user.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (actions.php:26)
+23/05/2016 13:32:46 ERR   include(../dilasys/biblio/tweevent_img.inc.php): failed to open stream: No such file or directory  (actions.php:27)
+23/05/2016 13:32:46 ERR   include(../dilasys/biblio/tweevent_img.inc.php): failed to open stream: No such file or directory  (actions.php:27)
+23/05/2016 13:32:46 ERR   include(): Failed opening '../dilasys/biblio/tweevent_img.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (actions.php:27)
+23/05/2016 13:32:46 ERR   call_user_func() expects parameter 1 to be a valid callback, no array or string given  (actions.php:42)
+23/05/2016 13:32:46 NORM  OUT:  
+23/05/2016 13:52:58 ERR   include(../dilasys/biblio/cle_api.inc.php): failed to open stream: No such file or directory  (pre.php:28)
+23/05/2016 13:52:58 ERR   include(../dilasys/biblio/cle_api.inc.php): failed to open stream: No such file or directory  (pre.php:28)
+23/05/2016 13:52:58 ERR   include(): Failed opening '../dilasys/biblio/cle_api.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (pre.php:28)
+23/05/2016 13:52:58 NORM  FILE:  /home/martinfrpc/www/projets/tweevent/q/actions.php
+23/05/2016 13:52:58 NORM  IN:  
+23/05/2016 13:52:58 ERR   include(../dilasys/biblio/post.inc.php): failed to open stream: No such file or directory  (actions.php:22)
+23/05/2016 13:52:58 ERR   include(../dilasys/biblio/post.inc.php): failed to open stream: No such file or directory  (actions.php:22)
+23/05/2016 13:52:58 ERR   include(): Failed opening '../dilasys/biblio/post.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (actions.php:22)
+23/05/2016 13:52:58 ERR   include(../dilasys/biblio/post_auteur.inc.php): failed to open stream: No such file or directory  (actions.php:23)
+23/05/2016 13:52:58 ERR   include(../dilasys/biblio/post_auteur.inc.php): failed to open stream: No such file or directory  (actions.php:23)
+23/05/2016 13:52:58 ERR   include(): Failed opening '../dilasys/biblio/post_auteur.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (actions.php:23)
+23/05/2016 13:52:58 ERR   include(../dilasys/biblio/post_categorie.inc.php): failed to open stream: No such file or directory  (actions.php:24)
+23/05/2016 13:52:58 ERR   include(../dilasys/biblio/post_categorie.inc.php): failed to open stream: No such file or directory  (actions.php:24)
+23/05/2016 13:52:58 ERR   include(): Failed opening '../dilasys/biblio/post_categorie.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (actions.php:24)
+23/05/2016 13:52:58 ERR   include(../dilasys/biblio/post_type.inc.php): failed to open stream: No such file or directory  (actions.php:25)
+23/05/2016 13:52:58 ERR   include(../dilasys/biblio/post_type.inc.php): failed to open stream: No such file or directory  (actions.php:25)
+23/05/2016 13:52:58 ERR   include(): Failed opening '../dilasys/biblio/post_type.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (actions.php:25)
+23/05/2016 13:52:58 ERR   call_user_func() expects parameter 1 to be a valid callback, no array or string given  (actions.php:42)
+23/05/2016 13:52:58 NORM  OUT:  
+23/05/2016 13:52:59 ERR   include(../dilasys/biblio/cle_api.inc.php): failed to open stream: No such file or directory  (pre.php:28)
+23/05/2016 13:52:59 ERR   include(../dilasys/biblio/cle_api.inc.php): failed to open stream: No such file or directory  (pre.php:28)
+23/05/2016 13:52:59 ERR   include(): Failed opening '../dilasys/biblio/cle_api.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (pre.php:28)
+23/05/2016 13:52:59 NORM  FILE:  /home/martinfrpc/www/projets/tweevent/q/actions.php
+23/05/2016 13:52:59 NORM  IN:  
+23/05/2016 13:52:59 ERR   include(../dilasys/biblio/post.inc.php): failed to open stream: No such file or directory  (actions.php:22)
+23/05/2016 13:52:59 ERR   include(../dilasys/biblio/post.inc.php): failed to open stream: No such file or directory  (actions.php:22)
+23/05/2016 13:52:59 ERR   include(): Failed opening '../dilasys/biblio/post.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (actions.php:22)
+23/05/2016 13:52:59 ERR   include(../dilasys/biblio/post_auteur.inc.php): failed to open stream: No such file or directory  (actions.php:23)
+23/05/2016 13:52:59 ERR   include(../dilasys/biblio/post_auteur.inc.php): failed to open stream: No such file or directory  (actions.php:23)
+23/05/2016 13:52:59 ERR   include(): Failed opening '../dilasys/biblio/post_auteur.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (actions.php:23)
+23/05/2016 13:52:59 ERR   include(../dilasys/biblio/post_categorie.inc.php): failed to open stream: No such file or directory  (actions.php:24)
+23/05/2016 13:52:59 ERR   include(../dilasys/biblio/post_categorie.inc.php): failed to open stream: No such file or directory  (actions.php:24)
+23/05/2016 13:52:59 ERR   include(): Failed opening '../dilasys/biblio/post_categorie.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (actions.php:24)
+23/05/2016 13:52:59 ERR   include(../dilasys/biblio/post_type.inc.php): failed to open stream: No such file or directory  (actions.php:25)
+23/05/2016 13:52:59 ERR   include(../dilasys/biblio/post_type.inc.php): failed to open stream: No such file or directory  (actions.php:25)
+23/05/2016 13:52:59 ERR   include(): Failed opening '../dilasys/biblio/post_type.inc.php' for inclusion (include_path='.:/usr/local/php5.4/lib/php')  (actions.php:25)
+23/05/2016 13:52:59 ERR   call_user_func() expects parameter 1 to be a valid callback, no array or string given  (actions.php:42)
+23/05/2016 13:52:59 NORM  OUT:  
