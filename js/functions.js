@@ -72,7 +72,6 @@ function connect(_username,_pwd)
         }
     });
 }
-<<<<<<< HEAD
  function ReceiptPost()
  {
    .ajax({
@@ -89,7 +88,7 @@ function connect(_username,_pwd)
                         <img src='"+element.img_url+"' alt='"+element.+"'>
                  "+element.img_url+"</div></div>");
                }else if(element.post){
-                 
+
                }
                $(divID).append("<div class='cd-timeline-block'>
                <div class='cd-timeline-img cd-picture'>
@@ -99,7 +98,7 @@ function connect(_username,_pwd)
        }
    });
  }
-=======
+
 
 function send_post()
 {
@@ -114,4 +113,3 @@ function send_post()
         }
     });
 }
->>>>>>> 4182c996853b616b4e9739df11de920d0a2291b7
