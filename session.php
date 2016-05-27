@@ -26,7 +26,8 @@
     function test_user($_usr,$_pwd)
     {
         $salt = "bonjour";
-        $url = 'http://martinfrouin.fr/projets/tweevent/q/req.php?action=Utilisateur_SELECT&username='.$_POST['username'].'&password='.md5($salt.$_POST['password']);
+        $password=md5($salt.$_POST['password']);
+        $url = 'http://martinfrouin.fr/projets/tweevent/q/req.php?action=Utilisateur_SELECT&username='.$_POST['username'].'&password='.$password;
         $obj = json_decode(file_get_contents($url), true);
         if($obj["message"]=="Utilisateur recupere !")
         {
