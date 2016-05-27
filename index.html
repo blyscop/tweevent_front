@@ -17,25 +17,24 @@
 
     <script>
 
-        function connexion()
-        {
+        function connexion() {
             var exec = true;
-            if(document.frm_connexion.username == "" || document.frm_connexion.password == "") {
+            if (document.frm_connexion.username == "" || document.frm_connexion.password == "") {
                 exec = false;
             }
             return exec;
         }
-//        function connect(_username, _pwd) {
-//            $.ajax({
-//                type: "POST",
-//                url: "session.php",
-//                data: {username: _username, password: _pwd},
-//                success: function (msg) {
-//                    console.log(msg);
-//                    document.location.replace("Actualite.php");
-//                }
-//            });
-//        }
+        //        function connect(_username, _pwd) {
+        //            $.ajax({
+        //                type: "POST",
+        //                url: "session.php",
+        //                data: {username: _username, password: _pwd},
+        //                success: function (msg) {
+        //                    console.log(msg);
+        //                    document.location.replace("Actualite.php");
+        //                }
+        //            });
+        //        }
 
     </script>
 </head>
@@ -52,7 +51,8 @@
             <a class="navbar-brand" href="index.html"><img width="180" src="./img/logo.png"></a>
         </div>
         <div id="slidemenu">
-            <form class="navbar-form navbar-right" method="post" action="functions.php?action=connexion" name="frm_connexion">
+            <form class="navbar-form navbar-right" method="post" action="functions.php?action=connexion"
+                  name="frm_connexion">
                 <div class="form-group">
                     <input type="text" name="username" placeholder="Adresse email" class="form-control">
                     <input type="password" name="password" placeholder="Mot de passe" class="form-control">
@@ -195,11 +195,17 @@
             $('#page-content, .navbar, body, .navbar-header').toggleClass('slide-active');
         });
         var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
+        $(function () {
+            $(window).resize(function () {
+                $('.block_home').height($(window).height() - $('.block_home').offset().top);
+            });
+            $(window).resize();
 
-        $(window).on("resize", function () {
-            if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
-                $(selected).removeClass('slide-active');
-            }
+            $(window).on("resize", function () {
+                if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
+                    $(selected).removeClass('slide-active');
+                }
+            });
         });
     });
 </script>
