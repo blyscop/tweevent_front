@@ -267,52 +267,39 @@
         Update Status
       </div>
       <div class="modal-body">
-          <!--<form class="form center-block">
-            <div class="form-group">
-
-              <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
-            </div>
-          </form>-->
-          <script>
-            window.onload = function() {
-//                $('#post_area').change(function(){
-//                    try{
-//                        $.ajax({
-//                              url: $('#post_area').val(),
-//                              complete: function(data) {
-//                                alert(data.responseText);
-//                              }
-//                        });
-//                    }
-//                    catch (e)
-//                    {
-//                    }
-//                    try{
-//                        var r = /:\/\/(.[^/]+)/;
-//                        var infos =  $('#post_area').val().match(r)[1];
-//                        console.log(infos);
-//                    }
-//                    catch (e)
-//                    {
-//                    }
-//                });
-
-}
-</script>
-<div class="form-group">
-
-  <textarea id="post_area" class="form-control input-lg" name="post" autofocus="" placeholder="What do you want to share?"></textarea>
-</div>
-<input type="hidden" name="action" value="Publier_Statut" />
-</div>
-<div class="modal-footer">
-  <div>
-    <button type="submit"  onclick="send_post();" class="btn btn-primary">Publier</button>
-    <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+        <div class="form-group">
+          <textarea id="post_area" class="form-control input-lg" name="post" autofocus="" placeholder="Que voulez-vous partager?"></textarea>
+        </div>
+        <input type="hidden" name="action" value="Publier_Statut" />
+      </div>
+      <div class="modal-footer">
+        <div>
+          <button type="submit"  onclick="send_post();" class="btn btn-primary">Publier</button>
+          <ul class="pull-left list-inline">
+            <li>
+              <a href="">
+                <i class="glyphicon glyphicon-upload"></i>
+              </a>
+            </li>
+            <li>
+              <div class="upload_photo">
+                <label for="fileupload">
+                  <i class="glyphicon glyphicon-camera"></i>
+                </label>
+                <input id="fileupload" type="file" name="files[]" multiple>
+              </div>
+            </li>
+            <li>
+              <a href="">
+                <i class="glyphicon glyphicon-map-marker"></i>
+              </a>
+            </li>
+          </ul>
+          <div id="files" class="files f-left"></div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-</div>
-</div>
 </div>
 
 <!--PREFERENCES-->
@@ -380,6 +367,116 @@
 <script src="./js/jquery.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/scripts.js"></script>
+
+<script src="js/fileupload/vendor/jquery.ui.widget.js"></script>
+<script src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+<script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+<script src="js/fileupload/jquery.iframe-transport.js"></script>
+<script src="js/fileupload/jquery.fileupload.js"></script>
+<script src="js/fileupload/jquery.fileupload-process.js"></script>
+<script src="js/fileupload/jquery.fileupload-image.js"></script>
+<script src="js/fileupload/jquery.fileupload-audio.js"></script>
+<script src="js/fileupload/jquery.fileupload-video.js"></script>
+<script src="js/fileupload/jquery.fileupload-validate.js"></script>
+
+<script>
+  $(function () {
+    'use strict';
+    // Change this to the location of your server-side upload handler:
+    var url = window.location.hostname === 'blueimp.github.io' ?
+    '//jquery-file-upload.appspot.com/' : 'server/php/',
+    uploadButton = $('<button/>')
+    .addClass('btn btn-primary')
+    .prop('disabled', true)
+    .text('Processing...')
+    .on('click', function () {
+      var $this = $(this),
+      data = $this.data();
+      $this
+      .off('click')
+      .text('Abort')
+      .on('click', function () {
+        $this.remove();
+        data.abort();
+      });
+      data.submit().always(function () {
+        $this.remove();
+      });
+    });
+    $('#fileupload').fileupload({
+      url: url,
+      dataType: 'json',
+      autoUpload: false,
+      acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+      maxFileSize: 9999000,
+      disableImageResize: /Android(?!.*Chrome)|Opera/
+      .test(window.navigator.userAgent),
+      previewMaxWidth: 100,
+      previewMaxHeight: 100,
+      previewCrop: true
+    }).on('fileuploadadd', function (e, data) {
+      data.context = $('<div/>').appendTo('#files');
+      $.each(data.files, function (index, file) {
+        var node = $('<p/>')
+        .append($('<span/>').text(file.name));
+        if (!index) {
+          node
+          .append('<br>')
+          .append(uploadButton.clone(true).data(data));
+        }
+        node.appendTo(data.context);
+      });
+    }).on('fileuploadprocessalways', function (e, data) {
+      var index = data.index,
+      file = data.files[index],
+      node = $(data.context.children()[index]);
+      if (file.preview) {
+        node
+        .prepend('<br>')
+        .prepend(file.preview);
+      }
+      if (file.error) {
+        node
+        .append('<br>')
+        .append($('<span class="text-danger"/>').text(file.error));
+      }
+      if (index + 1 === data.files.length) {
+        data.context.find('button')
+        .text('Upload')
+        .prop('disabled', !!data.files.error);
+      }
+    }).on('fileuploadprogressall', function (e, data) {
+      var progress = parseInt(data.loaded / data.total * 100, 10);
+      $('#progress .progress-bar').css(
+        'width',
+        progress + '%'
+        );
+    }).on('fileuploaddone', function (e, data) {
+      $.each(data.result.files, function (index, file) {
+        if (file.url) {
+          var link = $('<a>')
+          .attr('target', '_blank')
+          .prop('href', file.url);
+          $(data.context.children()[index])
+          .wrap(link);
+        } else if (file.error) {
+          var error = $('<span class="text-danger"/>').text(file.error);
+          $(data.context.children()[index])
+          .append('<br>')
+          .append(error);
+        }
+      });
+    }).on('fileuploadfail', function (e, data) {
+      $.each(data.files, function (index) {
+        var error = $('<span class="text-danger"/>').text('File upload failed.');
+        $(data.context.children()[index])
+        .append('<br>')
+        .append(error);
+      });
+    }).prop('disabled', !$.support.fileInput)
+    .parent().addClass($.support.fileInput ? undefined : 'disabled');
+  });
+</script>
 <input type="hidden" value="<?php echo $_SESSION['id_utilisateur']; ?>" id="id_utilisateur" />
 </body>
 </html>
