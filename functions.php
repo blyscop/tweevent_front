@@ -7,7 +7,7 @@ function check_session()
     session_start();
     // Utilisateur non-connecté
     if(!$_SESSION['est_connecte'])
-        header('Location: http://martinfrouin.fr/projets/tweevent/index.html'); // redirection page accueil
+        header('Location: index.html'); // redirection page accueil
 }
 
 // Connexion de l'utilisateur - Création de la session si utilisateur valide
@@ -37,16 +37,17 @@ function connexion()
         }
     }
     else
-       header('Location: http://martinfrouin.fr/projets/tweevent/index.html#login_error'); // redirection page accueil (pas de login et mdp fourni)
+       header('Location: index.html#login_error'); // redirection page accueil (pas de login et mdp fourni)
     if($redirection_actualite) {
-        header('Location: http://martinfrouin.fr/projets/tweevent/Actualite.php'); // redirection page accueil (pas de login et mdp fourni)
+        header('Location: Actualite.php'); // redirection page accueil (pas de login et mdp fourni)
     }
     else
-        header('Location: http://martinfrouin.fr/projets/tweevent/index.html#login_error'); // redirection page accueil (login/mdp invalide)
+        header('Location: index.html#login_error'); // redirection page accueil (login/mdp invalide)
 }
 
 // Appel de la fonction de connexion - on passe le post en paramètre de la requête
 if($_GET['action'] == "connexion")
     call_user_func("connexion");
+
 
 ?>
