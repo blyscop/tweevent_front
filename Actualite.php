@@ -196,7 +196,7 @@
               <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
             </div>
           </form>-->
-          
+
 <div class="form-group">
 
   <textarea id="post_area" class="form-control input-lg" name="post" autofocus="" placeholder="What do you want to share?"></textarea>
@@ -278,6 +278,6 @@
 <script src="./js/jquery.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/scripts.js"></script>
-<input type="hidden" value="63" id="id_utilisateur" />
+<input type="hidden" value="<?php echo $_SESSION['utilisateur_id']?>" id="id_utilisateur" />
 </body>
 </html>
