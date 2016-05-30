@@ -1,0 +1,5 @@
+-- Passer les requêtes du todo_sql sur le serveur --
+-- Déplacer les biblio dans le bon dossier (provenant du serveur sur local et serveur) --
+-- Préparer les requêtes de gestion des préférences --
+-- Activer les interfaces utilisateurs --
+-- Format universel id_utilisateur passé dans les requêtes --
