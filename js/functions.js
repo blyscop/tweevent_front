@@ -39,7 +39,7 @@ function inscription()
 {
    var _pseudo=$('#pseudo').val();
    var _password=$('#password').val();
-   _password = md5(salt.concat(_password));
+   
    var _action="Utilisateur_ADD";
    var _chk="enregistrer";
 
@@ -51,7 +51,7 @@ function inscription()
            var msg = $.parseJSON(msg);
            if(msg.utilisateur!=null) {
                console.log(msg.utilisateur);
-               connect(_pseudo,_password)
+               connect(msg.utilisateur);
            }
            else
            {
@@ -62,21 +62,12 @@ function inscription()
    });
 }
 
-function connect(_username,_pwd)
+function connect(user)
 {
-    console.log(_pwd);
-    _pwd = md5(salt.concat(_pwd));
-    console.log(_pwd);
-
-    $.ajax({
-        type: "POST",
-        url: "functions.php?action=connexion",
-        data: {username:_username,password:_pwd},
-        success: function(msg) {
-            console.log(msg);
-            document.location.replace("Actualite.php");
-        }
-    });
+    //pseudo_tweevent_user: "mousse", password_tweevent_user: "f80c211bf2b7e7441c73c22f46d7f4cb"
+    $("#connection_username").val(user.pseudo_tweevent_user);
+    $("#connection_pwd").val($("#password").val());
+    $('#connection_validation').trigger('click');
 }
 
 
@@ -127,3 +118,4 @@ function parseJsonDate(jsonDateString){
     var date = new Date(parseInt(jsonDateString));
     return date;
 }
+

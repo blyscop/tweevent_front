@@ -12,13 +12,13 @@ function check_session()
 
 // Connexion de l'utilisateur - Création de la session si utilisateur valide
 function connexion()
-{
 
+{
     $redirection_actualite = false;
 
     if(!empty($_POST['username']) && !empty($_POST['password'])) {
-
-        $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_SELECT&username='.$_POST['username'].'&password='.$_POST['password'];
+        $pwd_crypte=md5($_POST['password']);
+        $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_SELECT&username='.$_POST['username'].'&password='.$pwd_crypte;
         $obj = file_get_contents($url);
         $content = json_decode($obj, true);
 
@@ -32,6 +32,7 @@ function connexion()
             $_SESSION['utilisateur_type'] = !empty($content['utilisateur']['type_tweevent_user']) ? $content['utilisateur']['type_tweevent_user'] : "";
             $_SESSION['utilisateur_connexion'] = time();
             $_SESSION['est_connecte'] = true;
+            $_SESSION['username']=$_POST['username'];
 
 
         }
@@ -39,7 +40,8 @@ function connexion()
     else
        header('Location: index.html#login_error'); // redirection page accueil (pas de login et mdp fourni)
     if($redirection_actualite) {
-        header('Location: Actualite.php'); // redirection page accueil (pas de login et mdp fourni)
+        //echo json_encode(true);
+        header('Location: Actualite.php');
     }
     else
         header('Location: index.html#login_error'); // redirection page accueil (login/mdp invalide)
