@@ -1,0 +1,21 @@
+{
+  "name": "tweevent_front",
+  "version": "0.0.1",
+  "description": "Front end parts ",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blyscop/tweevent_front.git"
+  },
+  "author": "epsi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blyscop/tweevent_front/issues"
+  },
+  "homepage": "https://github.com/blyscop/tweevent_front#readme"
+}

@@ -1,0 +1,8 @@
+
+
+env:
+  global:
+    - "FTP_USER=root"
+    - "FTP_PASSWORD=epsi123"
+after_success:
+    "curl --ftp-create-dirs -T uploadfilename -u $FTP_USER:$FTP_PASSWORD ftp://188.168.64.172/app/"

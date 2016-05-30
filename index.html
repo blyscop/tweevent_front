@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://localhost/projeti4Save/actions.php -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tweevent</title>
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/jquery-ui.css">
+    <script src="./js/jquery-1.10.2.js"></script>-->
+    <script src="./js/jquery-ui.js"></script>
+    <script src="./js/functions.js"></script>
+
+    <script>
+
+        function connexion() {
+            var exec = true;
+            if (document.frm_connexion.username == "" || document.frm_connexion.password == "") {
+                exec = false;
+            }
+            return exec;
+        }
+        //        function connect(_username, _pwd) {
+        //            $.ajax({
+        //                type: "POST",
+        //                url: "session.php",
+        //                data: {username: _username, password: _pwd},
+        //                success: function (msg) {
+        //                    console.log(msg);
+        //                    document.location.replace("Actualite.php");
+        //                }
+        //            });
+        //        }
+
+    </script>
+</head>
+<body class="">
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="navbar-brand" href="index.html"><img width="180" src="./img/logo.png"></a>
+        </div>
+        <div id="slidemenu">
+            <form class="navbar-form navbar-right" method="post" action="functions.php?action=connexion"
+                  name="frm_connexion">
+                <div class="form-group">
+                    <input type="text" name="username" placeholder="Adresse email" class="form-control">
+                    <input type="password" name="password" placeholder="Mot de passe" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary icon-user" onclick="return connexion()">Connexion</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="inverse" id="navbar-height-col"></div>
+<div class="block_home center vcenter" style="height: 641px;">
+    <div class="title_home inner">
+        <h1>Bienvenue sur<br>Tweevent</h1>
+        <div class="about">
+            <h3><a href="#inscriptionModal" role="button" data-toggle="modal">S'inscrire</a></h3>
+            <h3><a href="#errorModal" id="errorBtn" role="button" data-toggle="modal">S'inscrire</a></h3>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    window.onload = function () {
+        if (window.jQuery) {
+            $("#validationInscription").trigger("click");
+        }
+        if (window.location.hash) {
+            var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+            if (hash = "login_error") {
+                $("#errorBtn").trigger("click");
+            }
+        } else {
+            // No hash found
+        }
+    }
+</script><!-- Validation inscription modal -->
+
+<!--inscription modal-->
+<div id="inscriptionModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h5>Formulaire d'inscription</h5>
+            </div>
+            <div id="info_inscription">
+
+            </div>
+            <form class="form-horizontal" id="register_form" action="" method="post">
+                <div id="content_inscription" class="form-group modal-body">
+
+                    <div class="form-group">
+                        <label for="pseudo" class="col-sm-3 control-label">Pseudo</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="email" id="pseudo" name="pseudo" value=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-sm-3 control-label">Mot de Passe</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="password" id="password" name="password" value=""/>
+                        </div>
+                    </div>
+                    <input type="hidden" id="action" name="action" value="PUT_Utilisateur">
+
+                </div>
+            </form>
+            <div class="modal-footer">
+                <div>
+                    <input onclick="inscription()" class="btn btn-default" type="submit" name="chk" value="Valider"/>
+                    <ul class="pull-left list-inline">
+                        <li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li>
+                        <li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li>
+                        <li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--error modal-->
+<div id="errorModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h5>Oups, il semble qu'aucun utilisateur corresponde aux données renseignées ;(</h5>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./js/jquery.min.js"></script>
+<script src="./js/scripts.js"></script>
+<!-- fin modal-->
+
+<!-- Scripts -->
+
+<!-- Scripts -->
+<script src="./js/jquery.min(1).js"></script>
+<script src="./js/bootstrap.min.js"></script>
+<script src="js/md5.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //stick in the fixed 100% height behind the navbar but don't wrap it
+        $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
+
+        $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));
+
+        // Enter your ids or classes
+        var toggler = '.navbar-toggle';
+        var pagewrapper = '#page-content';
+        var navigationwrapper = '.navbar-header';
+        var menuwidth = '100%'; // the menu inside the slide menu itself
+        var slidewidth = '80%';
+        var menuneg = '-100%';
+        var slideneg = '-80%';
+
+        $("#slide-nav").on("click", toggler, function (e) {
+            var selected = $(this).hasClass('slide-active');
+
+            $('#slidemenu').stop().animate({
+                left: selected ? menuneg : '0px'
+            });
+
+            $('#navbar-height-col').stop().animate({
+                left: selected ? slideneg : '0px'
+            });
+
+            $(pagewrapper).stop().animate({
+                left: selected ? '0px' : slidewidth
+            });
+
+            $(navigationwrapper).stop().animate({
+                left: selected ? '0px' : slidewidth
+            });
+            $(this).toggleClass('slide-active', !selected);
+            $('#slidemenu').toggleClass('slide-active');
+            $('#page-content, .navbar, body, .navbar-header').toggleClass('slide-active');
+        });
+        var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
+        $(function () {
+            $(window).resize(function () {
+                $('.block_home').height($(window).height() - $('.block_home').offset().top);
+            });
+            $(window).resize();
+
+            $(window).on("resize", function () {
+                if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
+                    $(selected).removeClass('slide-active');
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
