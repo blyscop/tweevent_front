@@ -4,9 +4,8 @@
 // Gestion des sessions (appeler à chaque page)
 function check_session()
 {
-    session_start();
     // Utilisateur non-connecté
-    if(!$_SESSION['est_connecte'])
+    if(!$_COOKIE['est_connecte'])
         header('Location: http://martinfrouin.fr/projets/tweevent/index.html'); // redirection page accueil
 }
 
@@ -18,7 +17,7 @@ function connexion()
 
     if(!empty($_POST['username']) && !empty($_POST['password'])) {
 
-        $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_SELECT&username='.$_POST['username'].'&password='.$_POST['password'];
+        $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_SELECT&username='.$_POST['username'].'&password='.md5($_POST['password']);
         $obj = file_get_contents($url);
         $content = json_decode($obj, true);
 
@@ -27,13 +26,11 @@ function connexion()
             $redirection_actualite = true;
 
             // Création de la session en récupérant les infos comp. de la base
-            session_start();
-            $_SESSION['utilisateur_id'] = $content['utilisateur']['id_tweevent_user'] > 0 ? $content['utilisateur']['id_tweevent_user'] : 0;
-            $_SESSION['utilisateur_type'] = !empty($content['utilisateur']['type_tweevent_user']) ? $content['utilisateur']['type_tweevent_user'] : "";
-            $_SESSION['utilisateur_connexion'] = time();
-            $_SESSION['est_connecte'] = true;
-
-
+            setcookie('utilisateur_id', $content['utilisateur']['id_tweevent_user'] > 0 ? $content['utilisateur']['id_tweevent_user'] : 0, time() + 365*24*3600);
+            setcookie('utilisateur_type', !empty($content['utilisateur']['type_tweevent_user']) ? $content['utilisateur']['type_tweevent_user'] : "", time() + 365*24*3600);
+            setcookie('utilisateur_connexion', $content['utilisateur']['id_tweevent_user'] > 0 ? $content['utilisateur']['id_tweevent_user'] : 0, time() + 365*24*3600);
+            setcookie('username', $content['utilisateur']['pseudo_tweevent_user'], time() + 365*24*3600);
+            setcookie('est_connecte', true, time() + 365*24*3600);
         }
     }
     else
@@ -46,7 +43,7 @@ function connexion()
 }
 
 // Appel de la fonction de connexion - on passe le post en paramètre de la requête
-if($_GET['action'] == "connexion")
-    call_user_func("connexion");
+if($_GET['action'] == "connexion" || $_GET['action'] == "ajouter_publication")
+    call_user_func($_GET['action']);
 
 ?>

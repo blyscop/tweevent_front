@@ -32,6 +32,20 @@ hr {
   border-color:#dedede;
 }
 
+.bar {
+    height: 18px;
+    background: green;
+}
+
+.upload_photo > input {
+  display: none;
+}
+
+.files {
+  float: left;
+}
+
+
 .fc-left h2 {
   color: #666;
 }
