@@ -56,7 +56,7 @@ function Utilisateur_ADD($data_in = array())
             if (empty($tweevent_user)) {
                 $utilisateur_add = new Tweevent_user();
                 $utilisateur_add->pseudo_tweevent_user = $data_in['pseudo'];
-                $utilisateur_add->password_tweevent_user = md5($data_in['password']);
+                $utilisateur_add->password_tweevent_user = $data_in['password'];
                 $utilisateur_add->ADD();
 
                 if ($utilisateur_add) {

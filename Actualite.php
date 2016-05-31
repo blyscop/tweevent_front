@@ -137,6 +137,7 @@ check_session(); ?>
                     alert("Vos préférences ont bien été mise à jour !");
                 }
             });
+
         }
          
          

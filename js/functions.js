@@ -63,6 +63,7 @@ function inscription()
 }
 
 function connect(user)
+
 {
     //pseudo_tweevent_user: "mousse", password_tweevent_user: "f80c211bf2b7e7441c73c22f46d7f4cb"
     $("#connection_username").val(user.pseudo_tweevent_user);
