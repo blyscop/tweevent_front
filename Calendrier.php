@@ -278,7 +278,7 @@
                 type: 'POST',
                 data: {
                     action: "Utilisateur_Calendrier_SELECT_ALL",
-                    utilisateur_id: "<?=$_SESSION['utilisateur_id'] > 0 ? $_SESSION['utilisateur_id'] : 0?>"
+                    utilisateur_id: "<?=$_COOKIE['utilisateur_id'] > 0 ? $_COOKIE['utilisateur_id'] : 0?>"
                 },
                 success: function (msg) {
                     console.log(msg);

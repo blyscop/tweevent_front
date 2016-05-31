@@ -72,47 +72,48 @@ function connect(user)
 
 
 
-function ReceiptPost()
-{
-    var _idUser=$("#id_utilisateur").val();
-    $.ajax({
-        type: "GET",
-        url: host+"/projets/tweevent/api/q/req.php",
-        data: { action:"Utilisateur_Posts_SELECT",id_utilisateur:_idUser },
-        dataType: 'json',
-        success: function(msg) {
-            console.log(msg);
-            $.each(msg.actualites, function(i, item) {
-                $('#cd-timeline').append('<div class="cd-timeline-block">'+
-                    '<div class="cd-timeline-img cd-picture">'+
-                    '<img src="./img/cd-icon-picture.svg" alt="Picture">'+
-                    '</div>'+
-                    '<div class="cd-timeline-content">'+
-                    '<h2>Unknow a commenté</h2>'+
-                    '<p>'+item.message_tweevent_post+'</p>'+
-                    '<a href="#0" class="cd-read-more">Read more</a>'+
-                    '<span class="cd-date">'+parseJsonDate(item.date_add)+'</span>'+
-                    '</div>'+
-                    '</div>');
-            })
-        }
-    });
-}
+// function ReceiptPost()
+// {
+//     var _idUser=$("#id_utilisateur").val();
+//     alert(_idUser);
+//     $.ajax({
+//         type: "GET",
+//         url: host+"/projets/tweevent/api/q/req.php",
+//         data: { action:"Utilisateur_Posts_SELECT",id_utilisateur:_idUser },
+//         dataType: 'json',
+//         success: function(msg) {
+//             console.log(msg);
+//             $.each(msg.actualites, function(i, item) {
+//                 $('#cd-timeline').append('<div class="cd-timeline-block">'+
+//                     '<div class="cd-timeline-img cd-picture">'+
+//                     '<img src="./img/cd-icon-picture.svg" alt="Picture">'+
+//                     '</div>'+
+//                     '<div class="cd-timeline-content">'+
+//                     '<h2>Unknow a commenté</h2>'+
+//                     '<p>'+item.message_tweevent_post+'</p>'+
+//                     '<a href="#0" class="cd-read-more">Read more</a>'+
+//                     '<span class="cd-date">'+parseJsonDate(item.date_add)+'</span>'+
+//                     '</div>'+
+//                     '</div>');
+//             })
+//         }
+//     });
+// }
 
 
-function send_post()
-{
-    var _idUser=$("#id_utilisateur").val();
-    var _message=$("#post_area").val();
-    $.ajax({
-        type: "POST",
-        url: host+"/projets/tweevent/api/q/req.php",
-        data: {action:"Post_ADD",id_utilisateur:_idUser,message:_message},
-        success: function(msg) {
-            $("#close_post_area").trigger("click");
-        }
-    });
-}
+// function send_post()
+// {
+//     var _idUser=$("#id_utilisateur").val();
+//     var _message=$("#post_area").val();
+//     $.ajax({
+//         type: "POST",
+//         url: host+"/projets/tweevent/api/q/req.php",
+//         data: {action:"Post_ADD",id_utilisateur:_idUser,message:_message},
+//         success: function(msg) {
+//             $("#close_post_area").trigger("click");
+//         }
+//     });
+// }
 
 function parseJsonDate(jsonDateString){
     var date = new Date(parseInt(jsonDateString));

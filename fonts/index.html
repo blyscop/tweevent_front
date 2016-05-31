@@ -10,30 +10,21 @@
     <link href="./css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/jquery-ui.css">
-    <script src="./js/jquery-1.10.2.js"></script>-->
+    <script src="./js/jquery-1.10.2.js"></script>
+    <style type="text/css"></style>
     <script src="./js/jquery-ui.js"></script>
     <script src="./js/functions.js"></script>
 
     <script>
 
-        function connexion() {
+        function connexion()
+        {
             var exec = true;
-            if (document.frm_connexion.username == "" || document.frm_connexion.password == "") {
+            if(document.frm_connexion.username == "" || document.frm_connexion.password == "") {
                 exec = false;
             }
             return exec;
         }
-        //        function connect(_username, _pwd) {
-        //            $.ajax({
-        //                type: "POST",
-        //                url: "session.php",
-        //                data: {username: _username, password: _pwd},
-        //                success: function (msg) {
-        //                    console.log(msg);
-        //                    document.location.replace("Actualite.php");
-        //                }
-        //            });
-        //        }
 
     </script>
 </head>
@@ -50,13 +41,12 @@
             <a class="navbar-brand" href="index.html"><img width="180" src="./img/logo.png"></a>
         </div>
         <div id="slidemenu">
-            <form class="navbar-form navbar-right" method="post" action="functions.php?action=connexion"
-                  name="frm_connexion">
+            <form class="navbar-form navbar-right" method="post" action="functions.php?action=connexion" name="frm_connexion">
                 <div class="form-group">
-                    <input type="text" id="connection_username" name="username" placeholder="Adresse email" class="form-control">
-                    <input type="password" id="connection_pwd" name="password" placeholder="Mot de passe" class="form-control">
+                    <input type="text" name="username" placeholder="Adresse email" class="form-control">
+                    <input type="password" name="password" placeholder="Mot de passe" class="form-control">
                 </div>
-                <button type="submit" id="connection_validation" class="btn btn-primary icon-user" onclick="return connexion()">Connexion</button>
+                <button type="submit" class="btn btn-primary icon-user" onclick="return connexion()">Connexion</button>
             </form>
         </div>
     </div>
@@ -74,17 +64,19 @@
 </div>
 
 <script>
-    window.onload = function () {
-        if (window.jQuery) {
-            $("#validationInscription").trigger("click");
-        }
-        if (window.location.hash) {
-            var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
-            if (hash = "login_error") {
-                $("#errorBtn").trigger("click");
-            }
-        }
-    }
+//    window.onload = function () {
+//        if (window.jQuery) {
+//            $("#validationInscription").trigger("click");
+//        }
+//        if (window.location.hash) {
+//            var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+//            if (hash = "login_error") {
+//                $("#errorBtn").trigger("click");
+//            }
+//        } else {
+//            // No hash found
+//        }
+//    }
 </script><!-- Validation inscription modal -->
 
 <!--inscription modal-->
@@ -192,20 +184,33 @@
             $('#page-content, .navbar, body, .navbar-header').toggleClass('slide-active');
         });
         var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
-        $(function () {
-            $(window).resize(function () {
-                $('.block_home').height($(window).height() - $('.block_home').offset().top);
-            });
-            $(window).resize();
 
-            $(window).on("resize", function () {
-                if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
-                    $(selected).removeClass('slide-active');
-                }
-            });
+        $(window).on("resize", function () {
+            if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
+                $(selected).removeClass('slide-active');
+            }
         });
     });
 </script>
 
+<script type="text/javascript">
+    $(function () {
+        $(window).resize(function () {
+            $('.block_home').height($(window).height() - $('.block_home').offset().top);
+        });
+        $(window).resize();
+    });
+
+    dialog = $("#dialog-form").dialog({
+        autoOpen: false,
+        height: 300,
+        width: 350,
+        modal: true,
+        close: function () {
+            form[0].reset();
+            allFields.removeClass("ui-state-error");
+        }
+    });
+</script>
 </body>
 </html>
