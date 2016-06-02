@@ -72,10 +72,10 @@
             <form class="navbar-form navbar-right" method="post" action="functions.php?action=connexion"
                   name="frm_connexion">
                 <div class="form-group">
-                    <input type="text" name="username" placeholder="Adresse email" class="form-control">
-                    <input type="password" name="password" placeholder="Mot de passe" class="form-control">
+                    <input type="text" id="connection_username" name="username" placeholder="Adresse email" class="form-control">
+                    <input type="password" id="connection_pwd" name="password" placeholder="Mot de passe" class="form-control">
                 </div>
-                <button type="submit" class="btn btn-primary icon-user" onclick="return connexion()">Connexion</button>
+                <button type="submit" id="connection_validation" class="btn btn-primary icon-user" onclick="return connexion()">Connexion</button>
             </form>
         </div>
     </div>
@@ -104,6 +104,7 @@
             if (hash == "login_error") {
                 $("#errorBtn").trigger("click");
             }
+
             else if(hash == "insc_error") {
                 $("#errorBtn2").trigger("click");
             }

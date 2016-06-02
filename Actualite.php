@@ -14,7 +14,7 @@ check_session(); ?>
     <link rel="stylesheet" href="./css/timelinestyle.css">
     <link rel="stylesheet" href="./css/jquery-ui.css">
     <script src="./js/jquery-1.10.2.js"></script>
-    -->
+
     <script src="./js/jquery-ui.js"></script>
     <script src="js/functions.js"></script>
     <!--[if lt IE 9]>
@@ -67,6 +67,54 @@ check_session(); ?>
                 }
             });
         }
+
+        function ReceiptPost()
+        {
+            var _idUser=<?=$_COOKIE["utilisateur_id"] > 0 ? $_COOKIE["utilisateur_id"] : 0 ?>;
+
+            $.ajax({
+                type: "GET",
+                url: host+"/projets/tweevent/api/q/req.php",
+                data: { action:"Utilisateur_Posts_SELECT",id_utilisateur:_idUser },
+                dataType: 'json',
+                success: function(msg) {
+                    console.log(msg);
+                    $.each(msg.actualites, function(i, item) {
+                        $('#cd-timeline').append('<div class="cd-timeline-block">'+
+                            '<div class="cd-timeline-img cd-picture">'+
+                            '<img src="./img/cd-icon-picture.svg" alt="Picture">'+
+                            '</div>'+
+                            '<div class="cd-timeline-content">'+
+                            '<h2>Unknow a commenté</h2>'+
+                            '<p>'+item.message_tweevent_post+'</p>'+
+                            '<a href="#0" class="cd-read-more">Read more</a>'+
+                            '<span class="cd-date">'+parseJsonDate(item.date_add)+'</span>'+
+                            '</div>'+
+                            '</div>');
+                    })
+                }
+            });
+        }
+
+        function send_post()
+        {
+            var _idUser=<?=$_COOKIE["utilisateur_id"] > 0 ? $_COOKIE["utilisateur_id"] : 0 ?> ;
+            var _message=$("#message").val();
+            console.log(_idUser+" "+_message);
+            $.ajax({
+                type: "POST",
+                url: host+"/projets/tweevent/api/q/req.php",
+                data: {action:"Post_ADD",id_utilisateur:_idUser,message:_message},
+                success: function(msg) {
+                    $("#close_post_area").trigger("click");
+                    $('#cd-timeline').empty();
+                    ReceiptPost();
+                },
+                error: function(msg) {
+                    alert(msg);
+                }
+            });
+        }
         // Modification des préférences de l'utilisateur, on requête le serveur d'API avec les cases cochées et il va nous répondre s'il a bien traiter notre demande (pour afficher un message à l'user)
         // Il faut penser à recharger le bloc en réappelant la fonction après l'UPD (s'il s'est bien déroulé)
         function modifier_preferences_utilisateur(params) {
@@ -89,164 +137,13 @@ check_session(); ?>
                     alert("Vos préférences ont bien été mise à jour !");
                 }
             });
-        }
-
-        /*
-         function ReceiptPost()
-         {
-         var _idUser=$("#id_utilisateur").val();
-         $.ajax({
-         type: "GET",
-         url: host+"/projets/tweevent/api/q/req.php",
-         data: { action:"Utilisateur_Posts_SELECT",id_utilisateur:_idUser },
-         dataType: 'json',
-         success: function(msg) {
-         console.log(msg);
-         $.each(msg.actualites, function(i, item) {
-         $('#cd-timeline').append('<div class="cd-timeline-block">'+
-         '<div class="cd-timeline-img cd-picture">'+
-         '<img src="./img/cd-icon-picture.svg" alt="Picture">'+
-         '</div>'+
-         '<div class="cd-timeline-content">'+
-         '<h2>Unknow a commenté</h2>'+
-         '<p>'+item.message_tweevent_post+'</p>'+
-         '<a href="#0" class="cd-read-more">Read more</a>'+
-         '<span class="cd-date">'+parseJsonDate(item.date_add)+'</span>'+
-         '</div>'+
-         '</div>');
-         })
-         }
-         });
-         }
-
-         Chargement du fil d'actualité
-         <div class="cd-timeline-block">
-         <div class="cd-timeline-img cd-picture">
-         <img src="./img/cd-icon-picture.svg" alt="Picture">
-         </div>
-
-         <div class="cd-timeline-content">
-         <h2>Title of section 1</h2>
-         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum
-         provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis
-         unde? Iste voluptatibus minus veritatis qui ut.</p>
-         <a href="#0" class="cd-read-more">Read more</a>
-         <span class="cd-date">Jan 14</span>
-         </div>
-         </div>
-
-         <div class="cd-timeline-block">
-         <div class="cd-timeline-img cd-movie">
-         <img src="./img/cd-icon-movie.svg" alt="Movie">
-         </div>
-
-         <div class="cd-timeline-content">
-         <h2>Title of section 2</h2>
-         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum
-         provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis
-         unde?</p>
-         <a href="#0" class="cd-read-more">Read more</a>
-         <span class="cd-date">Jan 18</span>
-         </div>
-         </div>
-
-         <div class="cd-timeline-block">
-         <div class="cd-timeline-img cd-picture">
-         <img src="./img/cd-icon-picture.svg" alt="Picture">
-         </div>
-
-         <div class="cd-timeline-content">
-         <h2>Title of section 3</h2>
-         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, obcaecati,
-         quisquam id molestias eaque asperiores voluptatibus cupiditate error assumenda
-         delectus odit similique earum voluptatem doloremque dolorem ipsam quae rerum
-         quis. Odit, itaque, deserunt corporis vero ipsum nisi eius odio natus ullam
-         provident pariatur temporibus quia eos repellat consequuntur perferendis enim
-         amet quae quasi repudiandae sed quod veniam dolore possimus rem voluptatum
-         eveniet eligendi quis fugiat aliquam sunt similique aut adipisci.</p>
-         <a href="#0" class="cd-read-more">Read more</a>
-         <span class="cd-date">Jan 24</span>
-         </div>
-         </div>
-
-         <div class="cd-timeline-block">
-         <div class="cd-timeline-img cd-location">
-         <img src="./img/cd-icon-location.svg" alt="Location">
-         </div>
-
-         <div class="cd-timeline-content">
-         <h2>Title of section 4</h2>
-         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum
-         provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis
-         unde? Iste voluptatibus minus veritatis qui ut.</p>
-         <a href="#0" class="cd-read-more">Read more</a>
-         <span class="cd-date">Feb 14</span>
-         </div>
-         </div>
-
-         <div class="cd-timeline-block">
-         <div class="cd-timeline-img cd-location">
-         <img src="./img/cd-icon-location.svg" alt="Location">
-         </div>
-
-         <div class="cd-timeline-content">
-         <h2>Title of section 5</h2>
-         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum
-         provident rerum.</p>
-         <a href="#0" class="cd-read-more">Read more</a>
-         <span class="cd-date">Feb 18</span>
-         </div>
-         </div>
-
-         <div class="cd-timeline-block">
-         <div class="cd-timeline-img cd-movie">
-         <img src="./img/cd-icon-movie.svg" alt="Movie">
-         </div>
-
-         <div class="cd-timeline-content">
-         <h2>Final Section</h2>
-         <p>This is the content of the last section</p>
-         <span class="cd-date">Feb 26</span>
-         </div>
-         </div>
-         */
-        function charger_fil_actualite() {
-            $j.ajax({
-                type: "GET",
-                url: "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_Fil_Actualite_SELECT&id_utilisateur=<?=$_COOKIE['utilisateur_id'] > 0 ? $_COOKIE['utilisateur_id'] : 0?>",
-                dataType: 'json',
-                success: function (data) {
-                    var html = "";
-                    $j('#preferences_categories').empty();
-                    $j.each(data, function (categorie, objet_preference) {
-                        var class_tag_i = "";
-                        if (categorie != "music")
-                            class_tag_i = "glass";
-                        else
-                            class_tag_i = categorie;
-                        html += "<div id='" + categorie + "Preferences' class='col-md-4'> <i class='fa fa-" + class_tag_i + " fa-4x' aria-hidden='true'></i>";
-                        $j.each(objet_preference, function (preference, droit) {
-                            var html_checkbox_preference = "";
-                            if (droit) {
-                                html += "<div><input type='checkbox' class='preferences' id='" + preference + "' name='" + preference + "' checked='checked'>" + preference + "</input></div>";
-                            }
-                            else {
-                                html += "<div><input type='checkbox' class='preferences' id='" + preference + "' name='" + preference + "'>" + preference + "</input></div>";
-                            }
-                        });
-                        html += "</div>";
-                    });
-                    $j('#preferences_categories').append(html);
-                }
-            });
-        }
-
-        function ajouter_publication() {
-            // message
-            //
 
         }
+         
+         
+        
 
+       
         // Fonction pour localiser un utilisateur lors du clic (natif à html5)
         function localiser() {
             // Si le navigateur le supporte, on execute getCurrentPosition, qui peut appelée montrerPosition ou montrerErreur suivant le callback
@@ -256,16 +153,13 @@ check_session(); ?>
                 x.innerHTML = "La géolocalisation n'est pas supportée pour votre terminal.";
             }
         }
-
         // Affiche un iframe provenant de gmaps avec la position de l'utilisateur
         function montrerPosition(position) {
             var lat_lon = position.coords.latitude + "," + position.coords.longitude;
-
             var img_url = "http://maps.googleapis.com/maps/api/staticmap?center="
                 + lat_lon + "&zoom=14&size=400x300&sensor=false";
             document.getElementById("localisation").innerHTML = "<img src='" + img_url + "'>";
         }
-
         // Si une erreur survient (ex : géo désactivée sur le terminal), on affiche un message
         function montrerErreur(error) {
             switch (error.code) {
@@ -285,7 +179,7 @@ check_session(); ?>
         }
     </script>
 </head>
-<body onload="charger_preferences_utilisateur();">
+<body onload="charger_preferences_utilisateur(); ReceiptPost();">
 <div class="wrapper">
     <div class="box">
         <div class="row row-offcanvas row-offcanvas-left">
@@ -399,7 +293,6 @@ check_session(); ?>
                                 <a href="http://localhost/projeti4Save/actions.php#" class="dropdown-toggle"
                                    data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-user"></i>
-                                    &nbsp;&nbsp;&nbsp;
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="">Mon profil</a></li>
@@ -438,8 +331,7 @@ check_session(); ?>
         <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form name="ajout_publication" id="ajout_publication"
-                          action="functions.php?action=ajouter_publication" enctype="multipart/form-data">
+
                         <div class="modal-header">
                             <button type="button" id="close_post_area" class="close" data-dismiss="modal"
                                     aria-hidden="true">×
@@ -451,11 +343,10 @@ check_session(); ?>
                             <textarea id="message" class="form-control input-lg" name="message" autofocus=""
                                       placeholder="Que voulez-vous partager?"></textarea>
                             </div>
-                            <input type="hidden" name="action" value="Publier_Statut"/>
                         </div>
                         <div class="modal-footer">
                             <div>
-                                <button type="submit" class="btn btn-primary">Publier
+                                <button  onclick="send_post()" class="btn btn-primary">Publier
                                 </button>
                                 <ul class="pull-left list-inline">
                                     <!--                                <li>-->
@@ -479,7 +370,6 @@ check_session(); ?>
                                 </ul>
                             </div>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -497,7 +387,7 @@ check_session(); ?>
                     <form name="preferences_upd" id="preferences_upd" action="functions.php?action=preferences_upd">
                         <div id="preferences_categories"></div>
                         <!-- AJAX bloc de préférence par catégorie avec checkbox -->
-                        <input type="hidden" name="id_utilisateur"
+                        <input type="hidden" id="id_utilisateur" name="id_utilisateur"
                                value="<?= $_COOKIE['id_utilisateur'] > 0 ? $_COOKIE['id_utilisateur'] : 0; ?>"/>
                     </form>
                 </div>
@@ -657,6 +547,5 @@ check_session(); ?>
             .parent().addClass($.support.fileInput ? undefined : 'disabled');
     });
 </script>
-<!--<input type="hidden" value="--><?php //echo $_COOKIE['id_utilisateur']; ?><!--" id="id_utilisateur"/>-->
 </body>
 </html>
