@@ -29,6 +29,7 @@ include('../dilasys/biblio/tweevent_user_event.inc.php');
 include('../dilasys/biblio/tweevent_preference.inc.php');
 include('../dilasys/biblio/tweevent_preference_categorie.inc.php');
 include('../dilasys/biblio/tweevent_user_preference.inc.php');
+include('../dilasys/biblio/tweevent_email_validation.inc.php');
 
 //==================================================================================
 // Initialisation des variables globals qui seront utilis?es dans les actions
@@ -46,29 +47,75 @@ function Utilisateur_ADD($data_in = array())
     $return = array();
     $return['confirmation'] = false;
 
-    if (empty($data_in['pseudo']) || empty($data_in['password']))
-        $return['message'] = "ERREUR : Le pseudo et/ou password est vide !";
+    if (empty($data_in['type']))
+        $return['message'] = "ERREUR : Le type est vide !";
+    else if (empty($data_in['pseudo']) || empty($data_in['password']))
+        $return['message'] = "ERREUR : Le pseudo / password est vide !";
     else {
-        if (!empty($data_in['pseudo']) && !empty($data_in['password'])) {
-            $args_tweevent_user['pseudo_tweevent_user'] = $data_in['pseudo'];
-            $tweevent_user = Tweevent_users_chercher($args_tweevent_user);
 
-            if (empty($tweevent_user)) {
+        $args_tweevent_user['pseudo_tweevent_user'] = $data_in['pseudo'];
+        $tweevent_user = Tweevent_users_chercher($args_tweevent_user);
+
+        if (empty($tweevent_user)) {
+            if($data_in['type'] == "pro") {
                 $utilisateur_add = new Tweevent_user();
                 $utilisateur_add->pseudo_tweevent_user = $data_in['pseudo'];
+                $utilisateur_add->email_tweevent_user = $data_in['pseudo'];
                 $utilisateur_add->password_tweevent_user = $data_in['password'];
-                $utilisateur_add->ADD();
+                $utilisateur_add->ville_tweevent_user = $data_in['ville'];
+                $utilisateur_add->code_postal_tweevent_user = $data_in['code_postal'];
+                $utilisateur_add->adresse_1_tweevent_user = $data_in['adresse'];
+                $utilisateur_add->tel_tweevent_user = $data_in['tel'];
+                $utilisateur_add->mob_tweevent_user = $data_in['mob'];
+                $utilisateur_add->type_tweevent_user = "pro";
+                $id_utilisateur = $utilisateur_add->ADD();
+            }
+            else {
+                $utilisateur_add = new Tweevent_user();
+                $utilisateur_add->pseudo_tweevent_user = $data_in['pseudo'];
+                $utilisateur_add->email_tweevent_user = $data_in['pseudo'];
+                $utilisateur_add->password_tweevent_user = $data_in['password'];
+                $utilisateur_add->type_tweevent_user = "par";
+                $id_utilisateur = $utilisateur_add->ADD();
+            }
 
-                if ($utilisateur_add) {
+            if ($utilisateur_add) {
+                // Création du lien de confirmation de mail à envoyer à l'utilisateur, basé sur le timestamp
+                $validation = new Tweevent_email_validation();
+                $validation->id_tweevent_user = $id_utilisateur;
+                $validation->est_valide = 0;
+                $validation->timestamp = time();
+                $id_validation = $validation->ADD();
+
+                $lien_validation = "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_Valider_Email&id_utilisateur=".$id_utilisateur."&k=".$validation->timestamp;
+
+                // Préparation de l'envoi de l'email à l'utilisateur pour qu'il valide son compte (sécurité supp. du captcha)
+                $subject = "Confirmation de votre compte sur Tweevent";
+                $email = " Merci de votre inscription. Afin de confirmer votre compte, merci de vous rendre sur le lien suivant : <br/>
+                           <a href='".$lien_validation."'>Valider mon compte</a> <br/>";
+                $headers   = array();
+                $headers[] = "MIME-Version: 1.0";
+                $headers[] = "Content-type: text/plain; charset=iso-8859-1";
+                $headers[] = "From: Tweevent <admin@tweevent.fr>";
+                $headers[] = "Subject: {$subject}";
+                $headers[] = "X-Mailer: PHP/".phpversion();
+                $headers[] = "Content-type: text/html; charset=UTF-8";
+
+                // todo reprendre l'affichage html du mail
+                if(mail($utilisateur_add->email_tweevent_user, $subject, $email, implode("\r\n", $headers))) {
                     $return['confirmation'] = true;
                     $return['message'] = "Votre utilisateur a bien ete creer";
                     $return['utilisateur'] = $utilisateur_add->getTab();
                     $data_in['id_utilisateur'] = $utilisateur_add->id_tweevent_user;
                     Utilisateur_Preferences_INIT($data_in);
                 }
-            } else
-                $return['message'] = "ERREUR : Le pseudo est deja utilise !";
-        }
+                else {
+                    $return['erreur_envoi_email'] = true;
+                }
+
+            }
+        } else
+            $return['message'] = "ERREUR : Le pseudo est deja utilise !";
 
     }
 
@@ -150,17 +197,17 @@ function Post_ADD($data_in = array())
 // Permet d'initialiser les préférences de l'utilisateur, lors de la création
 function Utilisateur_Preferences_INIT($data_in = array())
 {
-    if(!empty($data_in['id_utilisateur'])) {
+    if (!empty($data_in['id_utilisateur'])) {
         $args_preferences['id_tweevent_preference'] = '*';
         $liste_preferences = Tweevent_preferences_chercher($args_preferences);
 
-        if(!empty($liste_preferences)) {
-            foreach($liste_preferences as $id_preference => $preference) {
+        if (!empty($liste_preferences)) {
+            foreach ($liste_preferences as $id_preference => $preference) {
                 $args_user_preference['id_tweevent_preference'] = $id_preference;
                 $args_user_preference['id_tweevent_user'] = $data_in['id_utilisateur'];
                 $user_preference = Tweevent_user_preferences_chercher($args_user_preference);
 
-                if(!empty($user_preference))
+                if (!empty($user_preference))
                     continue; // La préférence a déjà été créée ! on ne traite pas cet élément
                 $preference_user_init = New Tweevent_user_preference();
                 $preference_user_init->id_tweevent_user = $data_in['id_utilisateur'];
@@ -171,6 +218,7 @@ function Utilisateur_Preferences_INIT($data_in = array())
         }
     }
 }
+
 //==================================================================================
 // READ
 //==================================================================================
@@ -187,9 +235,20 @@ function Utilisateur_SELECT($data_in = array())
 
         if (!empty($tweevent_user)) {
             if ($tweevent_user['password_tweevent_user'] == $data_in['password']) {
-                $return['confirmation'] = true;
-                $return['message'] = "Utilisateur recupere !";
-                $return['utilisateur'] = $tweevent_user;
+
+                // Vérification que l'utilisateur a bien validé son email auparavant
+                $args_email_user_valid['id_tweevent_user'] = $tweevent_user['id_tweevent_user'];
+                $email_user_valid = Tweevent_email_validations_chercher($args_email_user_valid);
+
+                if(empty($email_user_valid) || (!empty($email_user_valid) && !$email_user_valid['est_valide'])) {
+                    $return['email_non_valide'] = true;
+                    $return['message'] = "Erreur ! L'utilisateur n'a pas validé son email";
+                }
+                else {
+                    $return['confirmation'] = true;
+                    $return['message'] = "Utilisateur recupere !";
+                    $return['utilisateur'] = $tweevent_user;
+                }
             }
         } else
             $return['message'] = "Erreur ! L'utilisateur est introuvable.";
@@ -400,11 +459,11 @@ function Utilisateur_Preferences_UPD($data_in = array())
     $return['confirmation'] = false;
 
     $return['print'] = $return['print2'] = $return['print3'] = "";
-    if(!empty($data_in['id_utilisateur']) && !empty($data_in['preferences'])) {
+    if (!empty($data_in['id_utilisateur']) && !empty($data_in['preferences'])) {
         // pizza_0,kebab_1,hamburger_0, etc..
         $tmp_categories = explode("|", $data_in['preferences']);
         print_r($tmp_categories);
-        foreach($tmp_categories as $id => $categorie) {
+        foreach ($tmp_categories as $id => $categorie) {
             // pizza_1
             $preference_tmp = explode("_", $categorie);
             $droit_preference = $preference_tmp[0]; // 1
@@ -414,14 +473,14 @@ function Utilisateur_Preferences_UPD($data_in = array())
             $args_user_preferences['id_utilisateur'] = $data_in['id_utilisateur'];
             $args_user_preferences['id_preference'] = $preference_actuelle_a_upd->id_tweevent_preference;
             $user_preference = Tweevent_user_preference_recuperer('', $args_user_preferences);
-            $return['print'] .=  $args_user_preferences['id_preference']. " " ;
-            $return['print2'] .=  $user_preference->etat. " ";
-            if($droit_preference == '1')
-            $user_preference->etat = "actif";
-        else
-            $user_preference->etat = "supprime";
+            $return['print'] .= $args_user_preferences['id_preference'] . " ";
+            $return['print2'] .= $user_preference->etat . " ";
+            if ($droit_preference == '1')
+                $user_preference->etat = "actif";
+            else
+                $user_preference->etat = "supprime";
             $user_preference->UPD();
-            $return['print3'] .= $user_preference->etat. " ";
+            $return['print3'] .= $user_preference->etat . " ";
         }
         $return['confirmation'] = true;
     }
@@ -429,6 +488,37 @@ function Utilisateur_Preferences_UPD($data_in = array())
     header('Access-Control-Allow-Origin: *');
     echo json_encode($return);
 }
+
+function Utilisateur_Valider_Email($data_in = array())
+{
+    Lib_myLog("action: " . $data_in['action']);
+    foreach ($GLOBALS['tab_globals'] as $global) global $$global;
+
+    $return = array();
+    $return['confirmation'] = false;
+
+    // Validation provenant de l'email
+    if(!empty($data_in['id_utilisateur']) && !empty($data_in['k'])) {
+        $args_email_validation['id_tweevent_user'] = $data_in['id_utilisateur'];
+        $args_email_validation['timestamp'] = $data_in['k'];
+        $email_validation = Tweevent_email_validations_chercher($args_email_validation);
+
+        Lib_myLog("email: ",$email_validation);
+        if(!empty($email_validation)) {
+            // Clé valide => on active le compte
+            $validation = Tweevent_email_validation_recuperer($email_validation['id_tweevent_email_validation']);
+            $validation->est_valide = 1;
+            $validation->UPD();
+            header('Location: ../../index.html#conf_validation');
+        }
+        else {
+            // Clé / User  invalide
+            header('Location: ../../index.html#erreur_validation');
+        }
+
+    }
+}
+
 //==================================================================================
 // DELETE
 //==================================================================================

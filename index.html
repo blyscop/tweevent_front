@@ -89,6 +89,10 @@
             <h3><a href="#errorModal" id="errorBtn" role="button" data-toggle="modal"></a></h3>
             <h3><a href="#errorModal2" id="errorBtn2" role="button" data-toggle="modal"></a></h3>
             <h3><a href="#inscrOk" id="inscrBtn" role="button" data-toggle="modal"></a></h3>
+            <h3><a href="#errorEmail" id="errorMailBtn" role="button" data-toggle="modal"></a></h3>
+            <h3><a href="#emailNonValide" id="emailNonValideBtn" role="button" data-toggle="modal"></a></h3>
+            <h3><a href="#erreurValidation" id="errorValidationBtn" role="button" data-toggle="modal"></a></h3>
+            <h3><a href="#confValidation" id="confValidationBtn" role="button" data-toggle="modal"></a></h3>
         </div>
 
     </div>
@@ -110,6 +114,18 @@
             }
             else if(hash == "insc_ok") {
                 $("#inscrBtn").trigger("click");
+            }
+            else if(hash == "email_error") {
+                $("#errorMailBtn").trigger("click");
+            }
+            else if(hash == "email_invalide") {
+                $("#emailNonValideBtn").trigger("click");
+            }
+            else if(hash == "erreur_validation") {
+                $("#errorValidationBtn").trigger("click");
+            }
+             else if(hash == "conf_validation") {
+                $("#confValidationBtn").trigger("click");
             }
 
         } else {
@@ -184,6 +200,54 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h5>Votre compte a bien été créer et nous sommes heureux de vous accueilir ! Mais avant de commencer
                         notre histoire, merci de valider votre adresse email en cliquant sur le lien reçu.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="errorEmail" class="modal fade" tabindex="-4" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h5>Une erreur est survenue lors de l'envoi de l'email de confirmation, et nous sommes désolés pour ce gêne.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="emailNonValide" class="modal fade" tabindex="-5" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h5>Merci de valider votre email pour pouvoir vous connecter.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="erreurValidation" class="modal fade" tabindex="-6" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h5>La clé saisie n'est pas correcte.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="confValidation" class="modal fade" tabindex="-6" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h5>Votre compte a bien été activé, vous pouvez désormais vous connecter.</h5>
                 </div>
             </div>
         </div>

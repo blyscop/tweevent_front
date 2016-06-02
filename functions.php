@@ -43,9 +43,12 @@ function connexion()
             setcookie('username', $content['utilisateur']['pseudo_tweevent_user'], time() + 365*24*3600);
             setcookie('est_connecte', true, time() + 365*24*3600);
         }
+        else if($content['email_non_valide'])
+            header('Location: index.html#email_invalide'); // redirection page accueil (adresse email pas encore validée)
     }
-    else
-       header('Location: index.html#login_error'); // redirection page accueil (pas de login et mdp fourni)
+    else {
+        header('Location: index.html#login_error'); // redirection page accueil (pas de login et mdp fourni)
+    }
     if($redirection_actualite) {
         //echo json_encode(true);
         header('Location: Actualite.php');
@@ -68,15 +71,17 @@ function inscription()
     }
     if($_POST['choix_inscription'] == "par")
     {
-        $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_ADD&pseudo='.$_POST['pseudo'].'&password='.md5($_POST['password']);
+        $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_ADD&type=par&pseudo='.$_POST['pseudo'].'&password='.md5($_POST['password']);
         $obj = file_get_contents($url);
         $content = json_decode($obj, true);
 
         // Si l'API répond que la création s'est bien effectuée, on va rediriger vers la page d'accueil avec un message de confirmation invitant l'utilisateur à valider son email pour
         // pouvoir se connecter, sinon il ne pourra pas
-        if($content['confirmation'])
+        if($content['confirmation'] && !$content['erreur_envoi_email'])
             $redirection_accueil = true;
-        else
+        else if($content['erreur_envoi_email'])
+            header('Location: http://martinfrouin.fr/projets/tweevent/index.html#email_error'); // redirection page accueil (erreur lors de l'envoi de l'email)
+        else if(!$content['confirmation'])
             header('Location: http://martinfrouin.fr/projets/tweevent/index.html#insc_error'); // redirection page accueil (nom d'utilisateur déjà utilisé)
     }
 
