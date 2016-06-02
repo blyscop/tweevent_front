@@ -69,33 +69,35 @@ function inscription()
     $ip = $_SERVER['REMOTE_ADDR'];
     $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
     $responseKeys = json_decode($response,true);
-    echo $responseKeys["success"];
-    /*$redirection_accueil = false;
-
-    if($_POST['choix_inscription'] == "pro")
+    if($responseKeys["success"]==1)
     {
-        $url = "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_ADD";
-        $url .= "&pseudo=".$_POST['pseudo'];
+            $redirection_accueil = false;
 
-        if($redirection_accueil)
-            header('Location: index.html#insc_pro_ok');
+            if($_POST['choix_inscription'] == "pro")
+            {
+                $url = "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_ADD";
+                $url .= "&pseudo=".$_POST['pseudo'];
+
+                if($redirection_accueil)
+                    header('Location: index.html#insc_pro_ok');
+            }
+            if($_POST['choix_inscription'] == "par")
+            {
+                $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_ADD&pseudo='.$_POST['pseudo'].'&password='.md5($_POST['password']);
+                $obj = file_get_contents($url);
+                $content = json_decode($obj, true);
+
+                // Si l'API répond que la création s'est bien effectuée, on va rediriger vers la page d'accueil avec un message de confirmation invitant l'utilisateur à valider son email pour
+                // pouvoir se connecter, sinon il ne pourra pas
+                if($content['confirmation'])
+                    $redirection_accueil = true;
+                else
+                    header('Location: index.html#insc_error'); // redirection page accueil (nom d'utilisateur déjà utilisé)
+            }
+
+            if($redirection_accueil)
+                header('Location: index.html#insc_ok');
     }
-    if($_POST['choix_inscription'] == "par")
-    {
-        $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_ADD&pseudo='.$_POST['pseudo'].'&password='.md5($_POST['password']);
-        $obj = file_get_contents($url);
-        $content = json_decode($obj, true);
-
-        // Si l'API répond que la création s'est bien effectuée, on va rediriger vers la page d'accueil avec un message de confirmation invitant l'utilisateur à valider son email pour
-        // pouvoir se connecter, sinon il ne pourra pas
-        if($content['confirmation'])
-            $redirection_accueil = true;
-        else
-            header('Location: index.html#insc_error'); // redirection page accueil (nom d'utilisateur déjà utilisé)
-    }
-
-    if($redirection_accueil)
-        header('Location: index.html#insc_ok');*/
 }
 
 // Appel de la fonction de connexion - on passe le post en paramètre de la requête

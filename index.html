@@ -166,24 +166,27 @@
                 <!-- Chargement conditionnel du formulaire d'inscription en AJAX -->
                 <div class="form-group modal-body">
                     <div id="inscription"><br/>
-                        <table id="choix_form">
+                        <table style="width:100%;" id="choix_form">
                             <tr>
-                                <td>
+                                <td style="text-align:center;">
                                     <button onclick="charger_bloc('pro')">
                                         Je suis un professionnel
                                     </button>
                                 </td>
-                                <td>
+                                <td style="text-align:center;">
                                     <button onclick="charger_bloc('par')">
                                         Je suis un particulier
                                     </button>
                                 </td>
                             </tr>
                         </table>
+                        <br/>
                         <div id="content_inscription">
-                            <div class="g-recaptcha" data-sitekey="6LcDniETAAAAAFiX24Mw5sHqL2j0IqGJFGXqWkB0"></div>
+
 
                         </div>
+                        <div class="g-recaptcha" data-sitekey="6LcDniETAAAAAFiX24Mw5sHqL2j0IqGJFGXqWkB0"style ="text-align: -moz-center;"
+                             ></div><br/>
                     </div>
                     <div class="modal-footer">
                         <div>
@@ -195,7 +198,7 @@
                                 <li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li>
                             </ul>
                         </div>
-                        </div>>
+                        </div>
                     </div>
             </form>
         </div>
