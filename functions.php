@@ -56,7 +56,21 @@ function connexion()
 
 function inscription()
 {
-    $redirection_accueil = false;
+    $captcha="";
+
+    if(isset($_POST['g-recaptcha-response'])){
+        $captcha=$_POST['g-recaptcha-response'];
+    }
+    if(!$captcha){
+        echo '<h2>Please check the the captcha form.</h2>';
+        exit;
+    }
+    $secretKey = "6LcDniETAAAAACZlKXLOp8YnnuLiAjrysL4TIy9J";
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
+    $responseKeys = json_decode($response,true);
+    echo $responseKeys["success"];
+    /*$redirection_accueil = false;
 
     if($_POST['choix_inscription'] == "pro")
     {
@@ -64,7 +78,7 @@ function inscription()
         $url .= "&pseudo=".$_POST['pseudo'];
 
         if($redirection_accueil)
-            header('Location: http://martinfrouin.fr/projets/tweevent/index.html#insc_pro_ok');
+            header('Location: index.html#insc_pro_ok');
     }
     if($_POST['choix_inscription'] == "par")
     {
@@ -77,11 +91,11 @@ function inscription()
         if($content['confirmation'])
             $redirection_accueil = true;
         else
-            header('Location: http://martinfrouin.fr/projets/tweevent/index.html#insc_error'); // redirection page accueil (nom d'utilisateur déjà utilisé)
+            header('Location: index.html#insc_error'); // redirection page accueil (nom d'utilisateur déjà utilisé)
     }
 
     if($redirection_accueil)
-        header('Location: http://martinfrouin.fr/projets/tweevent/index.html#insc_ok');
+        header('Location: index.html#insc_ok');*/
 }
 
 // Appel de la fonction de connexion - on passe le post en paramètre de la requête

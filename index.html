@@ -12,7 +12,7 @@
     <script src="./js/jquery-1.10.2.js"></script>
     <script src="./js/jquery-ui.js"></script>
     <script src="./js/functions.js"></script>
-
+    <script src="https://www.google.com/recaptcha/api.js"></script>
     <script>
         var $j = jQuery.noConflict();
         function connexion() {
@@ -101,7 +101,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="navbar-brand" href="index.html"><img width="180" src="https://martinfrouin.fr/projets/tweevent/img/logo.png"></a>
+            <a class="navbar-brand" href="index.html"><img width="180" src="img/logo.png"></a>
         </div>
         <div id="slidemenu">
             <form class="navbar-form navbar-right" method="post" action="functions.php?action=connexion"
@@ -181,6 +181,7 @@
                             </tr>
                         </table>
                         <div id="content_inscription">
+                            <div class="g-recaptcha" data-sitekey="6LcDniETAAAAAFiX24Mw5sHqL2j0IqGJFGXqWkB0"></div>
 
                         </div>
                     </div>
@@ -194,6 +195,7 @@
                                 <li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li>
                             </ul>
                         </div>
+                        </div>>
                     </div>
             </form>
         </div>
