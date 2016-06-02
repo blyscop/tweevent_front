@@ -27,29 +27,54 @@
             var html = "";
             if (nom_bloc == "pro") {
                 // Chargement du formulaire d'inscription pour les pro.
-                // Nom de l'établissement
+                // Pseudo
                 html += "<div class='form-group'>";
                 html += "<label for='pseudo' class='col-sm-3 control-label'>Nom de l'établissement :</label>";
                 html += "<div class='col-sm-4'>";
-                html += "<input required class='form-control' type='text' id='etablissement' name='pseudo' value=''/>";
+                html += "<input required class='form-control' type='text' id='pseudo' name='pseudo' value=''/>";
                 html += "</div>";
                 html += "</div>";
 
-                // SIRET
+                // ville
                 html += "<div class='form-group'>";
-                html += "<label for='pseudo' class='col-sm-3 control-label'>SIRET :</label>";
+                html += "<label for='ville' class='col-sm-3 control-label'>Ville :</label>";
                 html += "<div class='col-sm-4'>";
-                html += "<input required class='form-control' type='text' id='siret' name='pseudo' value=''/>";
+                html += "<input required class='form-control' type='text' id='ville' name='ville' value=''/>";
                 html += "</div>";
                 html += "</div>";
 
-                // Nom de l'établissement
+                // Code postal
                 html += "<div class='form-group'>";
-                html += "<label for='pseudo' class='col-sm-3 control-label'>Nom de l'établissement :</label>";
+                html += "<label for='code_postal' class='col-sm-3 control-label'>Code postal:</label>";
                 html += "<div class='col-sm-4'>";
-                html += "<input required class='form-control' type='text' id='etablissement' name='pseudo' value=''/>";
+                html += "<input required class='form-control' type='text' id='code_postal' name='code_postal' value=''/>";
                 html += "</div>";
                 html += "</div>";
+
+                // Adresse
+                html += "<div class='form-group'>";
+                html += "<label for='adresse' class='col-sm-3 control-label'>Adresse :</label>";
+                html += "<div class='col-sm-4'>";
+                html += "<input required class='form-control' type='text' id='adresse' name='adresse' value=''/>";
+                html += "</div>";
+                html += "</div>";
+
+                // Téléphone
+                html += "<div class='form-group'>";
+                html += "<label for='telephone' class='col-sm-3 control-label'>Téléphone :</label>";
+                html += "<div class='col-sm-4'>";
+                html += "<input required class='form-control' type='text' id='tel' name='tel' value=''/>";
+                html += "</div>";
+                html += "</div>";
+
+                // Téléphone cellulaire
+                html += "<div class='form-group'>";
+                html += "<label for='cellulaire' class='col-sm-3 control-label'>Téléphone cellulaire :</label>";
+                html += "<div class='col-sm-4'>";
+                html += "<input required class='form-control' type='text' id='mob' name='mob' value=''/>";
+                html += "</div>";
+                html += "</div>";
+
 
                 // Pseudo
                 html += "<div class='form-group'>";
@@ -85,8 +110,8 @@
             }
             // Remplissage html
             html += "<input type='hidden' name='choix_inscription' value='"+nom_bloc+"'/>";
-            $("#content_inscription").empty();
-            $("#content_inscription").append(html);
+            $j("#content_inscription").empty();
+            $j("#content_inscription").append(html);
         }
     </script>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" ></script>

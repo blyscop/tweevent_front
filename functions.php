@@ -62,7 +62,7 @@ function inscription()
         $captcha=$_POST['g-recaptcha-response'];
     }
     if(!$captcha){
-        echo '<h2>Please check the the captcha form.</h2>';
+        header('Location: index.html'); // redirection page accueil
         exit;
     }
     $secretKey = "6LcDniETAAAAACZlKXLOp8YnnuLiAjrysL4TIy9J";
@@ -75,18 +75,21 @@ function inscription()
 
             if($_POST['choix_inscription'] == "pro")
             {
-                $url = "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_ADD";
-                $url .= "&pseudo=".$_POST['pseudo'];
-
-                if($redirection_accueil)
-                    header('Location: index.html#insc_pro_ok');
+                $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_ADD&type=pro&pseudo='.$_POST['pseudo'].'&password='.md5($_POST['password'].'&ville='.$_POST['ville'].'&code_postal='.$_POST['code_postal'].'&adresse='.$_POST['adresse'].'&tel='.$_POST['tel'].'&mob='.$_POST['mob']);
+                $obj = file_get_contents($url);
+                $content = json_decode($obj, true);
+                // Si l'API répond que la création s'est bien effectuée, on va rediriger vers la page d'accueil avec un message de confirmation invitant l'utilisateur à valider son email pour
+                // pouvoir se connecter, sinon il ne pourra pas
+                if($content['confirmation'])
+                    $redirection_accueil = true;
+                else
+                    header('Location: index.html#insc_error'); // redirection page accueil (nom d'utilisateur déjà utilisé)
             }
             if($_POST['choix_inscription'] == "par")
             {
-                $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_ADD&pseudo='.$_POST['pseudo'].'&password='.md5($_POST['password']);
+                $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_ADD&type=par&pseudo='.$_POST['pseudo'].'&password='.md5($_POST['password']);
                 $obj = file_get_contents($url);
                 $content = json_decode($obj, true);
-
                 // Si l'API répond que la création s'est bien effectuée, on va rediriger vers la page d'accueil avec un message de confirmation invitant l'utilisateur à valider son email pour
                 // pouvoir se connecter, sinon il ne pourra pas
                 if($content['confirmation'])
