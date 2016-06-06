@@ -56,8 +56,8 @@ function connexion()
 
 function inscription()
 {
+    //echo var_dump($_POST);
     $captcha="";
-
     if(isset($_POST['g-recaptcha-response'])){
         $captcha=$_POST['g-recaptcha-response'];
     }
@@ -75,7 +75,8 @@ function inscription()
 
             if($_POST['choix_inscription'] == "pro")
             {
-                $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_ADD&type=pro&pseudo='.$_POST['pseudo'].'&password='.md5($_POST['password'].'&ville='.$_POST['ville'].'&code_postal='.$_POST['code_postal'].'&adresse='.$_POST['adresse'].'&tel='.$_POST['tel'].'&mob='.$_POST['mob']);
+                $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_ADD&type=pro&pseudo='.$_POST['pseudo'].'&password='.md5($_POST['password']).'&ville='.$_POST['ville'].'&code_postal='.$_POST['code_postal'].'&adresse='.$_POST['adresse'].'&tel='.$_POST['tel'].'&mob='.$_POST['mob'];
+                echo $url;
                 $obj = file_get_contents($url);
                 $content = json_decode($obj, true);
                 // Si l'API répond que la création s'est bien effectuée, on va rediriger vers la page d'accueil avec un message de confirmation invitant l'utilisateur à valider son email pour
