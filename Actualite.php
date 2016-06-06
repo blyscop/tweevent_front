@@ -195,7 +195,7 @@ check_session(); ?>
                 </ul>
                 <ul class="nav hidden-xs" id="lg-menu">
                     <li>
-                        <a href="http://localhost/projeti4Save/actions.php#preferenceModal" role="button"
+                        <a href="#preferenceModal" role="button"
                         data-toggle="modal">
                         <i class="glyphicon glyphicon-list-alt"></i>
                         Préferences
@@ -214,7 +214,7 @@ check_session(); ?>
                     </a>
                 </li>
                 <li>
-                    <a href="http://localhost/projeti4Save/actions.php#">
+                    <a href="#">
                         <i class="glyphicon glyphicon-refresh"></i>
                         Refresh
                     </a>
@@ -237,8 +237,8 @@ check_session(); ?>
                         <i class="glyphicon glyphicon-list-alt"></i>
                     </a>
                 </li>
-                <li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
-                <li><a href="#" class="text-center"><i class="glyphicon glyphicon-paperclip"></i></a></li>
+                <li><a href="Calendrier.php" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
+                <li><a id="addEvent" href="#" class="text-center" data-toggle="modal" data-target=".addEvent"><i class="glyphicon glyphicon-paperclip"></i></a></li>
                 <li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
 
             </ul>
@@ -278,14 +278,14 @@ check_session(); ?>
                         </a>
                     </li>
                     <li>
-                        <a href="http://localhost/projeti4Save/actions.php#postModal" role="button"
+                        <a href="#postModal" role="button"
                         data-toggle="modal">
                         <i class="glyphicon glyphicon-plus"></i>
                         Post
                     </a>
                 </li>
                 <li>
-                    <a href="http://localhost/projeti4Save/actions.php#">
+                    <a href="#">
                         <span class="badge">badge</span>
                     </a>
                 </li>
