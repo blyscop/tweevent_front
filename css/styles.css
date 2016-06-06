@@ -149,6 +149,10 @@ hr {
  color:#efefef;
 }
 
+.dropdown {
+  padding-right: 15px;
+}
+
 .navbar-blue .dropdown-menu li a {color:#FFB347;}
 .navbar-blue .dropdown-menu li > a {padding-left:30px;}
 
