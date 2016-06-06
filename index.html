@@ -27,6 +27,7 @@
             var html = "";
             if (nom_bloc == "pro") {
                 // Chargement du formulaire d'inscription pour les pro.
+                // Chargement du formulaire d'inscription pour les pro.
                 // Pseudo
                 html += "<div class='form-group'>";
                 html += "<label for='pseudo' class='col-sm-3 control-label'>Nom de l'établissement :</label>";
@@ -100,6 +101,7 @@
                 html += "<input required class='form-control' type='email' id='pseudo' name='pseudo' value=''/>";
                 html += "</div>";
                 html += "</div>";
+
                 // Mot de passe
                 html += "<div class='form-group'>";
                 html += "<label for='password' class='col-sm-3 control-label'>Password :</label>";
@@ -108,13 +110,14 @@
                 html += "</div>";
                 html += "</div>";
             }
+
             // Remplissage html
-            html += "<input type='hidden' name='choix_inscription' value='"+nom_bloc+"'/>";
+            html += "<input type='hidden' name='choix_inscription' value='" + nom_bloc + "'/>";
             $j("#content_inscription").empty();
             $j("#content_inscription").append(html);
         }
+
     </script>
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js" ></script>
 </head>
 <body class="">
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
@@ -126,16 +129,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="navbar-brand" href="index.html"><img width="180" src="img/logo.png"></a>
+            <a class="navbar-brand" href="index.html"><img width="180" src="./img/logo.png"></a>
         </div>
         <div id="slidemenu">
             <form class="navbar-form navbar-right" method="post" action="functions.php?action=connexion"
                   name="frm_connexion">
                 <div class="form-group">
-                    <input type="text" id="connection_username" name="username" placeholder="Adresse email" class="form-control">
-                    <input type="password" id="connection_pwd" name="password" placeholder="Mot de passe" class="form-control">
+                    <input type="text" id="connection_username" name="username" placeholder="Adresse email"
+                           class="form-control">
+                    <input type="password" id="connection_pwd" name="password" placeholder="Mot de passe"
+                           class="form-control">
                 </div>
-                <button type="submit" id="connection_validation" class="btn btn-primary icon-user" onclick="return connexion()">Connexion</button>
+                <button type="submit" id="connection_validation" class="btn btn-primary icon-user"
+                        onclick="return connexion()">Connexion
+                </button>
             </form>
         </div>
     </div>
@@ -149,6 +156,13 @@
             <h3><a href="#errorModal" id="errorBtn" role="button" data-toggle="modal"></a></h3>
             <h3><a href="#errorModal2" id="errorBtn2" role="button" data-toggle="modal"></a></h3>
             <h3><a href="#inscrOk" id="inscrBtn" role="button" data-toggle="modal"></a></h3>
+            <h3><a href="#errorEmail" id="errorMailBtn" role="button" data-toggle="modal"></a></h3>
+            <h3><a href="#emailNonValide" id="emailNonValideBtn" role="button" data-toggle="modal"></a></h3>
+            <h3><a href="#erreurValidation" id="errorValidationBtn" role="button" data-toggle="modal"></a></h3>
+            <h3><a href="#confValidation" id="confValidationBtn" role="button" data-toggle="modal"></a></h3>
+            <h3><a href="#erreurCatpcha" id="erreurCatpchaBtn" role="button" data-toggle="modal"></a></h3>
+            <h3><a href="#erreur_captchaNonSaisi" id="erreur_captchaNonSaisiBtn" role="button" data-toggle="modal"></a></h3>
+            <h3><a href="#erreur_captchaRequete" id="erreur_captchaRequeteBtn" role="button" data-toggle="modal"></a></h3>
         </div>
 
     </div>
@@ -164,12 +178,32 @@
             if (hash == "login_error") {
                 $("#errorBtn").trigger("click");
             }
-            else if(hash == "insc_error") {
+
+            else if (hash == "insc_error") {
                 $("#errorBtn2").trigger("click");
             }
-            else if(hash == "insc_ok") {
+            else if (hash == "insc_ok") {
                 $("#inscrBtn").trigger("click");
             }
+            else if (hash == "email_error") {
+                $("#errorMailBtn").trigger("click");
+            }
+            else if (hash == "email_invalide") {
+                $("#emailNonValideBtn").trigger("click");
+            }
+            else if (hash == "erreur_validation") {
+                $("#errorValidationBtn").trigger("click");
+            }
+            else if (hash == "conf_validation") {
+                $("#confValidationBtn").trigger("click");
+            }
+            else if (hash == "erreur_captchaNonSaisi") {
+                $("#erreur_captchaNonSaisiBtn").trigger("click");
+            }
+            else if (hash == "erreur_captchaRequete") {
+                $("#erreur_captchaRequeteBtn").trigger("click");
+            }
+
         } else {
             // No hash found
         }
@@ -187,44 +221,28 @@
             <div id="info_inscription">
 
             </div>
-            <form class="form-horizontal" id="register_form" name="frm_ajout_utilisateur" action="functions.php?action=inscription" method="post">
+            <form class="form-horizontal" id="register_form" name="frm_ajout_utilisateur"
+                  action="functions.php?action=inscription" method="post">
                 <!-- Chargement conditionnel du formulaire d'inscription en AJAX -->
-                <div class="form-group modal-body">
-                    <div id="inscription"><br/>
-                        <table style="width:100%;" id="choix_form">
-                            <tr>
-                                <td style="text-align:center;">
-                                    <button class="btn btn-default" onclick="charger_bloc('pro')">
-                                        Je suis un professionnel
-                                    </button>
-                                </td>
-                                <td style="text-align:center;">
-                                    <button class="btn btn-default" onclick="charger_bloc('par')">
-                                        Je suis un particulier
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
-                        <br/>
-                        <div id="content_inscription">
-
-
-                        </div>
-                        <div class="g-recaptcha" data-sitekey="6LcDniETAAAAAFiX24Mw5sHqL2j0IqGJFGXqWkB0"style ="text-align: -moz-center;"
-                             ></div><br/>
+                <div id="content_inscription" class="form-group modal-body">
+                    Vous êtes : <br/>
+                    <input type="radio" name="choix_inscription" onclick="charger_bloc('pro');" value="pro"> Un
+                    professionnel<br/><br/>
+                    <input type="radio" name="choix_inscription" onclick="charger_bloc('par');" value="par"> Un
+                    particulier<br/>
+                </div>
+                <div class="g-recaptcha" data-sitekey="6LcDniETAAAAAFiX24Mw5sHqL2j0IqGJFGXqWkB0" style ="text-align: -moz-center;"></div>
+                <div class="modal-footer">
+                    <div>
+                        <input class="btn btn-default" type="submit" name="chk"
+                               value="Valider"/>
+                        <ul class="pull-left list-inline">
+                            <li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li>
+                            <li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li>
+                            <li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li>
+                        </ul>
                     </div>
-                    <div class="modal-footer">
-                        <div>
-                            <input class="btn btn-default" type="submit" name="chk"
-                                   value="Valider"/>
-                            <ul class="pull-left list-inline">
-                                <li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li>
-                                <li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li>
-                                <li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li>
-                            </ul>
-                        </div>
-                        </div>
-                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -267,20 +285,98 @@
         </div>
     </div>
 </div>
+<div>
+    <div id="errorEmail" class="modal fade" tabindex="-4" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h5>Une erreur est survenue lors de l'envoi de l'email de confirmation, et nous sommes désolés pour
+                        ce gêne.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="emailNonValide" class="modal fade" tabindex="-5" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h5>Merci de valider votre email pour pouvoir vous connecter.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="erreurValidation" class="modal fade" tabindex="-6" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h5>La clé saisie n'est pas correcte.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="confValidation" class="modal fade" tabindex="-7" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h5>Votre compte a bien été activé, vous pouvez désormais vous connecter.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="erreur_captchaNonSaisi" class="modal fade" tabindex="-8" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h5>Merci de valider que vous n'êtes pas un robot grâce au Re-Captcha de Google !</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="erreur_captchaRequete" class="modal fade" tabindex="-9" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h5>Merci de valider que vous n'êtes pas un robot grâce au Re-Captcha de Google !</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-
+<script src="./js/jquery.min.js"></script>
+<script src="./js/scripts.js"></script>
 <!-- fin modal-->
 
 <!-- Scripts -->
 
 <!-- Scripts -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<!--<script src="js/md5.min.js"></script>-->
+<script src="./js/jquery.min(1).js"></script>
+<script src="./js/bootstrap.min.js"></script>
+<script src="js/md5.min.js"></script>
 <script type="text/javascript">
+
     $(document).ready(function () {
         //stick in the fixed 100% height behind the navbar but don't wrap it
         $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
+
         $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));
+
         // Enter your ids or classes
         var toggler = '.navbar-toggle';
         var pagewrapper = '#page-content';
@@ -289,17 +385,22 @@
         var slidewidth = '80%';
         var menuneg = '-100%';
         var slideneg = '-80%';
+
         $("#slide-nav").on("click", toggler, function (e) {
             var selected = $(this).hasClass('slide-active');
+
             $('#slidemenu').stop().animate({
                 left: selected ? menuneg : '0px'
             });
+
             $('#navbar-height-col').stop().animate({
                 left: selected ? slideneg : '0px'
             });
+
             $(pagewrapper).stop().animate({
                 left: selected ? '0px' : slidewidth
             });
+
             $(navigationwrapper).stop().animate({
                 left: selected ? '0px' : slidewidth
             });
@@ -313,6 +414,7 @@
                 $('.block_home').height($(window).height() - $('.block_home').offset().top);
             });
             $(window).resize();
+
             $(window).on("resize", function () {
                 if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
                     $(selected).removeClass('slide-active');
