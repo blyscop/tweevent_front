@@ -348,28 +348,26 @@ check_session(); ?>
                 <button  onclick="send_post()" class="btn btn-primary">Publier
                 </button>
                 <ul class="pull-left list-inline">
-                    <!--                                <li>-->
-                    <!--                                    <a href="">-->
-                    <!--                                        <i class="glyphicon glyphicon-upload"></i>-->
-                    <!--                                    </a>-->
-                    <!--                                </li>-->
-                    <li>
-                        <div class="upload_photo">
-                            <label for="image">
-                                <i class="glyphicon glyphicon-camera"><input type="file" name="image" accept="image/*"></i>
-
-                            </label>
-
-                        </div>
-                    </li>
-                    <li>
-                        <i onclick="localiser()" class="glyphicon glyphicon-map-marker"></i>
-                        <div id="localisation"></div>
-                    </li>
-                </ul>
-            </div>
+                   <li>
+                       <a href="">
+                        <i class="glyphicon glyphicon-upload"></i>
+                    </a>
+                </li>
+                <li>
+                    <div class="upload_photo">
+                        <i class="glyphicon glyphicon-camera new_btn"></i>
+                        <input id="fileupload" type="file" name="files[]">
+                    </div>
+                </li>
+                <li>
+                    <i onclick="localiser()" class="glyphicon glyphicon-map-marker"></i>
+                    <div id="localisation"></div>
+                </li>
+            </ul>
+            <div id="files" class="files"></div>
         </div>
     </div>
+</div>
 </div>
 </div>
 
@@ -437,18 +435,22 @@ check_session(); ?>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/scripts.js"></script>
 
-<script src="js/fileupload/vendor/jquery.ui.widget.js"></script>
+<script src="./js/fileupload/vendor/jquery.ui.widget.js"></script>
 <script src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
 <script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
-<script src="js/fileupload/jquery.iframe-transport.js"></script>
-<script src="js/fileupload/jquery.fileupload.js"></script>
-<script src="js/fileupload/jquery.fileupload-process.js"></script>
-<script src="js/fileupload/jquery.fileupload-image.js"></script>
-<script src="js/fileupload/jquery.fileupload-audio.js"></script>
-<script src="js/fileupload/jquery.fileupload-video.js"></script>
-<script src="js/fileupload/jquery.fileupload-validate.js"></script>
+<script src="./js/fileupload/jquery.iframe-transport.js"></script>
+<script src="./js/fileupload/jquery.fileupload.js"></script>
+<script src="./js/fileupload/jquery.fileupload-process.js"></script>
+<script src="./js/fileupload/jquery.fileupload-image.js"></script>
+<script src="./js/fileupload/jquery.fileupload-audio.js"></script>
+<script src="./js/fileupload/jquery.fileupload-video.js"></script>
+<script src="./js/fileupload/jquery.fileupload-validate.js"></script>
 
 <script>
+$('.new_btn').on("click" , function () {
+        $('#fileupload').click();
+    });
+
     $(function () {
         'use strict';
         // Change this to the location of your server-side upload handler:
