@@ -37,12 +37,12 @@ hr {
     background: green;
 }
 
-.upload_photo > input {
-  display: none;
+.upload_photo input {
+    display: none;
 }
 
 .files {
-  float: left;
+  margin-top: 10px;
 }
 
 
@@ -83,11 +83,6 @@ hr {
 
 .full{
 	padding-top:70px;
-}
-
-.modal-dialog {
-  width: 800px;
-  margin: 30px auto;
 }
 
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
@@ -147,6 +142,10 @@ hr {
 
 .navbar-blue li > a,.navbar-toggle  {
  color:#efefef;
+}
+
+.dropdown {
+  padding-right: 15px;
 }
 
 .navbar-blue .dropdown-menu li a {color:#FFB347;}

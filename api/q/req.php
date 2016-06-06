@@ -69,8 +69,11 @@ function Utilisateur_ADD($data_in = array())
                 $utilisateur_add->mob_tweevent_user = $data_in['mob'];
                 $utilisateur_add->type_tweevent_user = "pro";
                 $id_utilisateur = $utilisateur_add->ADD();
+<<<<<<< HEAD
 
                 Lib_myLog("Ajout d'un pro... ",$utilisateur_add->getTab());
+=======
+>>>>>>> origin/master
             }
             else {
                 $utilisateur_add = new Tweevent_user();
@@ -79,7 +82,10 @@ function Utilisateur_ADD($data_in = array())
                 $utilisateur_add->password_tweevent_user = $data_in['password'];
                 $utilisateur_add->type_tweevent_user = "par";
                 $id_utilisateur = $utilisateur_add->ADD();
+<<<<<<< HEAD
                 Lib_myLog("Ajout d'un par... ",$utilisateur_add->getTab());
+=======
+>>>>>>> origin/master
             }
 
             if ($utilisateur_add) {
@@ -89,7 +95,10 @@ function Utilisateur_ADD($data_in = array())
                 $validation->est_valide = 0;
                 $validation->timestamp = time();
                 $id_validation = $validation->ADD();
+<<<<<<< HEAD
                 Lib_myLog("Ajout val... ",$validation->getTab());
+=======
+>>>>>>> origin/master
 
                 $lien_validation = "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_Valider_Email&id_utilisateur=".$id_utilisateur."&k=".$validation->timestamp;
 
@@ -244,15 +253,26 @@ function Utilisateur_SELECT($data_in = array())
                 $args_email_user_valid['id_tweevent_user'] = $tweevent_user['id_tweevent_user'];
                 $email_user_valid = Tweevent_email_validations_chercher($args_email_user_valid);
 
+<<<<<<< HEAD
                 if($email_user_valid['est_valide'] == 1 || $email_user_valid['est_valide'] == '1' || $email_user_valid['est_valide']) {
+=======
+                if(empty($email_user_valid) || (!empty($email_user_valid) && !$email_user_valid['est_valide'])) {
+                    $return['email_non_valide'] = true;
+                    $return['message'] = "Erreur ! L'utilisateur n'a pas validé son email";
+                }
+                else {
+>>>>>>> origin/master
                     $return['confirmation'] = true;
                     $return['message'] = "Utilisateur recupere !";
                     $return['utilisateur'] = $tweevent_user;
                 }
+<<<<<<< HEAD
                 else {
                     $return['email_non_valide'] = true;
                     $return['message'] = "Erreur ! L'utilisateur n'a pas validé son email";
                 }
+=======
+>>>>>>> origin/master
             }
         } else
             $return['message'] = "Erreur ! L'utilisateur est introuvable.";

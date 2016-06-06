@@ -270,7 +270,11 @@ function Tweevent_email_validations_chercher($args)
 			}
 		}
 
+<<<<<<< HEAD
 		if (count($tab_result) == 1 && ( $args['timestamp'] || $args['id_tweevent_user']))
+=======
+		if (count($tab_result) == 1 && $args['timestamp'])
+>>>>>>> origin/master
 			$tab_result = array_pop($tab_result);
 	}
 
