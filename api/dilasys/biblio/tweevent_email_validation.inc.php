@@ -56,7 +56,7 @@ function Tweevent_email_validation()
 }
 
 /**
-Cette fonction retourne un tableau correspondant aux différents attributs de Tweevent_email_validation.
+Cette fonction retourne un tableau correspondant aux diffï¿½rents attributs de Tweevent_email_validation.
 */
 function getTab()
 {
@@ -72,7 +72,7 @@ function getTab()
 }
 
 /**
-Cette fonction ajoute un element de la table tweevent_email_validation à la BDD. 
+Cette fonction ajoute un element de la table tweevent_email_validation ï¿½ la BDD. 
 */
 function ADD()
 {
@@ -102,7 +102,7 @@ function ADD()
 }
 
 /**
-Cette fonction modifie un élément de la table tweevent_email_validation dans la BDD. 
+Cette fonction modifie un ï¿½lï¿½ment de la table tweevent_email_validation dans la BDD. 
 */
 function UPD()
 {
@@ -145,7 +145,7 @@ function DEL()
 }
 
 /** 
-Cette fonction transforme les attributs en chaine de caractères.
+Cette fonction transforme les attributs en chaine de caractï¿½res.
 */
 function toStr()
 {
@@ -164,8 +164,8 @@ function toStr()
 }
 
 /**
-Recupère toutes les données relatives à un tweevent_email_validation suivant son identifiant
-et retourne la coquille "Tweevent_email_validation" remplie avec les informations récupérées
+Recupï¿½re toutes les donnï¿½es relatives ï¿½ un tweevent_email_validation suivant son identifiant
+et retourne la coquille "Tweevent_email_validation" remplie avec les informations rï¿½cupï¿½rï¿½es
 de la base.
 @param id_tweevent_email_validation.
 */
@@ -270,11 +270,7 @@ function Tweevent_email_validations_chercher($args)
 			}
 		}
 
-<<<<<<< HEAD
 		if (count($tab_result) == 1 && ( $args['timestamp'] || $args['id_tweevent_user']))
-=======
-		if (count($tab_result) == 1 && $args['timestamp'])
->>>>>>> origin/master
 			$tab_result = array_pop($tab_result);
 	}
 

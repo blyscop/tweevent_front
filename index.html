@@ -160,12 +160,11 @@
             <h3><a href="#emailNonValide" id="emailNonValideBtn" role="button" data-toggle="modal"></a></h3>
             <h3><a href="#erreurValidation" id="errorValidationBtn" role="button" data-toggle="modal"></a></h3>
             <h3><a href="#confValidation" id="confValidationBtn" role="button" data-toggle="modal"></a></h3>
-<<<<<<< HEAD
             <h3><a href="#erreurCatpcha" id="erreurCatpchaBtn" role="button" data-toggle="modal"></a></h3>
-            <h3><a href="#erreur_captchaNonSaisi" id="erreur_captchaNonSaisiBtn" role="button" data-toggle="modal"></a></h3>
-            <h3><a href="#erreur_captchaRequete" id="erreur_captchaRequeteBtn" role="button" data-toggle="modal"></a></h3>
-=======
->>>>>>> origin/master
+            <h3><a href="#erreur_captchaNonSaisi" id="erreur_captchaNonSaisiBtn" role="button" data-toggle="modal"></a>
+            </h3>
+            <h3><a href="#erreur_captchaRequete" id="erreur_captchaRequeteBtn" role="button" data-toggle="modal"></a>
+            </h3>
         </div>
 
     </div>
@@ -188,7 +187,6 @@
             else if (hash == "insc_ok") {
                 $("#inscrBtn").trigger("click");
             }
-<<<<<<< HEAD
             else if (hash == "email_error") {
                 $("#errorMailBtn").trigger("click");
             }
@@ -207,21 +205,6 @@
             else if (hash == "erreur_captchaRequete") {
                 $("#erreur_captchaRequeteBtn").trigger("click");
             }
-
-=======
-            else if(hash == "email_error") {
-                $("#errorMailBtn").trigger("click");
-            }
-            else if(hash == "email_invalide") {
-                $("#emailNonValideBtn").trigger("click");
-            }
-            else if(hash == "erreur_validation") {
-                $("#errorValidationBtn").trigger("click");
-            }
-             else if(hash == "conf_validation") {
-                $("#confValidationBtn").trigger("click");
-            }
->>>>>>> origin/master
         } else {
             // No hash found
         }
@@ -242,25 +225,6 @@
             <form class="form-horizontal" id="register_form" name="frm_ajout_utilisateur"
                   action="functions.php?action=inscription" method="post">
                 <!-- Chargement conditionnel du formulaire d'inscription en AJAX -->
-<<<<<<< HEAD
-                <div id="content_inscription" class="form-group modal-body">
-                    Vous êtes : <br/>
-                    <input type="radio" name="choix_inscription" onclick="charger_bloc('pro');" value="pro"> Un
-                    professionnel<br/><br/>
-                    <input type="radio" name="choix_inscription" onclick="charger_bloc('par');" value="par"> Un
-                    particulier<br/>
-                </div>
-                <div class="g-recaptcha" data-sitekey="6LcDniETAAAAAFiX24Mw5sHqL2j0IqGJFGXqWkB0" style ="text-align: -moz-center;"></div>
-                <div class="modal-footer">
-                    <div>
-                        <input class="btn btn-default" type="submit" name="chk"
-                               value="Valider"/>
-                        <ul class="pull-left list-inline">
-                            <li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li>
-                            <li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li>
-                            <li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li>
-                        </ul>
-=======
                 <div class="form-group modal-body">
                     <div id="inscription"><br/>
                         <table style="width:100%;" id="choix_form">
@@ -294,8 +258,6 @@
                                 <li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li>
                             </ul>
                         </div>
-                        </div>
->>>>>>> origin/master
                     </div>
                 </div>
             </form>
@@ -346,12 +308,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-<<<<<<< HEAD
                     <h5>Une erreur est survenue lors de l'envoi de l'email de confirmation, et nous sommes désolés pour
                         ce gêne.</h5>
-=======
-                    <h5>Une erreur est survenue lors de l'envoi de l'email de confirmation, et nous sommes désolés pour ce gêne.</h5>
->>>>>>> origin/master
                 </div>
             </div>
         </div>
@@ -382,113 +340,107 @@
     </div>
 </div>
 <div>
-<<<<<<< HEAD
     <div id="confValidation" class="modal fade" tabindex="-7" role="dialog" aria-hidden="true">
-=======
-    <div id="confValidation" class="modal fade" tabindex="-6" role="dialog" aria-hidden="true">
->>>>>>> origin/master
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>Votre compte a bien été activé, vous pouvez désormais vous connecter.</h5>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h5>Votre compte a bien été activé, vous pouvez désormais vous connecter.</h5>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<<<<<<< HEAD
-<div>
-    <div id="erreur_captchaNonSaisi" class="modal fade" tabindex="-8" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>Merci de valider que vous n'êtes pas un robot grâce au Re-Captcha de Google !</h5>
+
+    <div>
+        <div id="erreur_captchaNonSaisi" class="modal fade" tabindex="-8" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h5>Merci de valider que vous n'êtes pas un robot grâce au Re-Captcha de Google !</h5>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div>
-    <div id="erreur_captchaRequete" class="modal fade" tabindex="-9" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>Merci de valider que vous n'êtes pas un robot grâce au Re-Captcha de Google !</h5>
+    <div>
+        <div id="erreur_captchaRequete" class="modal fade" tabindex="-9" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h5>Merci de valider que vous n'êtes pas un robot grâce au Re-Captcha de Google !</h5>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-=======
->>>>>>> origin/master
 
-<script src="./js/jquery.min.js"></script>
-<script src="./js/scripts.js"></script>
-<!-- fin modal-->
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/scripts.js"></script>
+    <!-- fin modal-->
 
-<!-- Scripts -->
+    <!-- Scripts -->
 
-<!-- Scripts -->
-<script src="./js/jquery.min(1).js"></script>
-<script src="./js/bootstrap.min.js"></script>
-<script src="js/md5.min.js"></script>
-<script type="text/javascript">
+    <!-- Scripts -->
+    <script src="./js/jquery.min(1).js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="js/md5.min.js"></script>
+    <script type="text/javascript">
 
-    $(document).ready(function () {
-        //stick in the fixed 100% height behind the navbar but don't wrap it
-        $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
+        $(document).ready(function () {
+            //stick in the fixed 100% height behind the navbar but don't wrap it
+            $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
 
-        $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));
+            $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));
 
-        // Enter your ids or classes
-        var toggler = '.navbar-toggle';
-        var pagewrapper = '#page-content';
-        var navigationwrapper = '.navbar-header';
-        var menuwidth = '100%'; // the menu inside the slide menu itself
-        var slidewidth = '80%';
-        var menuneg = '-100%';
-        var slideneg = '-80%';
+            // Enter your ids or classes
+            var toggler = '.navbar-toggle';
+            var pagewrapper = '#page-content';
+            var navigationwrapper = '.navbar-header';
+            var menuwidth = '100%'; // the menu inside the slide menu itself
+            var slidewidth = '80%';
+            var menuneg = '-100%';
+            var slideneg = '-80%';
 
-        $("#slide-nav").on("click", toggler, function (e) {
-            var selected = $(this).hasClass('slide-active');
+            $("#slide-nav").on("click", toggler, function (e) {
+                var selected = $(this).hasClass('slide-active');
 
-            $('#slidemenu').stop().animate({
-                left: selected ? menuneg : '0px'
+                $('#slidemenu').stop().animate({
+                    left: selected ? menuneg : '0px'
+                });
+
+                $('#navbar-height-col').stop().animate({
+                    left: selected ? slideneg : '0px'
+                });
+
+                $(pagewrapper).stop().animate({
+                    left: selected ? '0px' : slidewidth
+                });
+
+                $(navigationwrapper).stop().animate({
+                    left: selected ? '0px' : slidewidth
+                });
+                $(this).toggleClass('slide-active', !selected);
+                $('#slidemenu').toggleClass('slide-active');
+                $('#page-content, .navbar, body, .navbar-header').toggleClass('slide-active');
             });
+            var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
+            $(function () {
+                $(window).resize(function () {
+                    $('.block_home').height($(window).height() - $('.block_home').offset().top);
+                });
+                $(window).resize();
 
-            $('#navbar-height-col').stop().animate({
-                left: selected ? slideneg : '0px'
-            });
-
-            $(pagewrapper).stop().animate({
-                left: selected ? '0px' : slidewidth
-            });
-
-            $(navigationwrapper).stop().animate({
-                left: selected ? '0px' : slidewidth
-            });
-            $(this).toggleClass('slide-active', !selected);
-            $('#slidemenu').toggleClass('slide-active');
-            $('#page-content, .navbar, body, .navbar-header').toggleClass('slide-active');
-        });
-        var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
-        $(function () {
-            $(window).resize(function () {
-                $('.block_home').height($(window).height() - $('.block_home').offset().top);
-            });
-            $(window).resize();
-
-            $(window).on("resize", function () {
-                if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
-                    $(selected).removeClass('slide-active');
-                }
+                $(window).on("resize", function () {
+                    if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
+                        $(selected).removeClass('slide-active');
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
 
 </body>
 </html>
