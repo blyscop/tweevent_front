@@ -134,7 +134,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="">Mon profil</a></li>
-                    <li><a href="">Déconnexion</a></li>
+                    <li><a href="functions.php?action=disconnect">Déconnexion</a></li>
                 </ul>
             </li>
         </ul>

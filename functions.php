@@ -10,6 +10,16 @@ function check_session()
         header('Location: index.html'); // redirection page accueil
 }
 
+function disconnect()
+{
+    setcookie("est_connecte", "", time()-3600);
+    setcookie("username", "", time()-3600);
+    setcookie("utilisateur_connexion", "", time()-3600);
+    setcookie("utilisateur_id", "", time()-3600);
+    setcookie("utilisateur_type", "", time()-3600);
+    header('Location: index.html'); // redirection page accueil
+}
+
 // Connexion de l'utilisateur - Création de la session si utilisateur valide
 function connexion()
 
@@ -103,7 +113,7 @@ function inscription()
 
 // Appel de la fonction de connexion - on passe le post en paramètre de la requête
 // Sécurité pour empêcher d'executer d'autre fct
-if ($_GET['action'] == "connexion" || $_GET['action'] == "ajouter_publication" || $_GET['action'] == "inscription")
+if ($_GET['action'] == "disconnect" || $_GET['action'] == "connexion" || $_GET['action'] == "ajouter_publication" || $_GET['action'] == "inscription")
     call_user_func($_GET['action']);
 
 
