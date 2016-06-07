@@ -148,11 +148,12 @@ function Post_ADD($data_in = array())
             $post_add->message_tweevent_post = $data_in['message'];
 
             $image = $_FILES['file']; // Récupère l'image donnée en AJAX
+            $nom_image_serveur = time()."_".basename($image['name']); // Nom unique d'image
             $extension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION)); // extension de l'image uploadée
 
             $destination_dossier = "../uploads/"; // dossier de stination
-            $destination_fichier = $destination_dossier . basename($image['name']); // Futur emplacement de l'image
-            $destination_sql = "api/uploads/" . basename($image['name']);
+            $destination_fichier = $destination_dossier . $nom_image_serveur; // Futur emplacement de l'image
+            $destination_sql = "api/uploads/" . $nom_image_serveur;
 
             if (file_exists($destination_fichier))
                 $return['msg'] = "Le fichier existe deja !";

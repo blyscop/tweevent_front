@@ -122,6 +122,7 @@ check_session(); ?>
                 }
                 else {
                     alert("Merci d'écrire un message ! ;-)");
+                    return false;
                 }
             }));
 
@@ -133,7 +134,7 @@ check_session(); ?>
                     var match = ["image/jpeg", "image/png", "image/jpg"];
                     if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]))) {
                         $j('#previewing').attr('src', 'noimage.png');
-                        $j("#message_image").html("<p id='error'>Merci de sélectionner une image valide</p>" + "<h4>Formats</h4>" + "<span id='error_message'>Only jpeg, jpg et png autorisés</span>");
+                        $j("#message_image").html("<p id='error'>Merci de sélectionner une image valide</p>" + "<h4>Formats</h4>" + "<span id='error_message'>jpeg, jpg et png autorisés</span>");
                         return false;
                     }
                     else {
