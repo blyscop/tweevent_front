@@ -68,79 +68,90 @@ check_session(); ?>
             });
         }
 
-        function ReceiptPost()
-        {
-            var _idUser=<?=$_COOKIE["utilisateur_id"] > 0 ? $_COOKIE["utilisateur_id"] : 0 ?>;
+        function ReceiptPost() {
+            var _idUser =<?=$_COOKIE["utilisateur_id"] > 0 ? $_COOKIE["utilisateur_id"] : 0 ?>;
 
             $.ajax({
                 type: "GET",
-                url: host+"/projets/tweevent/api/q/req.php",
-                data: { action:"Utilisateur_Posts_SELECT",id_utilisateur:_idUser },
+                url: host + "/projets/tweevent/api/q/req.php",
+                data: {action: "Utilisateur_Posts_SELECT", id_utilisateur: _idUser},
                 dataType: 'json',
-                success: function(msg) {
+                success: function (msg) {
                     console.log(msg);
-                    $.each(msg.actualites, function(i, item) {
-                        $('#cd-timeline').append('<div class="cd-timeline-block">'+
-                            '<div class="cd-timeline-img cd-picture">'+
-                            '<img src="./img/cd-icon-picture.svg" alt="Picture">'+
-                            '</div>'+
-                            '<div class="cd-timeline-content">'+
-                            '<h2>Unknow a commenté</h2>'+
-                            '<p>'+item.message_tweevent_post+'</p>'+
-                            '<a href="#0" class="cd-read-more">Read more</a>'+
-                            '<span class="cd-date">'+parseJsonDate(item.date_add)+'</span>'+
-                            '</div>'+
+                    $.each(msg.actualites, function (i, item) {
+                        $('#cd-timeline').append('<div class="cd-timeline-block">' +
+                            '<div class="cd-timeline-img cd-picture">' +
+                            '<img src="./img/cd-icon-picture.svg" alt="Picture">' +
+                            '</div>' +
+                            '<div class="cd-timeline-content">' +
+                            '<h2>Unknow a commenté</h2>' +
+                            '<p>' + item.message_tweevent_post + '</p>' +
+                            '<a href="#0" class="cd-read-more">Read more</a>' +
+                            '<span class="cd-date">' + parseJsonDate(item.date_add) + '</span>' +
+                            '</div>' +
                             '</div>');
                     })
                 }
             });
         }
-
-        function send_post()
-        {
-            var _idUser = <?=$_COOKIE["utilisateur_id"] > 0 ? $_COOKIE["utilisateur_id"] : 0 ?>;
-
-            $j.ajax({
-                type: "POST",
-                url: "http://martinfrouin.fr/projets/tweevent/api/q/req.php",
-                data: {
-                    image: $j("#image").prop("files")[0],
-                    message: $j("#message").val(),
-                    id_utilisateur: _idUser,
-                    action : "Post_ADD"
-                },
-                success: function (msg) {
-                    console.log(msg);
-                    alert("Vos préférences ont bien été mise à jour !");
+        $j(document).ready(function (e) {
+            $j('#loading').hide();
+            $j("#send_post").on('submit', (function (e) {
+                if($j("#message").val() != "") {
+                e.preventDefault();
+                $j("#message_image").empty();
+                $j('#loading').show();
+                    $j.ajax({
+                        url: "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Post_ADD&id_utilisateur=<?=$_COOKIE['utilisateur_id'] > 0 ? $_COOKIE['utilisateur_id'] : 0?>&message=" + $j("#message").val(),
+                        type: "POST",
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function (data) {
+                            $j('#loading').hide();
+                            var json_data = JSON.parse(data);
+                            if (json_data.confirmation) {
+                                window.location.reload(true);
+                            }
+                            else {
+                                alert(json_data.msg);
+                            }
+                        }
+                    });
                 }
+                else {
+                    alert("Merci d'écrire un message ! ;-)");
+                }
+            }));
+
+            $j(function () {
+                $j("#file").change(function () {
+                    $j("#message_image").empty();
+                    var file = this.files[0];
+                    var imagefile = file.type;
+                    var match = ["image/jpeg", "image/png", "image/jpg"];
+                    if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]))) {
+                        $j('#previewing').attr('src', 'noimage.png');
+                        $j("#message_image").html("<p id='error'>Merci de sélectionner une image valide</p>" + "<h4>Formats</h4>" + "<span id='error_message'>Only jpeg, jpg et png autorisés</span>");
+                        return false;
+                    }
+                    else {
+                        var reader = new FileReader();
+                        reader.onload = imageIsLoaded;
+                        reader.readAsDataURL(this.files[0]);
+                    }
+                });
             });
-
-//            $j.ajax({
-//                dataType: 'script',
-//                cache: false,
-//                contentType: "application/json; charset=utf-8",
-//                processData: false,
-//                data: form_data,
-//                type: 'post',
-//                success: function(msg){
-//                    console.log(msg);
-//                    alert("Valeur de confirmation : "+msg.confirmation);
-//                    if(msg.confirmation) {
-//                        // OK7
-//                        $j("#ajout_publication_infos").append("<h3>Votre post a bien été ajouté !</h3>");
-//                    }
-//                    else {
-//                        // Erreur1
-//                        $j("#ajout_publication_infos").append("<h3>Erreur lors de l'ajout de votre post : </h3> \n <p>"+msg.msg+"</p>");
-//                    }
-//                },
-//                error: function(res){
-//                    console.log(res);
-//                }
-//
-//            });
-
-        }
+            function imageIsLoaded(e) {
+                $j("#image_preview").css("display", "block");
+                $j("#file").css("color", "green");
+                $j('#image_preview').css("display", "block");
+                $j('#previewing').attr('src', e.target.result);
+                $j('#previewing').attr('width', '250px');
+                $j('#previewing').attr('height', '230px');
+            };
+        });
         // Modification des préférences de l'utilisateur, on requête le serveur d'API avec les cases cochées et il va nous répondre s'il a bien traiter notre demande (pour afficher un message à l'user)
         // Il faut penser à recharger le bloc en réappelant la fonction après l'UPD (s'il s'est bien déroulé)
         function modifier_preferences_utilisateur(params) {
@@ -165,9 +176,6 @@ check_session(); ?>
             });
 
         }
-
-
-
 
 
         // Fonction pour localiser un utilisateur lors du clic (natif à html5)
@@ -296,7 +304,7 @@ check_session(); ?>
                         </form>
                         <ul class="nav navbar-nav">
                             <li>
-                                <a href="Actualite.html">
+                                <a href="Actualite.php">
                                     <i class="glyphicon glyphicon-home"></i>
                                     Actualités
                                 </a>
@@ -357,21 +365,25 @@ check_session(); ?>
         <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
+                    <form id="send_post" name="send_post" enctype="multipart/form-data">
                         <div class="modal-header">
                             <button type="button" id="close_post_area" class="close" data-dismiss="modal"
                                     aria-hidden="true">×
                             </button>
+                            <h4 id='loading'>Chargement ...</h4>
+                            <div id="message_image"></div>
                             <div id="ajout_publication_infos">Update Status</div>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
                             <textarea id="message" class="form-control input-lg" name="message" autofocus=""
                                       placeholder="Que voulez-vous partager?"></textarea>
+
                             </div>
                         </div>
                         <div class="modal-footer">
                             <div>
-                                <button  onclick="send_post()" class="btn btn-primary">Publier
+                                <button id="send_post" class="btn btn-primary">Publier
                                 </button>
                                 <ul class="pull-left list-inline">
 
@@ -382,10 +394,12 @@ check_session(); ?>
                                     <!--                                </li>-->
                                     <li>
                                         <div class="upload_photo">
-                                            <label for="image">
-                                                <i class="glyphicon glyphicon-camera"><input type="file" name="image" id="image" accept="image/*"></i>
-
-                                            </label>
+                                            <div id="image_preview" style="display: none;">
+                                                <img id="previewing" src="img/noimage.png" height="70%" width="70%"/>
+                                            </div>
+                                            <div id="selectImage">
+                                                <input type="file" name="file" id="file"/>
+                                            </div>
 
                                         </div>
                                     </li>
@@ -396,6 +410,7 @@ check_session(); ?>
                                 </ul>
                             </div>
                         </div>
+                    </form>
                 </div>
             </div>
         </div>

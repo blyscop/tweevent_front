@@ -135,6 +135,9 @@ function Post_ADD($data_in = array())
 
     $return = array();
     $return['confirmation'] = false;
+
+    Lib_myLog("files : ",$_FILES);
+    Lib_myLog("IN : ",$data_in);
     if ($data_in['id_utilisateur'] > 0 && !empty($data_in['message'])) {
         $user_tweevent['id_tweevent_user'] = $data_in['id_utilisateur'];
         $test_user_tweevent = Tweevent_users_chercher($user_tweevent);
@@ -144,7 +147,7 @@ function Post_ADD($data_in = array())
             $post_add->id_user_tweevent_post = $data_in['id_utilisateur'];
             $post_add->message_tweevent_post = $data_in['message'];
 
-            $image = $_FILES['image']; // Récupère l'image donnée en AJAX
+            $image = $_FILES['file']; // Récupère l'image donnée en AJAX
             $extension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION)); // extension de l'image uploadée
 
             $destination_dossier = "../uploads/"; // dossier de stination
@@ -162,7 +165,7 @@ function Post_ADD($data_in = array())
                     $return['msg'] = "Fichier disponible sur " . $destination_sql;
 
                     $sql_image = new Tweevent_img();
-                    $sql_image->nom_tweevent_img = "une image";
+                    $sql_image->nom_tweevent_img = $image['name'];
                     $sql_image->url_tweevent_img = $destination_sql;
                     $sql_image->id_user_tweevent_img = $data_in['id_utilisateur'];
                     $sql_image->ADD();
