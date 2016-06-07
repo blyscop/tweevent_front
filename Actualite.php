@@ -96,39 +96,49 @@ check_session(); ?>
             });
         }
 
-        //Fonction send_post avec ajout de l'image
         function send_post()
         {
-            for(var i = 0; i < files.length; i++) {
-                console.log(files[i][0]);
-            }
-            var file_data = $j("#image").prop("files");
-            var form_data = new FormData();
-
-
-
-            //Côté Serveur il suffit de récupérer $_FILES['image']
-            form_data.append("image", file_data);
-            form_data.append("action","Post_ADD");
-            form_data.append("id_utilisateur",<?=$_COOKIE['utilisateur_id'] > 0 ? $_COOKIE['utilisateur_id'] : 0?>);
-            form_data.append("message",_message);
+            var _idUser = <?=$_COOKIE["utilisateur_id"] > 0 ? $_COOKIE["utilisateur_id"] : 0 ?>;
 
             $j.ajax({
-                url: "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Post_ADD",
-                dataType: 'script',
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: form_data,
-                type: 'post',
-                success: function(msg){
-                    console.log(msg);
+                type: "POST",
+                url: "http://martinfrouin.fr/projets/tweevent/api/q/req.php",
+                data: {
+                    image: $j("#image").prop("files")[0],
+                    message: $j("#message").val(),
+                    id_utilisateur: _idUser,
+                    action : "Post_ADD"
                 },
-                error: function(msg){
-                    console.log(msg.responseText);
+                success: function (msg) {
+                    console.log(msg);
+                    alert("Vos préférences ont bien été mise à jour !");
                 }
-
             });
+
+//            $j.ajax({
+//                dataType: 'script',
+//                cache: false,
+//                contentType: "application/json; charset=utf-8",
+//                processData: false,
+//                data: form_data,
+//                type: 'post',
+//                success: function(msg){
+//                    console.log(msg);
+//                    alert("Valeur de confirmation : "+msg.confirmation);
+//                    if(msg.confirmation) {
+//                        // OK7
+//                        $j("#ajout_publication_infos").append("<h3>Votre post a bien été ajouté !</h3>");
+//                    }
+//                    else {
+//                        // Erreur1
+//                        $j("#ajout_publication_infos").append("<h3>Erreur lors de l'ajout de votre post : </h3> \n <p>"+msg.msg+"</p>");
+//                    }
+//                },
+//                error: function(res){
+//                    console.log(res);
+//                }
+//
+//            });
 
         }
         // Modification des préférences de l'utilisateur, on requête le serveur d'API avec les cases cochées et il va nous répondre s'il a bien traiter notre demande (pour afficher un message à l'user)
@@ -155,11 +165,11 @@ check_session(); ?>
             });
 
         }
-         
-         
-        
 
-       
+
+
+
+
         // Fonction pour localiser un utilisateur lors du clic (natif à html5)
         function localiser() {
             // Si le navigateur le supporte, on execute getCurrentPosition, qui peut appelée montrerPosition ou montrerErreur suivant le callback
@@ -347,7 +357,6 @@ check_session(); ?>
         <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-
                         <div class="modal-header">
                             <button type="button" id="close_post_area" class="close" data-dismiss="modal"
                                     aria-hidden="true">×

@@ -22,6 +22,37 @@
             }
             return exec;
         }
+
+        function verifier_formulaire()
+        {
+            var msg = "";
+            var msg_intro = "Merci de vérifier les champs suivants : ";
+            if($j("#choix_inscription").val == "pro")
+            {
+                // Vérif du formulaire pour les pro
+
+            }
+            else {
+                // Vérif du formulaire pour les par
+                if($j("#pseudo").val == "") {
+                    msg +="- Pseudo \n";
+                    $j("#pseudo").css("background-color", "#FF0000");
+                }
+                if($j("#password").val().length <= 5) {
+                    msg += "- Mot de passe (6 caractères minimum) \n";
+                    $j("#password").css("background-color", "#FF0000");
+                }
+            }
+
+            if(msg == "") {
+                return true;
+            }
+            else {
+                alert(msg_intro + " \n" + msg);
+                return false;
+            }
+        }
+
         function charger_bloc(nom_bloc) {
             // Initialisation et suivant le paramètre entrant, on charge le formulaire du bloc correspondant
             var html = "";
@@ -91,6 +122,8 @@
                 html += "<input required class='form-control' type='password' id='password' name='password' value=''/>";
                 html += "</div>";
                 html += "</div>";
+
+                $j("#afficher_btn_retour").css("display", "block");
             }
             if (nom_bloc == "par") {
                 // Chargement du formulaire d'inscription pour les par.
@@ -109,6 +142,14 @@
                 html += "<input required class='form-control' type='password' id='password' name='password' value=''/>";
                 html += "</div>";
                 html += "</div>";
+
+                $j("#afficher_btn_retour").css("display", "block");
+            }
+            if (nom_bloc == "choix")
+            {
+                $j("#afficher_btn_retour").css("display",  "none");
+                html += "Vous êtes : <br/> <input id='pro' type='radio' name='choix_inscription' onclick='charger_bloc(this.id);' value='pro'>Un professionnel<br/><br/>";
+                html += "Vous êtes : <br/> <input id='par' type='radio' name='choix_inscription' onclick='charger_bloc(this.id);' value='pro'>Un particulier<br/><br/>";
             }
 
             // Remplissage html
@@ -198,7 +239,7 @@
                 $("#confValidationBtn").trigger("click");
             }
             else if (hash == "erreur_captchaNonSaisi") {
-                $("#erreur_captchaNonSaisiBtn").trigger("click");
+                $("#erreurCatpchaBtn").trigger("click");
             }
             else if (hash == "erreur_captchaRequete") {
                 $("#erreur_captchaRequeteBtn").trigger("click");
@@ -222,25 +263,23 @@
 
             </div>
             <form class="form-horizontal" id="register_form" name="frm_ajout_utilisateur"
-                  action="functions.php?action=inscription" method="post">
+                  action="functions.php?action=inscription" method="post" onsubmit="return verifier_formulaire();">
                 <!-- Chargement conditionnel du formulaire d'inscription en AJAX -->
                 <div id="content_inscription" class="form-group modal-body">
                     Vous êtes : <br/>
-                    <input type="radio" name="choix_inscription" onclick="charger_bloc('pro');" value="pro"> Un
+                    <input type="radio" id="pro" name="choix_inscription" onclick="charger_bloc(this.id);" value="pro"> Un
                     professionnel<br/><br/>
-                    <input type="radio" name="choix_inscription" onclick="charger_bloc('par');" value="par"> Un
+                    <input type="radio" id="par" name="choix_inscription" onclick="charger_bloc(this.id);" value="par"> Un
                     particulier<br/>
                 </div>
                 <div class="g-recaptcha" data-sitekey="6LcDniETAAAAAFiX24Mw5sHqL2j0IqGJFGXqWkB0" style ="text-align: -moz-center;"></div>
                 <div class="modal-footer">
                     <div>
-                        <input class="btn btn-default" type="submit" name="chk"
-                               value="Valider"/>
-                        <ul class="pull-left list-inline">
-                            <li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li>
-                            <li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li>
-                            <li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li>
-                        </ul>
+                        <input class="btn btn-default" type="submit" name="chk" value="Valider"/>
+                    </div>
+                    <div id="afficher_btn_retour" style="display: none;">
+                        <input class="btn btn-default" type="button" onclick="charger_bloc('choix');" name="chk"
+                               value="Retour"/>
                     </div>
                 </div>
             </form>
@@ -323,12 +362,12 @@
     </div>
 </div>
 <div>
-    <div id="confValidation" class="modal fade" tabindex="-7" role="dialog" aria-hidden="true">
+    <div id="erreurCatpcha" class="modal fade" tabindex="-7" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>Votre compte a bien été activé, vous pouvez désormais vous connecter.</h5>
+                    <h5>Merci d'approuver le captcha !</h5>
                 </div>
             </div>
         </div>
@@ -367,7 +406,7 @@
 
 <!-- Scripts -->
 <script src="./js/jquery.min(1).js"></script>
-<script src="./js/bootstrap.min.js"></script>
+<script src="./js/bootstrap.min.js"></script> <!-- mal inclus -->
 <script src="js/md5.min.js"></script>
 <script type="text/javascript">
 
