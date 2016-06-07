@@ -20,6 +20,11 @@ body {
 	width: 80%;
 }
 
+div.g-recaptcha{
+    margin: 0 auto;
+    width: 304px;
+}
+
 #page-content input {
 	background: none;
 	border: none;

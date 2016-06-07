@@ -22,33 +22,137 @@
             }
             return exec;
         }
-
+        function isInt(value) {
+          return !isNaN(value) && 
+                 parseInt(Number(value)) == value && 
+                 !isNaN(parseInt(value, 10));
+        }
+        function isValidCP(cp) {
+            console.log(cp);
+            if (isInt(cp))
+             {
+              return /^\d{5}(-\d{4})?$/.test(cp);
+             }
+            else
+             {
+              return false;
+            }
+        }
         function verifier_formulaire()
         {
             var msg = "";
-            var msg_intro = "Merci de vérifier les champs suivants : ";
-            if($j("#choix_inscription").val == "pro")
+            var msg_intro = "Merci de vérifier les champs suivants : <br/>";
+            //alert($j("#choix_inscription").val());
+            if($j("#choix_inscription").val() == "par")
             {
-                // Vérif du formulaire pour les pro
-
-            }
-            else {
-                // Vérif du formulaire pour les par
-                if($j("#pseudo").val == "") {
-                    msg +="- Pseudo \n";
+                //Verif pseudo
+                if($j("#pseudo").val().length < 3 || $j("#pseudo").val().length>15) {
+                    msg += "- Pseudo (Doit être compris entre 3 et 15 caracteres)<br/>";
                     $j("#pseudo").css("background-color", "#FF0000");
                 }
-                if($j("#password").val().length <= 5) {
-                    msg += "- Mot de passe (6 caractères minimum) \n";
+                else
+                {
+                    $j("#pseudo").css("background-color", "");
+                }
+                //Verif password
+                if($j("#password").val().length < 5 || $j("#password").val().length > 25) {
+                    msg += "- Mot de passe (Doit être compris entre 5 et 25 caracteres) <br/>";
                     $j("#password").css("background-color", "#FF0000");
                 }
+                else
+                {
+                    $j("#password").css("background-color", "");
+                }
+            }
+            else {
+              // Vérif du formulaire pour les pro
+
+              //Verif pseudo
+              if($j("#pseudo").val().length < 3 || $j("#pseudo").val().length>15) {
+                msg += "- Pseudo (Doit être compris entre 3 et 15 caracteres)<br/>";
+                $j("#pseudo").css("background-color", "#FF0000");
+              }
+              else
+               {
+                 $j("#pseudo").css("background-color", "");
+               }
+
+              //Verif ville
+              if($j("#ville").val().length < 3 || $j("#ville").val().length>15) {
+                msg += "- Ville (Doit être compris entre 3 et 15 caracteres)<br/>";
+                $j("#ville").css("background-color", "#FF0000");
+              }
+              else
+               {
+                 $j("#ville").css("background-color", "");
+               }
+
+              //Verif code postal
+              if($j("#code_postal").val().length != 5 || !isValidCP($j("#code_postal").val())) {
+                msg += "- Code postal incorrecte <br/>";
+                $j("#code_postal").css("background-color", "#FF0000");
+              }
+              else
+               {
+                 $j("#code_postal").css("background-color", "");
+               }
+
+              //Verif adresse
+              if($j("#adresse").val().length < 7 || $j("#adresse").val().length>25) {
+                msg += "- Adresse incorrecte<br/>";
+                $j("#adresse").css("background-color", "#FF0000");
+              }
+              else
+               {
+                 $j("#adresse").css("background-color", "");
+               }
+
+              //Verfi tel
+              if($j("#tel").val().length != 10 || !isInt($j("#tel").val())) {
+                msg += "- n°tel incorrecte <br/>";
+                $j("#tel").css("background-color", "#FF0000");
+              }
+              else
+               {
+                 $j("#tel").css("background-color", "");
+               }
+
+              //Verif mobile
+              if($j("#mob").val().length != 10 || !isInt($j("#mob").val())) {
+                msg += "- n°tel mobile incorrecte <br/>";
+                $j("#mob").css("background-color", "#FF0000");
+              }
+              else
+               {
+                 $j("#mob").css("background-color", "");
+               }
+
+              //Verif mail
+              if($j("#mail").val().length < 3 || $j("#mail").val().length > 255) {
+                msg += "- Mail invalide <br/>";
+                $j("#mail").css("background-color", "#FF0000");
+              }
+              else
+               {
+                 $j("#mail").css("background-color", "");
+               }
+
+              //Verif password
+              if($j("#password").val().length < 5 || $j("#password").val().length > 25) {
+                msg += "- Mot de passe (Doit être compris entre 5 et 25 caracteres) <br/>";
+                $j("#password").css("background-color", "#FF0000");
+              }
+              else
+               {
+                 $j("#password").css("background-color", "");
+               }
             }
 
             if(msg == "") {
                 return true;
             }
             else {
-                alert(msg_intro + " \n" + msg);
+                 $j("#form_error").html((msg_intro + " \n" + msg));
                 return false;
             }
         }
@@ -66,7 +170,6 @@
                 html += "<input required class='form-control' type='text' id='pseudo' name='pseudo' value=''/>";
                 html += "</div>";
                 html += "</div>";
-
                 // ville
                 html += "<div class='form-group'>";
                 html += "<label for='ville' class='col-sm-3 control-label'>Ville :</label>";
@@ -148,14 +251,14 @@
             if (nom_bloc == "choix")
             {
                 $j("#afficher_btn_retour").css("display",  "none");
-                html += "Vous êtes : <br/> <input id='pro' type='radio' name='choix_inscription' onclick='charger_bloc(this.id);' value='pro'>Un professionnel<br/><br/>";
-                html += "Vous êtes : <br/> <input id='par' type='radio' name='choix_inscription' onclick='charger_bloc(this.id);' value='pro'>Un particulier<br/><br/>";
+               html += "Vous êtes : <br/> <input id='pro' type='radio' name='choix_inscription' onclick='charger_bloc(this.id);' value='pro'><label for='pro'>Un professionnel</label>";
+                html += "<input id='par' type='radio' name='choix_inscription' onclick='charger_bloc(this.id);' value='par'><label for='par'>Un particulier</label><br/><br/>";
             }
 
             // Remplissage html
-            html += "<input type='hidden' name='choix_inscription' value='" + nom_bloc + "'/>";
+            html += "<input type='hidden' name='choix_inscription' id='choix_inscription' value='" + nom_bloc + "'/>";
             $j("#content_inscription").empty();
-            $j("#content_inscription").append(html);
+            $j("#content_inscription").append(html+"<span style='color:Red;' id='form_error'></span>");
         }
 
     </script>
@@ -267,20 +370,22 @@
                 <!-- Chargement conditionnel du formulaire d'inscription en AJAX -->
                 <div id="content_inscription" class="form-group modal-body">
                     Vous êtes : <br/>
-                    <input type="radio" id="pro" name="choix_inscription" onclick="charger_bloc(this.id);" value="pro"> Un
-                    professionnel<br/><br/>
-                    <input type="radio" id="par" name="choix_inscription" onclick="charger_bloc(this.id);" value="par"> Un
-                    particulier<br/>
+                    <input type="radio" id="pro" name="choix_inscription" onclick="charger_bloc(this.id);" value="pro"/><label for="pro">Un professionnel</label>
+                    <input type="radio" id="par" name="choix_inscription" onclick="charger_bloc(this.id);" value="par"/><label for="par">Un particulier</label> <br/>
                 </div>
                 <div class="g-recaptcha" data-sitekey="6LcDniETAAAAAFiX24Mw5sHqL2j0IqGJFGXqWkB0" style ="text-align: -moz-center;"></div>
                 <div class="modal-footer">
                     <div>
-                        <input class="btn btn-default" type="submit" name="chk" value="Valider"/>
-                    </div>
-                    <div id="afficher_btn_retour" style="display: none;">
+                        <div id="afficher_btn_retour" style="display: none;text-align: left;" class="col-md-1" >
                         <input class="btn btn-default" type="button" onclick="charger_bloc('choix');" name="chk"
-                               value="Retour"/>
+                               value="Retour" />
+                        </div>
+                        <div>
+                            <input class="btn btn-default" type="submit" name="chk" value="Valider"/>
+                        </div>
+                        
                     </div>
+                    
                 </div>
             </form>
         </div>
