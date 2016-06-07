@@ -69,6 +69,8 @@ function Utilisateur_ADD($data_in = array())
                 $utilisateur_add->mob_tweevent_user = $data_in['mob'];
                 $utilisateur_add->type_tweevent_user = "pro";
                 $id_utilisateur = $utilisateur_add->ADD();
+
+                Lib_myLog("Ajout d'un pro... ",$utilisateur_add->getTab());
             }
             else {
                 $utilisateur_add = new Tweevent_user();
@@ -77,6 +79,7 @@ function Utilisateur_ADD($data_in = array())
                 $utilisateur_add->password_tweevent_user = $data_in['password'];
                 $utilisateur_add->type_tweevent_user = "par";
                 $id_utilisateur = $utilisateur_add->ADD();
+                Lib_myLog("Ajout d'un par... ",$utilisateur_add->getTab());
             }
 
             if ($utilisateur_add) {
@@ -86,6 +89,7 @@ function Utilisateur_ADD($data_in = array())
                 $validation->est_valide = 0;
                 $validation->timestamp = time();
                 $id_validation = $validation->ADD();
+                Lib_myLog("Ajout val... ",$validation->getTab());
 
                 $lien_validation = "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_Valider_Email&id_utilisateur=".$id_utilisateur."&k=".$validation->timestamp;
 
@@ -124,44 +128,6 @@ function Utilisateur_ADD($data_in = array())
     echo json_encode($return);
 }
 
-function Image_ADD($data_in = array())
-{
-    Lib_myLog("action: " . $data_in['action']);
-    foreach ($GLOBALS['tab_globals'] as $global) global $$global;
-
-    $return = array(); // Tableau de retour
-    $image = $_FILES['image']; // Récupère l'image donnée en AJAX
-    $extension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION)); // extension de l'image uploadée
-
-    $destination_dossier = "../uploads/"; // dossier de stination
-    $destination_fichier = $destination_dossier . basename($image['name']); // Futur emplacement de l'image
-    $destination_sql = "api/uploads/" . basename($image['name']);
-
-    if (file_exists($destination_fichier))
-        $return['msg'] = "Le fichier existe deja !";
-    else if ($image['size'] > 1000000)
-        $return['msg'] = "Le fichier est trop gros !";
-    else if ($extension != "jpg" && $extension != "png" && $extension != "jpeg" && $extension != "gif")
-        $return['msg'] = "L'extension n'est pas autorisee ! jpg png jpeg gif seulement !";
-    else {
-        if (move_uploaded_file($image['tmp_name'], $destination_fichier)) {
-            $return['msg'] = "Fichier disponible sur " . $destination_sql;
-
-            $sql_image = new Tweevent_img();
-            $sql_image->nom_tweevent_img = "une image";
-            $sql_image->url_tweevent_img = $destination_sql;
-            $sql_image->ADD();
-
-            if ($sql_image->id_tweevent_img != 0)
-                $return['id'] = $sql_image->id_tweevent_img;
-        } else
-            $return['msg'] = "Erreur lors de l'upload du fichier sur le serveur ! (droit ecriture ?) ";
-    }
-
-    header('Access-Control-Allow-Origin: *');
-    echo json_encode($return);
-}
-
 function Post_ADD($data_in = array())
 {
     Lib_myLog("action: " . $data_in['action']);
@@ -177,16 +143,48 @@ function Post_ADD($data_in = array())
             $post_add = new Tweevent_post();
             $post_add->id_user_tweevent_post = $data_in['id_utilisateur'];
             $post_add->message_tweevent_post = $data_in['message'];
-            $post_add->ADD();
 
-            $return['utilisateur'] = $test_user_tweevent;
+            $image = $_FILES['image']; // Récupère l'image donnée en AJAX
+            $extension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION)); // extension de l'image uploadée
 
-            if ($post_add)
-                $return['confirmation'] = true;
-            else
-                $return['message'] = "Erreur lors de l'ajout du post !";
-        } else
-            $return['message'] = "Erreur l'utilisateur n'existe pas !";
+            $destination_dossier = "../uploads/"; // dossier de stination
+            $destination_fichier = $destination_dossier . basename($image['name']); // Futur emplacement de l'image
+            $destination_sql = "api/uploads/" . basename($image['name']);
+
+            if (file_exists($destination_fichier))
+                $return['msg'] = "Le fichier existe deja !";
+            else if ($image['size'] > 1000000)
+                $return['msg'] = "Le fichier est trop gros !";
+            else if ($extension != "jpg" && $extension != "png" && $extension != "jpeg" && $extension != "gif")
+                $return['msg'] = "L'extension n'est pas autorisee ! jpg png jpeg gif seulement !";
+            else {
+                if (move_uploaded_file($image['tmp_name'], $destination_fichier)) {
+                    $return['msg'] = "Fichier disponible sur " . $destination_sql;
+
+                    $sql_image = new Tweevent_img();
+                    $sql_image->nom_tweevent_img = "une image";
+                    $sql_image->url_tweevent_img = $destination_sql;
+                    $sql_image->id_user_tweevent_img = $data_in['id_utilisateur'];
+                    $sql_image->ADD();
+
+                    $post_add->ADD();
+
+                    $return['utilisateur'] = $test_user_tweevent;
+
+                    if ($post_add)
+                        $return['confirmation'] = true;
+                    else
+                        $return['message'] = "Erreur lors de l'ajout du post !";
+
+                    if ($sql_image->id_tweevent_img != 0)
+                        $return['id'] = $sql_image->id_tweevent_img;
+                } else
+                    $return['msg'] = "Erreur lors de l'upload du fichier sur le serveur ! (droit ecriture ?) ";
+            }
+        }
+
+
+
     } else
         $return['message'] = "Les parametres id_utilisateur et message sont invalides !";
 
@@ -240,7 +238,6 @@ function Utilisateur_SELECT($data_in = array())
                 $args_email_user_valid['id_tweevent_user'] = $tweevent_user['id_tweevent_user'];
                 $email_user_valid = Tweevent_email_validations_chercher($args_email_user_valid);
 
-
                 if($email_user_valid['est_valide'] == 1 || $email_user_valid['est_valide'] == '1' || $email_user_valid['est_valide']) {
                     $return['confirmation'] = true;
                     $return['message'] = "Utilisateur recupere !";
@@ -256,6 +253,9 @@ function Utilisateur_SELECT($data_in = array())
     } else
         $return['message'] = "Le pseudo et/ou mot de passe est vide !";
 
+    Lib_myLog("return : ",$return);
+    Lib_myLog("user : ",$tweevent_user);
+    Lib_myLog("valid : ",$email_user_valid);
     // permet d'éxecuter la requete sur le post client qui est sur un serveur différent (client en local - api en ligne)
     header('Access-Control-Allow-Origin: *');
     echo json_encode($return);
