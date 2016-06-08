@@ -148,7 +148,6 @@ check_session(); ?>
                                 <div id="localisation"></div>
                             </li>
                         </ul>
-                        <div id="files" class="files"></div>
                     </div>
                 </div>
             </form>
