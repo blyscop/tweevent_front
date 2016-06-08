@@ -310,6 +310,9 @@ function Utilisateur_Posts_SELECT($data_in = array())
     $return['confirmation'] = false;
 
     if ($data_in['id_utilisateur'] > 0) {
+        // Récupération de l'utilisateur
+        $utilisateur = Tweevent_user_recuperer($data_in['id_utilisateur']);
+        $return['utilisateur'] = $utilisateur->getTab();
         $args_tweevent_user['id_user_tweevent_post'] = $data_in['id_utilisateur'];
         $posts = Tweevent_posts_chercher($args_tweevent_user);
 
@@ -318,8 +321,16 @@ function Utilisateur_Posts_SELECT($data_in = array())
             foreach ($posts as $id_post => $post) {
                 $return['liste_actualites'][$id_post] = $post;
                 $return['liste_actualites'][$id_post]['type'] = "actualite";
+                $return['liste_actualites'][$id_post]['date_creation'] = date("d-m-Y H:i", $post['date_add']);
+
+                $return['liste_actualites'][$id_post]['image'] = "#";
+                if($post['ids_imgs_tweevent_post'] > 0) {
+                    // Récupération de l'image du post
+                    $image_post = Tweevent_img_recuperer($post['ids_imgs_tweevent_post']);
+                    Lib_myLog("IMAGE : ",$image_post->getTab());
+                    $return['liste_actualites'][$id_post]['image'] = $image_post->url_tweevent_img;
+                }
             }
-            $return['actualites'] = $posts;
             $return['confirmation'] = true;
         } else
             $return['message'] = "Aucun post pour l'utilisateur ";

@@ -240,6 +240,16 @@ check_session(); ?>
 <script src="js/fileupload/jquery.fileupload-audio.js"></script>
 <script src="js/fileupload/jquery.fileupload-video.js"></script>
 <script src="js/fileupload/jquery.fileupload-validate.js"></script>
+<!-- Add mousewheel plugin (this is optional) -->
+<script type="text/javascript" src="js/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="js/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet" href="js/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
+
+<link rel="stylesheet" href="js/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
 
 <script>
 
