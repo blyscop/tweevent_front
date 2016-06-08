@@ -46,8 +46,8 @@
             if($j("#choix_inscription").val() == "par")
             {
                 //Verif pseudo
-                if($j("#pseudo").val().length < 3 || $j("#pseudo").val().length>15) {
-                    msg += "- Pseudo (Doit être compris entre 3 et 15 caracteres)<br/>";
+                if($j("#pseudo").val().length < 3 || $j("#pseudo").val().length>35) {
+                    msg += "- Pseudo (Doit être compris entre 3 et 35 caracteres)<br/>";
                     $j("#pseudo").css("background-color", "#FF0000");
                 }
                 else
@@ -68,8 +68,8 @@
               // Vérif du formulaire pour les pro
 
               //Verif pseudo
-              if($j("#pseudo").val().length < 3 || $j("#pseudo").val().length>15) {
-                msg += "- Pseudo (Doit être compris entre 3 et 15 caracteres)<br/>";
+              if($j("#pseudo").val().length < 3 || $j("#pseudo").val().length>35) {
+                msg += "- Pseudo (Doit être compris entre 3 et 35 caracteres)<br/>";
                 $j("#pseudo").css("background-color", "#FF0000");
               }
               else
@@ -497,6 +497,18 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h5>Merci de valider que vous n'êtes pas un robot grâce au Re-Captcha de Google !</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="confValidation" class="modal fade" tabindex="-10" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h5>Merci d'avoir validé votre email ! Vous pouvez désormais vous connecter</h5>
                 </div>
             </div>
         </div>

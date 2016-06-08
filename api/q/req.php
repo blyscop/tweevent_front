@@ -89,7 +89,6 @@ function Utilisateur_ADD($data_in = array())
                 $validation->est_valide = 0;
                 $validation->timestamp = time();
                 $id_validation = $validation->ADD();
-                Lib_myLog("Ajout val... ",$validation->getTab());
 
                 $lien_validation = "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_Valider_Email&id_utilisateur=".$id_utilisateur."&k=".$validation->timestamp;
 
@@ -105,12 +104,12 @@ function Utilisateur_ADD($data_in = array())
                 $headers[] = "X-Mailer: PHP/".phpversion();
                 $headers[] = "Content-type: text/html; charset=UTF-8";
 
-                // todo reprendre l'affichage html du mail
                 if(mail($utilisateur_add->email_tweevent_user, $subject, $email, implode("\r\n", $headers))) {
                     $return['confirmation'] = true;
                     $return['message'] = "Votre utilisateur a bien ete creer";
                     $return['utilisateur'] = $utilisateur_add->getTab();
-                    $data_in['id_utilisateur'] = $utilisateur_add->id_tweevent_user;
+                    $data_in['id_utilisateur'] = $id_utilisateur;
+                    Lib_myLog("Initialisation des préférénces ...");
                     Utilisateur_Preferences_INIT($data_in);
                 }
                 else {
@@ -209,13 +208,13 @@ function Utilisateur_Preferences_INIT($data_in = array())
                 $args_user_preference['id_tweevent_user'] = $data_in['id_utilisateur'];
                 $user_preference = Tweevent_user_preferences_chercher($args_user_preference);
 
-                if (!empty($user_preference))
-                    continue; // La préférence a déjà été créée ! on ne traite pas cet élément
                 $preference_user_init = New Tweevent_user_preference();
                 $preference_user_init->id_tweevent_user = $data_in['id_utilisateur'];
                 $preference_user_init->id_tweevent_preference = $id_preference;
                 $preference_user_init->etat = "supprime";
                 $preference_user_init->ADD();
+
+                Lib_myLog("PReferences creer : ",$preference_user_init->getTab());
             }
         }
     }
