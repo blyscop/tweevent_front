@@ -23,25 +23,27 @@ check_session(); ?>
     <script type="text/javascript">
         var $j = jQuery.noConflict();
 
-        function changer_mdp(form) {
+        function changer_password()
+        {
+            alert("rentre");
             var msg = "";
             var msg_intro = "Champs requis : \n";
             if ($j("#old_password").val() == "") {
-                msg += "- Ancien mot de passe <br/>";
+                msg += "- Ancien mot de passe \n";
                 $j("#old_password").css("background-color", "#FF0000");
             }
             else
                 $j("#old_password").css("background-color", "");
 
             if ($j("#new_password").val() == "") {
-                msg += "- Nouveau mot de passe <br/>";
+                msg += "- Nouveau mot de passe \n";
                 $j("#new_password").css("background-color", "#FF0000");
             }
             else
                 $j("#new_password").css("background-color", "");
 
             if ($j("#new_password_conf").val() == "") {
-                msg += "- Confirmation nouveau mot de passe <br/>";
+                msg += "- Confirmation nouveau mot de passe \n";
                 $j("#new_password_conf").css("background-color", "#FF0000");
             }
             else
@@ -66,7 +68,7 @@ check_session(); ?>
             <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li>
-                        <a href="http://localhost/projeti4Save/actions.php#" data-toggle="offcanvas"
+                        <a href="#" data-toggle="offcanvas"
                            class="visible-xs text-center">
                             <i class="glyphicon glyphicon-chevron-right"></i>
                         </a>
@@ -74,14 +76,14 @@ check_session(); ?>
                 </ul>
                 <ul class="nav hidden-xs" id="lg-menu">
                     <li>
-                        <a href="http://localhost/projeti4Save/actions.php#preferenceModal" role="button"
+                        <a href="#" role="button"
                            data-toggle="modal">
                             <i class="glyphicon glyphicon-list-alt"></i>
                             Préferences
                         </a>
                     </li>
                     <li>
-                        <a href="Calendrier.php">
+                        <a href="Calendrier">
                             <i class="glyphicon glyphicon-list"></i>
                             Calendrier
                         </a>
@@ -93,7 +95,7 @@ check_session(); ?>
                         </a>
                     </li>
                     <li>
-                        <a href="http://localhost/projeti4Save/actions.php#">
+                        <a href="#">
                             <i class="glyphicon glyphicon-refresh"></i>
                             Refresh
                         </a>
@@ -101,7 +103,7 @@ check_session(); ?>
                 </ul>
                 <ul class="list-unstyled hidden-xs" id="sidebar-footer">
                     <li>
-                        <a href="http://www.bootply.com/">
+                        <a href="#">
                             <h3>Tweevent</h3>
                             <i class="glyphicon glyphicon-heart-empty"></i>
                             Events
@@ -112,7 +114,7 @@ check_session(); ?>
                 <!-- tiny only nav-->
                 <ul class="nav visible-xs" id="xs-menu">
                     <li>
-                        <a href="#preferenceModal" role="button"
+                        <a href="#" role="button"
                            data-toggle="modal">
                             <i class="glyphicon glyphicon-list-alt"></i>
                         </a>
@@ -128,19 +130,32 @@ check_session(); ?>
                 <!-- /top nav -->
                 <div class="full-actu col-sm-12">
                     <!-- content -->
+                    <div class="row">
 
-                    <section id="cd-timeline" class="cd-container">
-                        <form name="changer_mdp" id="changer_mdp" onsubmit="changer_mdp(this);">
-                            <label for="old_password">Ancien mot de passe :</label>
-                            <input type="password" name="old_password" id="old_password"/><br/>
-                            <label for="old_password">Nouveau mot de passe :</label>
-                            <input type="password" name="new_password" id="new_password"/><br/>
-                            <label for="old_password">Confirmation nouveau mot de passe :</label>
-                            <input type="password" name="new_password_conf" id="new_password_conf"/><br/>
-                            <input type="submit" name="modifier" id="modifier" value="Modifier"/>
-                        </form>
-                    </section> <!-- cd-timeline -->
 
+                        <header>
+                            <img class="bloc-round" src="./img/profilpic.jpg"/>
+                            <h1>Bonjour <?php echo ucfirst($_COOKIE['username']); ?></h1>
+                        </header>
+                        <section id="cd-timeline" class="cd-container">
+                            <div class="cd-timeline-block">
+                                <h1>Modifier votre mot de passe</h1>
+                                <form name="changer_mdp" id="changer_mdp" onsubmit="changer_password();">
+                                    <label for="old_password">Ancien mot de passe :</label>
+                                    <input type="password" name="old_password" id="old_password"/><br/>
+                                    <label for="old_password">Nouveau mot de passe :</label>
+                                    <input type="password" name="new_password" id="new_password"/><br/>
+                                    <label for="old_password">Confirmation nouveau mot de passe :</label>
+                                    <input type="password" name="new_password_conf" id="new_password_conf"/><br/>
+                                    <input type="submit" name="modifier" id="modifier" value="Modifier"/>
+                                </form>
+                            </div>
+                        </section> <!-- cd-timeline -->
+
+
+                    </div><!--/row-->
+                    <div><!--colsm9-content-->
+                    </div>
                     <!-- /main -->
                 </div>
             </div>
@@ -148,13 +163,15 @@ check_session(); ?>
     </div>
 </div>
 
-
 <!-- script references -->
 
 <script src="./js/jquery.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
 <script src="./js/scripts.js"></script>
 
 <script src="js/fileupload/vendor/jquery.ui.widget.js"></script>
+<script src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+<script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
 <script src="js/fileupload/jquery.iframe-transport.js"></script>
 <script src="js/fileupload/jquery.fileupload.js"></script>
 <script src="js/fileupload/jquery.fileupload-process.js"></script>

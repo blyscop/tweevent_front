@@ -49,7 +49,7 @@ function connexion()
         header('Location: index.html#login_error'); // redirection page accueil (pas de login et mdp fourni)
     }
     if ($redirection_actualite) {
-        header('Location: Actualite.php');
+        header('Location: Actualite');
     }
 }
 

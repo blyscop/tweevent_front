@@ -41,12 +41,12 @@
         function verifier_formulaire()
         {
             var msg = "";
-            var msg_intro = "Merci de vérifier les champs suivants : <br/>";
+            var msg_intro = "Merci de vérifier les champs suivants : \n";
             if($j("#choix_inscription").val() == "par")
             {
                 //Verif pseudo
                 if($j("#pseudo").val().length < 3 || $j("#pseudo").val().length>35) {
-                    msg += "- Pseudo (Doit être compris entre 3 et 35 caracteres)<br/>";
+                    msg += "- Pseudo (Doit être compris entre 3 et 35 caracteres)\n";
                     $j("#pseudo").css("background-color", "#FF0000");
                 }
                 else
@@ -55,7 +55,7 @@
                 }
                 //Verif password
                 if($j("#password").val().length < 5 || $j("#password").val().length > 25) {
-                    msg += "- Mot de passe (Doit être compris entre 5 et 25 caracteres) <br/>";
+                    msg += "- Mot de passe (Doit être compris entre 5 et 25 caracteres) \n";
                     $j("#password").css("background-color", "#FF0000");
                 }
                 else
@@ -68,7 +68,7 @@
 
               //Verif pseudo
               if($j("#pseudo").val().length < 3 || $j("#pseudo").val().length>35) {
-                msg += "- Pseudo (Doit être compris entre 3 et 35 caracteres)<br/>";
+                msg += "- Pseudo (Doit être compris entre 3 et 35 caracteres)\n";
                 $j("#pseudo").css("background-color", "#FF0000");
               }
               else
@@ -78,7 +78,7 @@
 
               //Verif ville
               if($j("#ville").val().length < 3 || $j("#ville").val().length>15) {
-                msg += "- Ville (Doit être compris entre 3 et 15 caracteres)<br/>";
+                msg += "- Ville (Doit être compris entre 3 et 15 caracteres)\n";
                 $j("#ville").css("background-color", "#FF0000");
               }
               else
@@ -88,7 +88,7 @@
 
               //Verif code postal
               if($j("#code_postal").val().length != 5 || !isValidCP($j("#code_postal").val())) {
-                msg += "- Code postal incorrecte <br/>";
+                msg += "- Code postal incorrecte \n";
                 $j("#code_postal").css("background-color", "#FF0000");
               }
               else
@@ -98,7 +98,7 @@
 
               //Verif adresse
               if($j("#adresse").val().length < 7 || $j("#adresse").val().length>25) {
-                msg += "- Adresse incorrecte<br/>";
+                msg += "- Adresse incorrecte\n";
                 $j("#adresse").css("background-color", "#FF0000");
               }
               else
@@ -108,7 +108,7 @@
 
               //Verfi tel
               if($j("#tel").val().length != 10 || !isInt($j("#tel").val())) {
-                msg += "- n°tel incorrecte <br/>";
+                msg += "- n°tel incorrecte \n";
                 $j("#tel").css("background-color", "#FF0000");
               }
               else
@@ -118,7 +118,7 @@
 
               //Verif mobile
               if($j("#mob").val().length != 10 || !isInt($j("#mob").val())) {
-                msg += "- n°tel mobile incorrecte <br/>";
+                msg += "- n°tel mobile incorrecte \n";
                 $j("#mob").css("background-color", "#FF0000");
               }
               else
@@ -128,7 +128,7 @@
 
               //Verif mail
               if($j("#mail").val().length < 3 || $j("#mail").val().length > 255) {
-                msg += "- Mail invalide <br/>";
+                msg += "- Mail invalide \n";
                 $j("#mail").css("background-color", "#FF0000");
               }
               else
@@ -138,7 +138,7 @@
 
               //Verif password
               if($j("#password").val().length < 5 || $j("#password").val().length > 25) {
-                msg += "- Mot de passe (Doit être compris entre 5 et 25 caracteres) <br/>";
+                msg += "- Mot de passe (Doit être compris entre 5 et 25 caracteres) \n";
                 $j("#password").css("background-color", "#FF0000");
               }
               else

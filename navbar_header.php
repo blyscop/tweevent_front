@@ -29,7 +29,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" role="button"
+                <a href="Actualite#postModal" role="button"
                    data-toggle="modal">
                     <i class="glyphicon glyphicon-plus"></i>
                     Post
