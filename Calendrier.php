@@ -236,7 +236,7 @@ check_session(); ?>
 <script type='text/javascript' src='./js/gcal.js'></script>
 <script>
     $('.new_btn').on("click", function () {
-        $('#fileupload').click();
+        $('#file').click();
     });
 
     $(function () {
@@ -262,7 +262,7 @@ check_session(); ?>
                 $this.remove();
             });
         });
-        $('#fileupload').fileupload({
+        $('#file').fileupload({
             url: url,
             dataType: 'json',
             autoUpload: false,
