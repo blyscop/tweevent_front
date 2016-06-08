@@ -35,11 +35,6 @@
                     Post
                 </a>
             </li>
-            <li>
-                <a href="#">
-                    <span class="badge">badge</span>
-                </a>
-            </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
