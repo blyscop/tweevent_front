@@ -77,12 +77,12 @@
             // Vérif du formulaire pour les pro
 
             //Verif pseudo
-            if ($j("#pseudo").val().length < 3 || $j("#pseudo").val().length > 35) {
-                msg += "- Pseudo (Doit être compris entre 3 et 35 caracteres)\n";
-                $j("#pseudo").css("background-color", "#FF0000");
+            if ($j("#nom").val().length < 3 || $j("#nom").val().length > 35) {
+                msg += "- Le nom (Doit être compris entre 3 et 35 caracteres)\n";
+                $j("#nom").css("background-color", "#FF0000");
             }
             else {
-                $j("#pseudo").css("background-color", "");
+                $j("#nom").css("background-color", "");
             }
 
             //Verif ville
@@ -130,6 +130,15 @@
                 $j("#mob").css("background-color", "");
             }
 
+            //Verif siret
+            if ($j("#siret").val().length != 14 || !isInt($j("#siret").val())) {
+                msg += "- Le code siret est incorrect \n";
+                $j("#siret").css("background-color", "#FF0000");
+            }
+            else {
+                $j("#siret").css("background-color", "");
+            }
+
             //Verif mail
             if ($j("#mail").val().length < 3 || $j("#mail").val().length > 255) {
                 msg += "- Mail invalide \n";
@@ -168,7 +177,7 @@
             html += "<div class='form-group'>";
             html += "<label for='pseudo' class='col-sm-3 control-label'>Nom de l'établissement :</label>";
             html += "<div class='col-sm-4'>";
-            html += "<input required class='form-control' type='text' id='pseudo' name='pseudo' value=''/>";
+            html += "<input required class='form-control' type='text' id='nom' name='nom' value=''/>";
             html += "</div>";
             html += "</div>";
             // ville
@@ -208,6 +217,14 @@
             html += "<label for='cellulaire' class='col-sm-3 control-label'>Téléphone cellulaire :</label>";
             html += "<div class='col-sm-4'>";
             html += "<input required class='form-control' type='text' id='mob' name='mob' value=''/>";
+            html += "</div>";
+            html += "</div>";
+
+            // SIRET
+            html += "<div class='form-group'>";
+            html += "<label for='siret' class='col-sm-3 control-label'>Code siret :</label>";
+            html += "<div class='col-sm-4'>";
+            html += "<input required class='form-control' type='text' id='siret' name='siret' value=''/>";
             html += "</div>";
             html += "</div>";
 

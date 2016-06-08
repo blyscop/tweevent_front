@@ -14,7 +14,7 @@
   <script src="./js/functions.js"></script>
   <script src="https://www.google.com/recaptcha/api.js"></script>
   <?php include("functions_js.php"); ?>
-      </head>
+  </head>
       <body class="">
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
           <div class="container">
@@ -329,7 +329,6 @@
         <!-- Scripts -->
 
         <!-- Scripts -->
-        <script src="./js/jquery.min(1).js"></script>
         <script src="./js/bootstrap.min.js"></script> <!-- mal inclus -->
         <script src="js/md5.min.js"></script>
         <script type="text/javascript">
