@@ -37,14 +37,14 @@ check_session(); ?>
                 </ul>
                 <ul class="nav hidden-xs" id="lg-menu">
                     <li>
-                        <a href="#preferenceModal" role="button"
+                        <a href="#" role="button"
                            data-toggle="modal">
                             <i class="glyphicon glyphicon-list-alt"></i>
                             Préferences
                         </a>
                     </li>
                     <li>
-                        <a href="Calendrier.php">
+                        <a href="Calendrier">
                             <i class="glyphicon glyphicon-list"></i>
                             Calendrier
                         </a>
@@ -64,7 +64,7 @@ check_session(); ?>
                 </ul>
                 <ul class="list-unstyled hidden-xs" id="sidebar-footer">
                     <li>
-                        <a href="http://www.bootply.com/">
+                        <a href=#">
                             <h3>Tweevent</h3>
                             <i class="glyphicon glyphicon-heart-empty"></i>
                             Events
@@ -75,11 +75,11 @@ check_session(); ?>
                 <!-- tiny only nav-->
                 <ul class="nav visible-xs" id="xs-menu">
                     <li>
-                        <a href="#preferenceModal" class="text-center" role="button" data-toggle="modal">
+                        <a href="" class="text-center" role="button" data-toggle="modal">
                             <i class="glyphicon glyphicon-list-alt"></i>
                         </a>
                     </li>
-                    <li><a href="Calendrier.php" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
+                    <li><a href="Calendrier" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
                     <li><a id="addEvent" href="#" class="text-center" data-toggle="modal" data-target=".addEvent"><i
                                 class="glyphicon glyphicon-paperclip"></i></a></li>
                     <li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>

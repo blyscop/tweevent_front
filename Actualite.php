@@ -222,7 +222,7 @@ check_session(); ?>
             <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li>
-                        <a href="http://localhost/projeti4Save/actions.php#" data-toggle="offcanvas"
+                        <a href="#" data-toggle="offcanvas"
                            class="visible-xs text-center">
                             <i class="glyphicon glyphicon-chevron-right"></i>
                         </a>
@@ -230,14 +230,14 @@ check_session(); ?>
                 </ul>
                 <ul class="nav hidden-xs" id="lg-menu">
                     <li>
-                        <a href="http://localhost/projeti4Save/actions.php#preferenceModal" role="button"
+                        <a href="#" role="button"
                            data-toggle="modal">
                             <i class="glyphicon glyphicon-list-alt"></i>
                             Préferences
                         </a>
                     </li>
                     <li>
-                        <a href="Calendrier.php">
+                        <a href="Calendrier">
                             <i class="glyphicon glyphicon-list"></i>
                             Calendrier
                         </a>
@@ -249,7 +249,7 @@ check_session(); ?>
                         </a>
                     </li>
                     <li>
-                        <a href="http://localhost/projeti4Save/actions.php#">
+                        <a href="#">
                             <i class="glyphicon glyphicon-refresh"></i>
                             Refresh
                         </a>
@@ -257,7 +257,7 @@ check_session(); ?>
                 </ul>
                 <ul class="list-unstyled hidden-xs" id="sidebar-footer">
                     <li>
-                        <a href="http://www.bootply.com/">
+                        <a href="#">
                             <h3>Tweevent</h3>
                             <i class="glyphicon glyphicon-heart-empty"></i>
                             Events
@@ -268,7 +268,7 @@ check_session(); ?>
                 <!-- tiny only nav-->
                 <ul class="nav visible-xs" id="xs-menu">
                     <li>
-                        <a href="#preferenceModal" role="button"
+                        <a href="#" role="button"
                            data-toggle="modal">
                             <i class="glyphicon glyphicon-list-alt"></i>
                         </a>

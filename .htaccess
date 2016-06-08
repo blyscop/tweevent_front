@@ -1,0 +1,3 @@
+RewriteRule ^actualite  /actualite.php [L]
+RewriteRule ^calendrier  /calendrier.php [L]
+RewriteRule ^profil  /profil.php [L]

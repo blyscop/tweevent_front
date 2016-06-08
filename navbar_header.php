@@ -23,32 +23,32 @@
         </form>
         <ul class="nav navbar-nav">
             <li>
-                <a href="Actualite.php">
+                <a href="Actualite">
                     <i class="glyphicon glyphicon-home"></i>
                     Actualit&eacute;s
                 </a>
             </li>
             <li>
-                <a href="http://localhost/projeti4Save/actions.php#postModal" role="button"
+                <a href="#" role="button"
                    data-toggle="modal">
                     <i class="glyphicon glyphicon-plus"></i>
                     Post
                 </a>
             </li>
             <li>
-                <a href="http://localhost/projeti4Save/actions.php#">
+                <a href="#">
                     <span class="badge">badge</span>
                 </a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-                <a href="http://localhost/projeti4Save/actions.php#" class="dropdown-toggle"
+                <a href="#" class="dropdown-toggle"
                    data-toggle="dropdown">
                     <i class="glyphicon glyphicon-user"></i>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="">Mon profil</a></li>
+                    <li><a href="Profil">Mon profil</a></li>
                     <li><a href="functions.php?action=disconnect">D&eacute;connexion</a></li>
                 </ul>
             </li>
