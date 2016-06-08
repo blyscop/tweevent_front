@@ -11,9 +11,11 @@ check_session(); ?>
     <link href="./css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
     <link href="./css/styles.css" rel="stylesheet">
-    <link rel="stylesheet" href="js/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
-    <link rel="stylesheet" href="js/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
-    <link rel="stylesheet" href="js/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+    <link rel="stylesheet" href="js/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="js/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css"
+          media="screen"/>
+    <link rel="stylesheet" href="js/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css"
+          media="screen"/>
     <link rel="stylesheet" href="./css/timelinestyle.css">
     <link rel="stylesheet" href="./css/jquery-ui.css">
     <script src="./js/jquery-1.10.2.js"></script>
@@ -256,20 +258,29 @@ check_session(); ?>
         success: function (msg) {
             console.log(msg);
             $j.each(msg.liste_actualites, function (i, item) {
+                var bloc_image = "";
+                var bloc_popup = bloc_popup = '<div id="contenu_' + item.id_tweevent_post + '"><a class="b-close">x<a/>Url de l"image : ' + item.image + ' | Date de creation : ' + item.date_creation + '</div>';
+                if (item.possede_image) {
+                    bloc_image = '<div class="cd-timeline-img cd-picture">' +
+                        '<a class="fancybox" rel="group" href="' + item.image + '">' +
+                        '<img src="' + item.image + '" alt=""/></a>' +
+                        '</div>';
+                }
+                else {
+                    bloc_image = '<div class="cd-timeline-img cd-picture">' +
+                        '</div>';
+                }
                 $j('#cd-timeline').append(
-                    '<div class="cd-timeline-block">' +
-                    '<div class="cd-timeline-img cd-picture">' +
-                    '<a class="fancybox" rel="group" href="' + item.image + '">' +
-                    '<img src="' + item.image + '" alt=""/></a>' +
-                    '</div>' +
+                    '<div class="cd-timeline-block">' + bloc_image +
                     '<div class="cd-timeline-content">' +
                     '<h2>' + msg.utilisateur.nom_tweevent_user + ' a commenté</h2>' +
                     '<p>' + item.message_tweevent_post + '</p>' +
                     '<button class="cd-read-more" id="button_' + item.id_tweevent_post + '" >Voir</button>' +
                     '<span class="cd-date">' + item.date_creation + '</span>' +
                     '</div>' +
-                    '</div>' +
-                    '<div id="contenu_' + item.id_tweevent_post + '"><a class="b-close">x<a/>Content of popup</div>');
+                    '</div>' + bloc_popup);
+
+               
                 $j('#contenu_' + item.id_tweevent_post).css("display", "none");
                 $j('#button_' + item.id_tweevent_post).bind('click', function (e) {
                     $('#contenu_' + item.id_tweevent_post).bPopup();

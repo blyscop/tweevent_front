@@ -57,7 +57,7 @@ function Utilisateur_ADD($data_in = array())
         $tweevent_user = Tweevent_users_chercher($args_tweevent_user);
 
         if (empty($tweevent_user)) {
-            if($data_in['type'] == "pro") {
+            if ($data_in['type'] == "pro") {
                 $utilisateur_add = new Tweevent_user();
                 $utilisateur_add->pseudo_tweevent_user = $data_in['mail'];
                 $utilisateur_add->email_tweevent_user = $data_in['mail'];
@@ -72,16 +72,15 @@ function Utilisateur_ADD($data_in = array())
                 $utilisateur_add->type_tweevent_user = "pro";
                 $id_utilisateur = $utilisateur_add->ADD();
 
-                Lib_myLog("Ajout d'un pro... ",$utilisateur_add->getTab());
-            }
-            else {
+                Lib_myLog("Ajout d'un pro... ", $utilisateur_add->getTab());
+            } else {
                 $utilisateur_add = new Tweevent_user();
                 $utilisateur_add->pseudo_tweevent_user = $data_in['pseudo'];
                 $utilisateur_add->email_tweevent_user = $data_in['pseudo'];
                 $utilisateur_add->password_tweevent_user = $data_in['password'];
                 $utilisateur_add->type_tweevent_user = "par";
                 $id_utilisateur = $utilisateur_add->ADD();
-                Lib_myLog("Ajout d'un par... ",$utilisateur_add->getTab());
+                Lib_myLog("Ajout d'un par... ", $utilisateur_add->getTab());
             }
 
             if ($utilisateur_add) {
@@ -92,29 +91,28 @@ function Utilisateur_ADD($data_in = array())
                 $validation->timestamp = time();
                 $id_validation = $validation->ADD();
 
-                $lien_validation = "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_Valider_Email&id_utilisateur=".$id_utilisateur."&k=".$validation->timestamp;
+                $lien_validation = "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_Valider_Email&id_utilisateur=" . $id_utilisateur . "&k=" . $validation->timestamp;
 
                 // Préparation de l'envoi de l'email à l'utilisateur pour qu'il valide son compte (sécurité supp. du captcha)
                 $subject = "Confirmation de votre compte sur Tweevent";
                 $email = " Merci de votre inscription. Afin de confirmer votre compte, merci de vous rendre sur le lien suivant : <br/>
-                           <a href='".$lien_validation."'>Valider mon compte</a> <br/>";
-                $headers   = array();
+                           <a href='" . $lien_validation . "'>Valider mon compte</a> <br/>";
+                $headers = array();
                 $headers[] = "MIME-Version: 1.0";
                 $headers[] = "Content-type: text/plain; charset=iso-8859-1";
                 $headers[] = "From: Tweevent <admin@tweevent.fr>";
                 $headers[] = "Subject: {$subject}";
-                $headers[] = "X-Mailer: PHP/".phpversion();
+                $headers[] = "X-Mailer: PHP/" . phpversion();
                 $headers[] = "Content-type: text/html; charset=UTF-8";
 
-                if(mail($utilisateur_add->email_tweevent_user, $subject, $email, implode("\r\n", $headers))) {
+                if (mail($utilisateur_add->email_tweevent_user, $subject, $email, implode("\r\n", $headers))) {
                     $return['confirmation'] = true;
                     $return['message'] = "Votre utilisateur a bien ete creer";
                     $return['utilisateur'] = $utilisateur_add->getTab();
                     $data_in['id_utilisateur'] = $id_utilisateur;
                     Lib_myLog("Initialisation des préférénces ...");
                     Utilisateur_Preferences_INIT($data_in);
-                }
-                else {
+                } else {
                     $return['erreur_envoi_email'] = true;
                 }
 
@@ -148,7 +146,7 @@ function Post_ADD($data_in = array())
 
             $id_image = 0;
 
-            if(!empty($_FILES['file']['name'])) { // Fichier entrant
+            if (!empty($_FILES['file']['name'])) { // Fichier entrant
                 $image = $_FILES['file']; // Récupère l'image donnée en AJAX
                 $nom_image_serveur = time() . "_" . basename($image['name']); // Nom unique d'image
                 $extension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION)); // extension de l'image uploadée
@@ -172,20 +170,21 @@ function Post_ADD($data_in = array())
                         $sql_image->url_tweevent_img = $destination_sql;
                         $sql_image->id_user_tweevent_img = $data_in['id_utilisateur'];
                         $id_image = $sql_image->ADD();
-                    }
-                    else
+                    } else
                         $return['msg'] = "Erreur lors de l'upload du fichier sur le serveur ! (droit ecriture ?) ";
                 }
             }
 
             $post_add->ids_imgs_tweevent_post = $sql_image->id_tweevent_img > 0 ? $sql_image->id_tweevent_img : $id_image;
-            $post_add->ADD();
 
-            if ($post_add)
+            // Si l'ajout de post avec/sans image s'est bien déroulé, on retoure vrai pour l'affichage. Sinon, le front affichera $return['msg'] en cas d'erreur
+            if ($post_add && ((!empty($_FILES['file']['name']) && $id_image > 0) || empty($_FILES['file']['name'])) ) {
+                $post_add->ADD();
                 $return['confirmation'] = true;
+            }
             else
                 $return['message'] = "Erreur lors de l'ajout du post !";
-            }
+        }
     } else
         $return['message'] = "Les parametres id_utilisateur et message sont invalides !";
 
@@ -212,7 +211,7 @@ function Utilisateur_Preferences_INIT($data_in = array())
                 $preference_user_init->etat = "supprime";
                 $preference_user_init->ADD();
 
-                Lib_myLog("PReferences creer : ",$preference_user_init->getTab());
+                Lib_myLog("PReferences creer : ", $preference_user_init->getTab());
             }
         }
     }
@@ -239,14 +238,13 @@ function Utilisateur_SELECT($data_in = array())
                 $args_email_user_valid['id_tweevent_user'] = $tweevent_user['id_tweevent_user'];
                 $email_user_valid = Tweevent_email_validations_chercher($args_email_user_valid);
 
-                Lib_myLog("Validation de l'email recuperee avec l'id_user ".$args_email_user_valid['id_tweevent_user']." : ".$email_user_valid['est_valide']);
+                Lib_myLog("Validation de l'email recuperee avec l'id_user " . $args_email_user_valid['id_tweevent_user'] . " : " . $email_user_valid['est_valide']);
 
-                if($email_user_valid['est_valide'] == 1 || $email_user_valid['est_valide'] == '1' || $email_user_valid['est_valide']) {
+                if ($email_user_valid['est_valide'] == 1 || $email_user_valid['est_valide'] == '1' || $email_user_valid['est_valide']) {
                     $return['confirmation'] = true;
                     $return['message'] = "Utilisateur recupere !";
                     $return['utilisateur'] = $tweevent_user;
-                }
-                else {
+                } else {
                     $return['email_non_valide'] = true;
                     $return['message'] = "Erreur ! L'utilisateur n'a pas validé son email";
                 }
@@ -256,9 +254,9 @@ function Utilisateur_SELECT($data_in = array())
     } else
         $return['message'] = "Le pseudo et/ou mot de passe est vide !";
 
-    Lib_myLog("return : ",$return);
-    Lib_myLog("user : ",$tweevent_user);
-    Lib_myLog("valid : ",$email_user_valid);
+    Lib_myLog("return : ", $return);
+    Lib_myLog("user : ", $tweevent_user);
+    Lib_myLog("valid : ", $email_user_valid);
     // permet d'éxecuter la requete sur le post client qui est sur un serveur différent (client en local - api en ligne)
     header('Access-Control-Allow-Origin: *');
     echo json_encode($return);
@@ -323,12 +321,13 @@ function Utilisateur_Posts_SELECT($data_in = array())
                 $return['liste_actualites'][$id_post]['type'] = "actualite";
                 $return['liste_actualites'][$id_post]['date_creation'] = date("d-m-Y H:i", $post['date_add']);
 
-                $return['liste_actualites'][$id_post]['image'] = "#";
-                if($post['ids_imgs_tweevent_post'] > 0) {
+                $return['liste_actualites'][$id_post]['image'] = "";
+                if ($post['ids_imgs_tweevent_post'] > 0) {
                     // Récupération de l'image du post
                     $image_post = Tweevent_img_recuperer($post['ids_imgs_tweevent_post']);
-                    Lib_myLog("IMAGE : ",$image_post->getTab());
+                    Lib_myLog("IMAGE : ", $image_post->getTab());
                     $return['liste_actualites'][$id_post]['image'] = $image_post->url_tweevent_img;
+                    $return['liste_actualites'][$id_post]['possede_image'] = 1;
                 }
             }
             $return['confirmation'] = true;
@@ -513,20 +512,19 @@ function Utilisateur_Valider_Email($data_in = array())
     $return['confirmation'] = false;
 
     // Validation provenant de l'email
-    if(!empty($data_in['id_utilisateur']) && !empty($data_in['k'])) {
+    if (!empty($data_in['id_utilisateur']) && !empty($data_in['k'])) {
         $args_email_validation['id_tweevent_user'] = $data_in['id_utilisateur'];
         $args_email_validation['timestamp'] = $data_in['k'];
         $email_validation = Tweevent_email_validations_chercher($args_email_validation);
 
-        Lib_myLog("email: ",$email_validation);
-        if(!empty($email_validation)) {
+        Lib_myLog("email: ", $email_validation);
+        if (!empty($email_validation)) {
             // Clé valide => on active le compte
             $validation = Tweevent_email_validation_recuperer($email_validation['id_tweevent_email_validation']);
             $validation->est_valide = 1;
             $validation->UPD();
             header('Location: ../../index.php#conf_validation');
-        }
-        else {
+        } else {
             // Clé / User  invalide
             header('Location: ../../index.php#erreur_validation');
         }
@@ -543,12 +541,12 @@ function Utilisateur_Rein_Mdp($data_in = array())
     $return['confirmation'] = false;
 
     // Recherche de l'utilisateur
-    if(!empty($data_in['email'])) {
+    if (!empty($data_in['email'])) {
         $args_mail_reinit['id_tweevent_user'] = '*';
         $args_mail_reinit['email_tweevent_user'] = $data_in['email'];
         $mail_reinit = Tweevent_users_chercher($args_mail_reinit);
 
-        if(!empty($mail_reinit)) {
+        if (!empty($mail_reinit)) {
             // Réinitialisation du mdp
             $time = time();
             $time_crypte = md5($time);
@@ -556,33 +554,30 @@ function Utilisateur_Rein_Mdp($data_in = array())
             $user_reinit->password_tweevent_user = $time_crypte; // On met le timestamp en attendant que l'utilisateur change son mdp
             $user_reinit->UPD();
 
-            $lien_validation = "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Changement_Mdp&id=utilisateur=".$user_reinit->id_tweevent_user;
+            $lien_validation = "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Changement_Mdp&id=utilisateur=" . $user_reinit->id_tweevent_user;
 
             $subject = "Changement de votre mot de passe sur Tweevent";
             $email = " Vous pouvez désormais vous connecter avec le mot de passe ci-dessous (pensez à le changer dans l'interface) : <br/>
-                           ".$time." <br/> Attention à ne pas prendre en compte l'espace à la fin du mot de passe.";
-            $headers   = array();
+                           " . $time . " <br/> Attention à ne pas prendre en compte l'espace à la fin du mot de passe.";
+            $headers = array();
             $headers[] = "MIME-Version: 1.0";
             $headers[] = "Content-type: text/plain; charset=iso-8859-1";
             $headers[] = "From: Tweevent <admin@tweevent.fr>";
             $headers[] = "Subject: {$subject}";
-            $headers[] = "X-Mailer: PHP/".phpversion();
+            $headers[] = "X-Mailer: PHP/" . phpversion();
             $headers[] = "Content-type: text/html; charset=UTF-8";
 
-            if(mail($data_in['email'], $subject, $email, implode("\r\n", $headers))) {
+            if (mail($data_in['email'], $subject, $email, implode("\r\n", $headers))) {
                 $return['confirmation'] = true;
                 $return['message'] = "Email envoyé";
-            }
-            else {
+            } else {
                 $return['message'] = "Une erreur est survenue lors de l'envoi de l'email !";
             }
-        }
-        else {
+        } else {
             $return['message'] = "L'email fourni ne correspond à aucun compte utilisateur";
         }
 
-    }
-    else {
+    } else {
         $return['message'] = "Aucun email passé en paramètre !";
     }
 
@@ -598,22 +593,20 @@ function Utilisateur_Changer_Mdp($data_in = array())
     $return = array();
     $return['confirmation'] = false;
 
-    if(!empty($data_in['id_utilisateur'])) {
-       $user_mdp_upd = Tweevent_user_recuperer($data_in['id_utilisateur']);
-        if($user_mdp_upd->password_tweevent_user == md5($data_in['old_password'])) {
+    if (!empty($data_in['id_utilisateur'])) {
+        $user_mdp_upd = Tweevent_user_recuperer($data_in['id_utilisateur']);
+        if ($user_mdp_upd->password_tweevent_user == md5($data_in['old_password'])) {
             // L'utilisateur a bien saisi son ancien mdp : on va le mettre à jour avec le nouveau
             $user_mdp_upd->password_tweevent_user = md5($data_in['new_password']);
             $user_mdp_upd->UPD();
 
             $return['confirmation'] = true;
             $return['message'] = "Le mot de passe a bien été mis à jour !";
-        }
-        // Ancien mot de passe saisi invalide
+        } // Ancien mot de passe saisi invalide
         else {
             $return['message'] = "L'ancien mot de passe saisi est invalide !";
         }
-    }
-    // id_utilisateur passé en paramètre invalide
+    } // id_utilisateur passé en paramètre invalide
     else
         $return['message'] = "L'identifiant d'utilisateur est invalide ";
 
