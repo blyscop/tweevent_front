@@ -242,12 +242,15 @@ check_session(); ?>
                         Calendrier
                     </a>
                 </li>
+                <?php if($_COOKIE['utilisateur_type']=="pro"){?>
                 <li>
                     <a id="addEvent" href="#" data-toggle="modal" data-target=".addEvent">
                         <i class="glyphicon glyphicon-paperclip"></i>
                         Ajouter Evenement
                     </a>
                 </li>
+                <?php } ?>
+                    
                 <li>
                     <a href="#">
                         <i class="glyphicon glyphicon-refresh"></i>
