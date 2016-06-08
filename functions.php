@@ -6,7 +6,7 @@ function check_session()
     // Utilisateur non-connecté
 
     if (!$_COOKIE['est_connecte'])
-        header('Location: index.html'); // redirection page accueil
+        header('Location: index.php'); // redirection page accueil
 }
 
 function disconnect()
@@ -16,7 +16,7 @@ function disconnect()
     setcookie("utilisateur_connexion", "", time()-3600);
     setcookie("utilisateur_id", "", time()-3600);
     setcookie("utilisateur_type", "", time()-3600);
-    header('Location: index.html'); // redirection page accueil
+    header('Location: index.php'); // redirection page accueil
 }
 
 // Connexion de l'utilisateur - Création de la session si utilisateur valide
@@ -42,11 +42,11 @@ function connexion()
             setcookie('username', $content['utilisateur']['pseudo_tweevent_user'], time() + 365 * 24 * 3600);
             setcookie('est_connecte', true, time() + 365 * 24 * 3600);
         } else if ($content['email_non_valide'])
-            header('Location: index.html#email_invalide'); // redirection page accueil (adresse email pas encore validée)
+            header('Location: index.php#email_invalide'); // redirection page accueil (adresse email pas encore validée)
         else
-            header('Location: index.html#login_error'); // redirection page accueil (login / mdp invalide)
+            header('Location: index.php#login_error'); // redirection page accueil (login / mdp invalide)
     } else {
-        header('Location: index.html#login_error'); // redirection page accueil (pas de login et mdp fourni)
+        header('Location: index.php#login_error'); // redirection page accueil (pas de login et mdp fourni)
     }
     if ($redirection_actualite) {
         header('Location: Actualite');
@@ -84,9 +84,9 @@ function inscription()
         if ($content['confirmation'] && !$content['erreur_envoi_email'])
             $redirection_accueil = true;
         else if ($content['erreur_envoi_email'])
-            header('Location: http://martinfrouin.fr/projets/tweevent/index.html#email_error'); // redirection page accueil (erreur lors de l'envoi de l'email)
+            header('Location: http://martinfrouin.fr/projets/tweevent/index.php#email_error'); // redirection page accueil (erreur lors de l'envoi de l'email)
         else
-            header('Location: index.html#insc_error'); // redirection page accueil (nom d'utilisateur déjà utilisé)
+            header('Location: index.php#insc_error'); // redirection page accueil (nom d'utilisateur déjà utilisé)
     }
 
     // Particuliers
@@ -100,15 +100,15 @@ function inscription()
         if ($content['confirmation'] && !$content['erreur_envoi_email'])
             $redirection_accueil = true;
         else if ($content['erreur_envoi_email'])
-            header('Location: http://martinfrouin.fr/projets/tweevent/index.html#email_error'); // redirection page accueil (erreur lors de l'envoi de l'email)
+            header('Location: http://martinfrouin.fr/projets/tweevent/index.php#email_error'); // redirection page accueil (erreur lors de l'envoi de l'email)
         else if (!$content['confirmation'])
-            header('Location: http://martinfrouin.fr/projets/tweevent/index.html#insc_error'); // redirection page accueil (nom d'utilisateur déjà utilisé)
+            header('Location: http://martinfrouin.fr/projets/tweevent/index.php#insc_error'); // redirection page accueil (nom d'utilisateur déjà utilisé)
     }
 
     if ($redirection_accueil)
-        header('Location: http://martinfrouin.fr/projets/tweevent/index.html#insc_ok');
+        header('Location: http://martinfrouin.fr/projets/tweevent/index.php#insc_ok');
     if (empty($captcha))
-        header('Location: index.html#erreur_captchaNonSaisi'); // redirection page accueil
+        header('Location: index.php#erreur_captchaNonSaisi'); // redirection page accueil
 }
 
 // Appel de la fonction de connexion - on passe le post en paramètre de la requête

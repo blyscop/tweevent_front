@@ -18,72 +18,8 @@ check_session(); ?>
     <script src="js/functions.js"></script>
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <?php include("functions_js.php"); ?>
     <![endif]-->
-    <script type="text/javascript">
-        var $j = jQuery.noConflict();
-
-        function changer_password() {
-            var msg = "";
-            var msg_intro = "Champs requis : \n";
-            if ($j("#old_password").val() == "") {
-                msg += "- Ancien mot de passe \n";
-                $j("#old_password").css("background-color", "#FF0000");
-            }
-            else
-                $j("#old_password").css("background-color", "");
-
-            if ($j("#new_password").val() == "") {
-                msg += "- Nouveau mot de passe \n";
-                $j("#new_password").css("background-color", "#FF0000");
-            }
-            else
-                $j("#new_password").css("background-color", "");
-
-            if ($j("#new_password_conf").val() == "") {
-                msg += "- Confirmation nouveau mot de passe \n";
-                $j("#new_password_conf").css("background-color", "#FF0000");
-            }
-            else
-                $j("#new_password_conf").css("background-color", "");
-
-            if ($j("#new_password").val() != $j("#new_password_conf").val()) {
-                msg += "- Les 2 nouveaux mot de passe doivent correspondre. \n";
-                $j("#new_password").css("background-color", "#FF0000");
-                $j("#new_password_conf").css("background-color", "#FF0000");
-            }
-            else {
-                $j("#new_password_conf").css("background-color", "");
-                $j("#new_password").css("background-color", "");
-            }
-
-            if($j("#old_password").val() == $j("#new_password").val() ) {
-                msg += "- Merci de choisir un nouveau mot de passe différent de votre ancien \n";
-            }
-
-            if (msg == "") {
-                // Modification du mot de passe avec les 3 champs saisis
-                var id_user = <?=$_COOKIE['utilisateur_id'] > 0 ? $_COOKIE['utilisateur_id'] : 0?>;
-                $j.ajax({
-                    type: "GET",
-                    url: host + "/projets/tweevent/api/q/req.php",
-                    data: {action: "Utilisateur_Changer_Mdp", id_utilisateur: id_user, old_password: $j("#old_password").val(), new_password: $j("#new_password").val()},
-                    dataType: 'json',
-                    success: function (data) {
-                        console.log(data);
-                        if (data.confirmation) {
-                            $j("#infos_mdp_upd").html("<h1>" + data.message + "</h1>");
-                        }
-                        else {
-                            $j("#infos_mdp_upd").html("<h1>" + data.message+ "</h1>");
-                        }
-                    }
-                });
-            }
-            else {
-                alert(msg_intro + msg);
-            }
-        }
-    </script>
 </head>
 <body>
 <div class="wrapper">

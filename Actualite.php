@@ -17,53 +17,12 @@ check_session(); ?>
     
     <script src="./js/jquery-ui.js"></script>
     <script src="js/functions.js"></script>
+    <?php include("functions_js.php"); ?>
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script type="text/javascript">
         var $j = jQuery.noConflict();
-        // Chargement en AJAX de la liste des catégories de préferences (exemple : musique, boissons, etc...)
-        /*
-         Le code à générer est sous la forme suivante :
-         <div class="col-md-4">
-         <i class="fa fa-glass fa-4x" aria-hidden="true"></i>
-         <div><input type="checkbox"/> Vin</div>
-         <div><input type="checkbox"/> Bière</div>
-         <div><input type="checkbox"/> Whisky</div>
-         <div><input type="checkbox"/> Rhum</div>
-         <div><input type="checkbox"/> Gin</div>
-         <div><input type="checkbox"/> Vodka</div>
-         <div><input type="checkbox"/> Tequila</div>
-         </div>
-         */
-         
-
-        function ReceiptPost() {
-            var _idUser =<?=$_COOKIE["utilisateur_id"] > 0 ? $_COOKIE["utilisateur_id"] : 0 ?>;
-
-            $.ajax({
-                type: "GET",
-                url: host + "/projets/tweevent/api/q/req.php",
-                data: {action: "Utilisateur_Posts_SELECT", id_utilisateur: _idUser},
-                dataType: 'json',
-                success: function (msg) {
-                    console.log(msg);
-                    $.each(msg.actualites, function (i, item) {
-                        $('#cd-timeline').append('<div class="cd-timeline-block">' +
-                            '<div class="cd-timeline-img cd-picture">' +
-                            '<img src="./img/cd-icon-picture.svg" alt="Picture">' +
-                            '</div>' +
-                            '<div class="cd-timeline-content">' +
-                            '<h2>Unknow a commenté</h2>' +
-                            '<p>' + item.message_tweevent_post + '</p>' +
-                            '<a href="#0" class="cd-read-more">Read more</a>' +
-                            '<span class="cd-date">' + parseJsonDate(item.date_add) + '</span>' +
-                            '</div>' +
-                            '</div>');
-                    })
-                }
-            });
-        }
         $j(document).ready(function (e) {
             $j('#loading').hide();
             $j("#send_post").on('submit', (function (e) {
@@ -123,65 +82,6 @@ check_session(); ?>
                 $j('#previewing').attr('height', '230px');
             };
         });
-        // Modification des préférences de l'utilisateur, on requête le serveur d'API avec les cases cochées et il va nous répondre s'il a bien traiter notre demande (pour afficher un message à l'user)
-        // Il faut penser à recharger le bloc en réappelant la fonction après l'UPD (s'il s'est bien déroulé)
-        function modifier_preferences_utilisateur(params) {
-            var preferences_cochees = "";
-            var id_utilisateur = <?=$_COOKIE["utilisateur_id"] > 0 ? $_COOKIE["utilisateur_id"] : 0 ?> ;
-            $j('input[type=checkbox]').each(function () {
-                var est_cochee = (this.checked ? "1" : "0");
-                preferences_cochees += (preferences_cochees == "" ? est_cochee + "_" + this.name : "|" + est_cochee + "_" + this.name);
-            });
-            // Liste sous la forme 1_Pizza pour à coché 1, ou 0_Pizza pour n'a pas coché pizza
-            $j.ajax({
-                type: "POST",
-                url: "http://martinfrouin.fr/projets/tweevent/api/q/req.php",
-                data: {
-                    action: "Utilisateur_Preferences_UPD",
-                    id_utilisateur: id_utilisateur,
-                    preferences: preferences_cochees
-                },
-                success: function (msg) {
-                    alert("Vos préférences ont bien été mise à jour !");
-                }
-            });
-
-        }
-
-
-        // Fonction pour localiser un utilisateur lors du clic (natif à html5)
-        function localiser() {
-            // Si le navigateur le supporte, on execute getCurrentPosition, qui peut appelée montrerPosition ou montrerErreur suivant le callback
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(montrerPosition, montrerErreur);
-            } else {
-                x.innerHTML = "La géolocalisation n'est pas supportée pour votre terminal.";
-            }
-        }
-        // Affiche un iframe provenant de gmaps avec la position de l'utilisateur
-        function montrerPosition(position) {
-            var lat_lon = position.coords.latitude + "," + position.coords.longitude;
-            var img_url = "http://maps.googleapis.com/maps/api/staticmap?center="
-            + lat_lon + "&zoom=14&size=400x300&sensor=false";
-            document.getElementById("localisation").innerHTML = "<img src='" + img_url + "'>";
-        }
-        // Si une erreur survient (ex : géo désactivée sur le terminal), on affiche un message
-        function montrerErreur(error) {
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                document.getElementById("ajout_publication_infos").innerHTML = "User denied the request for Geolocation.";
-                break;
-                case error.POSITION_UNAVAILABLE:
-                document.getElementById("ajout_publication_infos").innerHTML = "Location information is unavailable.";
-                break;
-                case error.TIMEOUT:
-                document.getElementById("ajout_publication_infos").innerHTML = "The request to get user location timed out.";
-                break;
-                case error.UNKNOWN_ERROR:
-                document.getElementById("ajout_publication_infos").innerHTML = "An unknown error occurred.";
-                break;
-            }
-        }
     </script>
     <? include("functions_js.php"); ?>
 </head>
