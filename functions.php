@@ -85,7 +85,7 @@ function inscription()
             $redirection_accueil = true;
         else if ($content['erreur_envoi_email'])
             header('Location: http://martinfrouin.fr/projets/tweevent/index.php#email_error'); // redirection page accueil (erreur lors de l'envoi de l'email)
-        else
+        else if(!$content['confirmation'])
             header('Location: index.php#insc_error'); // redirection page accueil (nom d'utilisateur déjà utilisé)
     }
 

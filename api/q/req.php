@@ -59,14 +59,16 @@ function Utilisateur_ADD($data_in = array())
         if (empty($tweevent_user)) {
             if($data_in['type'] == "pro") {
                 $utilisateur_add = new Tweevent_user();
-                $utilisateur_add->pseudo_tweevent_user = $data_in['pseudo'];
-                $utilisateur_add->email_tweevent_user = $data_in['pseudo'];
+                $utilisateur_add->pseudo_tweevent_user = $data_in['mail'];
+                $utilisateur_add->email_tweevent_user = $data_in['mail'];
+                $utilisateur_add->nom_tweevent_user = $data_in['nom'];
                 $utilisateur_add->password_tweevent_user = $data_in['password'];
                 $utilisateur_add->ville_tweevent_user = $data_in['ville'];
                 $utilisateur_add->code_postal_tweevent_user = $data_in['code_postal'];
                 $utilisateur_add->adresse_1_tweevent_user = $data_in['adresse'];
                 $utilisateur_add->tel_tweevent_user = $data_in['tel'];
                 $utilisateur_add->mob_tweevent_user = $data_in['mob'];
+                $utilisateur_add->siret = $data_in['siret'];
                 $utilisateur_add->type_tweevent_user = "pro";
                 $id_utilisateur = $utilisateur_add->ADD();
 
@@ -135,59 +137,55 @@ function Post_ADD($data_in = array())
     $return = array();
     $return['confirmation'] = false;
 
-    Lib_myLog("files : ",$_FILES);
-    Lib_myLog("IN : ",$data_in);
-    if ($data_in['id_utilisateur'] > 0 && !empty($data_in['message'])) {
+    if ($data_in['id_utilisateur'] > 0) {
         $user_tweevent['id_tweevent_user'] = $data_in['id_utilisateur'];
         $test_user_tweevent = Tweevent_users_chercher($user_tweevent);
 
         if (!empty($test_user_tweevent)) {
             $post_add = new Tweevent_post();
             $post_add->id_user_tweevent_post = $data_in['id_utilisateur'];
-            $post_add->message_tweevent_post = $data_in['message'];
+            $post_add->message_tweevent_post = !empty($data_in['message']) ? $data_in['message'] : '';
 
-            $image = $_FILES['file']; // Récupère l'image donnée en AJAX
-            $nom_image_serveur = time()."_".basename($image['name']); // Nom unique d'image
-            $extension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION)); // extension de l'image uploadée
+            $id_image = 0;
 
-            $destination_dossier = "../uploads/"; // dossier de stination
-            $destination_fichier = $destination_dossier . $nom_image_serveur; // Futur emplacement de l'image
-            $destination_sql = "api/uploads/" . $nom_image_serveur;
+            if(!empty($_FILES['file']['name'])) { // Fichier entrant
+                $image = $_FILES['file']; // Récupère l'image donnée en AJAX
+                $nom_image_serveur = time() . "_" . basename($image['name']); // Nom unique d'image
+                $extension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION)); // extension de l'image uploadée
 
-            if (file_exists($destination_fichier))
-                $return['msg'] = "Le fichier existe deja !";
-            else if ($image['size'] > 1000000)
-                $return['msg'] = "Le fichier est trop gros !";
-            else if ($extension != "jpg" && $extension != "png" && $extension != "jpeg" && $extension != "gif")
-                $return['msg'] = "L'extension n'est pas autorisee ! jpg png jpeg gif seulement !";
-            else {
-                if (move_uploaded_file($image['tmp_name'], $destination_fichier)) {
-                    $return['msg'] = "Fichier disponible sur " . $destination_sql;
+                $destination_dossier = "../uploads/"; // dossier de stination
+                $destination_fichier = $destination_dossier . $nom_image_serveur; // Futur emplacement de l'image
+                $destination_sql = "api/uploads/" . $nom_image_serveur;
 
-                    $sql_image = new Tweevent_img();
-                    $sql_image->nom_tweevent_img = $image['name'];
-                    $sql_image->url_tweevent_img = $destination_sql;
-                    $sql_image->id_user_tweevent_img = $data_in['id_utilisateur'];
-                    $sql_image->ADD();
+                if (file_exists($destination_fichier))
+                    $return['msg'] = "Le fichier existe deja !";
+                else if ($image['size'] > 1000000)
+                    $return['msg'] = "Le fichier est trop gros !";
+                else if ($extension != "jpg" && $extension != "png" && $extension != "jpeg" && $extension != "gif")
+                    $return['msg'] = "L'extension n'est pas autorisee ! jpg png jpeg gif seulement !";
+                else {
+                    if (move_uploaded_file($image['tmp_name'], $destination_fichier)) {
+                        $return['msg'] = "Fichier disponible sur " . $destination_sql;
 
-                    $post_add->ADD();
-
-                    $return['utilisateur'] = $test_user_tweevent;
-
-                    if ($post_add)
-                        $return['confirmation'] = true;
+                        $sql_image = new Tweevent_img();
+                        $sql_image->nom_tweevent_img = $image['name'];
+                        $sql_image->url_tweevent_img = $destination_sql;
+                        $sql_image->id_user_tweevent_img = $data_in['id_utilisateur'];
+                        $id_image = $sql_image->ADD();
+                    }
                     else
-                        $return['message'] = "Erreur lors de l'ajout du post !";
-
-                    if ($sql_image->id_tweevent_img != 0)
-                        $return['id'] = $sql_image->id_tweevent_img;
-                } else
-                    $return['msg'] = "Erreur lors de l'upload du fichier sur le serveur ! (droit ecriture ?) ";
+                        $return['msg'] = "Erreur lors de l'upload du fichier sur le serveur ! (droit ecriture ?) ";
+                }
             }
-        }
 
+            $post_add->ids_imgs_tweevent_post = $sql_image->id_tweevent_img > 0 ? $sql_image->id_tweevent_img : $id_image;
+            $post_add->ADD();
 
-
+            if ($post_add)
+                $return['confirmation'] = true;
+            else
+                $return['message'] = "Erreur lors de l'ajout du post !";
+            }
     } else
         $return['message'] = "Les parametres id_utilisateur et message sont invalides !";
 
@@ -515,11 +513,11 @@ function Utilisateur_Valider_Email($data_in = array())
             $validation = Tweevent_email_validation_recuperer($email_validation['id_tweevent_email_validation']);
             $validation->est_valide = 1;
             $validation->UPD();
-            header('Location: ../../index.html#conf_validation');
+            header('Location: ../../index.php#conf_validation');
         }
         else {
             // Clé / User  invalide
-            header('Location: ../../index.html#erreur_validation');
+            header('Location: ../../index.php#erreur_validation');
         }
 
     }
