@@ -14,7 +14,7 @@ check_session(); ?>
     <link rel="stylesheet" href="./css/timelinestyle.css">
     <link rel="stylesheet" href="./css/jquery-ui.css">
     <script src="./js/jquery-1.10.2.js"></script>
-
+    
     <script src="./js/jquery-ui.js"></script>
     <script src="js/functions.js"></script>
     <!--[if lt IE 9]>
@@ -36,37 +36,7 @@ check_session(); ?>
          <div><input type="checkbox"/> Tequila</div>
          </div>
          */
-         function charger_preferences_utilisateur() {
-            $j.ajax({
-                type: "GET",
-                url: "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_Preferences_SELECT_ALL&id_utilisateur=<?=$_COOKIE['utilisateur_id'] > 0 ? $_COOKIE['utilisateur_id'] : 0?>",
-                dataType: 'json',
-                success: function (data) {
-                    var html = "";
-                    $j('#preferences_categories').empty();
-                    $j.each(data, function (categorie, objet_preference) {
-                        var class_tag_i = "";
-                        if (categorie != "music")
-                            class_tag_i = "glass";
-                        else
-                            class_tag_i = categorie;
-                        html += "<div id='" + categorie + "Preferences' class='col-md-4'> <i class='fa fa-" + class_tag_i + " fa-4x' aria-hidden='true'></i>";
-                        $j.each(objet_preference, function (preference, droit) {
-                            var html_checkbox_preference = "";
-                            if (droit) {
-                                html += "<div><input type='checkbox' class='preferences' id='" + preference + "' name='" + preference + "' checked='checked'>" + preference + "</input></div>";
-                            }
-                            else {
-                                html += "<div><input type='checkbox' class='preferences' id='" + preference + "' name='" + preference + "'>" + preference + "</input></div>";
-                            }
-                        });
-                        html += "</div>";
-                    });
-                    html += "<table class='table borderles'><input type='button' value='Envoyer' class='btn btn-default btn-preference' onclick='modifier_preferences_utilisateur();' /></table>";
-                    $j('#preferences_categories').append(html);
-                }
-            });
-        }
+         
 
         function ReceiptPost() {
             var _idUser =<?=$_COOKIE["utilisateur_id"] > 0 ? $_COOKIE["utilisateur_id"] : 0 ?>;
@@ -213,6 +183,7 @@ check_session(); ?>
             }
         }
     </script>
+    <? include("functions_js.php"); ?>
 </head>
 <body onload="charger_preferences_utilisateur(); ReceiptPost();">
     <div class="wrapper">

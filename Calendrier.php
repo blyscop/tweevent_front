@@ -14,7 +14,7 @@ check_session(); ?>
     <link href="./css/styles.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/timelinestyle.css">
     <link rel='stylesheet' href='./css/fullcalendar.min.css'/>
-
+    <? include("functions_js.php"); ?>
 
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
