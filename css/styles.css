@@ -37,8 +37,8 @@ hr {
     background: green;
 }
 
-.upload_photo input {
-    display: none;
+#selectImage input[type=file] {
+    display: none !important;
 }
 
 .files {
