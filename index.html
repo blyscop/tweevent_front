@@ -42,7 +42,6 @@
         {
             var msg = "";
             var msg_intro = "Merci de vérifier les champs suivants : <br/>";
-            //alert($j("#choix_inscription").val());
             if($j("#choix_inscription").val() == "par")
             {
                 //Verif pseudo
@@ -152,7 +151,7 @@
                 return true;
             }
             else {
-                 $j("#form_error").html((msg_intro + " \n" + msg));
+                 alert(msg_intro + " \n" + msg);
                 return false;
             }
         }

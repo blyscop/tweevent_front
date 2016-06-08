@@ -538,16 +538,16 @@ function Utilisateur_Rein_Mdp($data_in = array())
 
         if(!empty($mail_reinit)) {
             // Réinitialisation du mdp
+            $time = time();
             $user_reinit = Tweevent_user_recuperer($mail_reinit['id_tweevent_user']);
-            $user_reinit->password_tweevent_user = time(); // On met le timestamp en attendant que l'utilisateur change son mdp
-            $user_reinit->nb_connect_tweevent_user = 99;
+            $user_reinit->password_tweevent_user = $time; // On met le timestamp en attendant que l'utilisateur change son mdp
             $user_reinit->UPD();
 
             $lien_validation = "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Changement_Mdp&id=utilisateur=".$user_reinit->id_tweevent_user;
 
             $subject = "Changement de votre mot de passe sur Tweevent";
-            $email = " Afin de modifier votre mot de passe, merci de vous rendre sur l'adresse suivante : <br/>
-                           <a href='".$lien_validation."'>Modifier mon mot de passe</a> <br/>";
+            $email = " Vous pouvez désormais vous connecter avec le mot de passe ci-dessous (pensez à le changer dans l'interface) : <br/>
+                           ".$time."> <br/>";
             $headers   = array();
             $headers[] = "MIME-Version: 1.0";
             $headers[] = "Content-type: text/plain; charset=iso-8859-1";
@@ -569,34 +569,6 @@ function Utilisateur_Rein_Mdp($data_in = array())
     else {
         $return['message'] = "Aucun email passé en paramètre !";
     }
-}
-
-function Changement_Mdp($data_in = array())
-{
-    Lib_myLog("action: " . $data_in['action']);
-    foreach ($GLOBALS['tab_globals'] as $global) global $$global;
-
-    $return = array();
-    $return['confirmation'] = false;
-
-    if(!empty($data_in['id_utilisateur'])) {
-        $args_mail_reinit['id_tweevent_user'] = $data_in['id_utilisateur'];
-        $mail_reinit = Tweevent_user_preferences_chercher($args_mail_reinit);
-
-        if($mail_reinit['nb_connect_tweevent_user'] != 99) {
-            $return['message'] = "Vous ne pouvez pas réinitialiser le mot de passe !";
-        }
-        else {
-            $data_out['id_utilisateur'] = $mail_reinit['id_tweevent_user'];
-            $data_out['page'] = "api_form_reinit_mdp.php";
-        }
-    }
-    else {
-        $return['message'] = "Erreur : aucun id_utilisteur fourni !";
-    }
-
-    if(!empty($return['message']))
-        echo $return['message'];
 }
 
 //==================================================================================
