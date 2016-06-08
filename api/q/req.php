@@ -581,6 +581,37 @@ function Utilisateur_Rein_Mdp($data_in = array())
     echo json_encode($return);
 }
 
+function Utilisateur_Changer_Mdp($data_in = array())
+{
+    Lib_myLog("action: " . $data_in['action']);
+    foreach ($GLOBALS['tab_globals'] as $global) global $$global;
+
+    $return = array();
+    $return['confirmation'] = false;
+
+    if(!empty($data_in['id_utilisateur'])) {
+       $user_mdp_upd = Tweevent_user_recuperer($data_in['id_utilisateur']);
+        if($user_mdp_upd->password_tweevent_user == md5($data_in['old_password'])) {
+            // L'utilisateur a bien saisi son ancien mdp : on va le mettre à jour avec le nouveau
+            $user_mdp_upd->password_tweevent_user = md5($data_in['new_password']);
+            $user_mdp_upd->UPD();
+
+            $return['confirmation'] = true;
+            $return['message'] = "Le mot de passe a bien été mis à jour !";
+        }
+        // Ancien mot de passe saisi invalide
+        else {
+            $return['message'] = "L'ancien mot de passe saisi est invalide !";
+        }
+    }
+    // id_utilisateur passé en paramètre invalide
+    else
+        $return['message'] = "L'identifiant d'utilisateur est invalide ";
+
+    header('Access-Control-Allow-Origin: *');
+    echo json_encode($return);
+}
+
 //==================================================================================
 // DELETE
 //==================================================================================

@@ -1,7 +1,6 @@
 <?php include("functions.php");
 check_session(); ?>
 <!DOCTYPE html>
-<!-- saved from url=(0041)http://localhost/projeti4Save/actions.php -->
 <html class="no-js">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -23,9 +22,7 @@ check_session(); ?>
     <script type="text/javascript">
         var $j = jQuery.noConflict();
 
-        function changer_password()
-        {
-            alert("rentre");
+        function changer_password() {
             var msg = "";
             var msg_intro = "Champs requis : \n";
             if ($j("#old_password").val() == "") {
@@ -49,13 +46,41 @@ check_session(); ?>
             else
                 $j("#new_password_conf").css("background-color", "");
 
-            if (msg == "") {
-                // Modification du mot de passe
+            if ($j("#new_password").val() != $j("#new_password_conf").val()) {
+                msg += "- Les 2 nouveaux mot de passe doivent correspondre. \n";
+                $j("#new_password").css("background-color", "#FF0000");
+                $j("#new_password_conf").css("background-color", "#FF0000");
+            }
+            else {
+                $j("#new_password_conf").css("background-color", "");
+                $j("#new_password").css("background-color", "");
+            }
 
+            if($j("#old_password").val() == $j("#new_password").val() ) {
+                msg += "- Merci de choisir un nouveau mot de passe différent de votre ancien \n";
+            }
+
+            if (msg == "") {
+                // Modification du mot de passe avec les 3 champs saisis
+                var id_user = <?=$_COOKIE['utilisateur_id'] > 0 ? $_COOKIE['utilisateur_id'] : 0?>;
+                $j.ajax({
+                    type: "GET",
+                    url: host + "/projets/tweevent/api/q/req.php",
+                    data: {action: "Utilisateur_Changer_Mdp", id_utilisateur: id_user, old_password: $j("#old_password").val(), new_password: $j("#new_password").val()},
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        if (data.confirmation) {
+                            $j("#infos_mdp_upd").html("<h1>" + data.message + "</h1>");
+                        }
+                        else {
+                            $j("#infos_mdp_upd").html("<h1>" + data.message+ "</h1>");
+                        }
+                    }
+                });
             }
             else {
                 alert(msg_intro + msg);
-                return false;
             }
         }
     </script>
@@ -139,16 +164,16 @@ check_session(); ?>
                         </header>
                         <section id="cd-timeline" class="cd-container">
                             <div class="cd-timeline-block">
-                                <h1>Modifier votre mot de passe</h1>
-                                <form name="changer_mdp" id="changer_mdp" onsubmit="changer_password();">
-                                    <label for="old_password">Ancien mot de passe :</label>
-                                    <input type="password" name="old_password" id="old_password"/><br/>
-                                    <label for="old_password">Nouveau mot de passe :</label>
-                                    <input type="password" name="new_password" id="new_password"/><br/>
-                                    <label for="old_password">Confirmation nouveau mot de passe :</label>
-                                    <input type="password" name="new_password_conf" id="new_password_conf"/><br/>
-                                    <input type="submit" name="modifier" id="modifier" value="Modifier"/>
-                                </form>
+                                <h1 id="infos_mdp_upd">Modifier votre mot de passe</h1>
+                                <label for="old_password">Ancien mot de passe :<br/>
+                                    <input type="password" name="old_password" id="old_password"/></label><br/>
+                                <label for="old_password">Nouveau mot de passe :<br/>
+                                    <input type="password" name="new_password" id="new_password"/></label><br/>
+                                <label for="old_password">Confirmation nouveau mot de passe :<br/>
+                                    <input type="password" name="new_password_conf"
+                                           id="new_password_conf"/></label><br/>
+                                <input type="button" name="modifier" id="modifier" onclick="changer_password();"
+                                       value="Modifier"/>
                             </div>
                         </section> <!-- cd-timeline -->
 
