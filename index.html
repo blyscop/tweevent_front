@@ -1,69 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tweevent</title>
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./css/index.css">
-    <link rel="stylesheet" href="./css/jquery-ui.css">
-    <script src="./js/jquery-1.10.2.js"></script>
-    <script src="./js/jquery-ui.js"></script>
-    <script src="./js/functions.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js"></script>
-    <script>
-        var $j = jQuery.noConflict();
-        function connexion() {
-            var exec = true;
-            if (document.frm_connexion.username == "" || document.frm_connexion.password == "") {
-                exec = false;
-            }
-            return exec;
-        }
-        function isInt(value) {
-          return !isNaN(value) && 
-                 parseInt(Number(value)) == value && 
-                 !isNaN(parseInt(value, 10));
-        }
-        function isValidCP(cp) {
-            console.log(cp);
-            if (isInt(cp))
-             {
-              return /^\d{5}(-\d{4})?$/.test(cp);
-             }
-            else
-             {
-              return false;
-            }
-        }
-        function verifier_formulaire()
-        {
-            var msg = "";
-            var msg_intro = "Merci de vérifier les champs suivants : \n";
-            if($j("#choix_inscription").val() == "par")
-            {
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tweevent</title>
+  <link href="./css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./css/jquery-ui.css">
+  <script src="./js/jquery-1.10.2.js"></script>
+  <script src="./js/jquery-ui.js"></script>
+  <script src="./js/functions.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js"></script>
+  <script>
+    var $j = jQuery.noConflict();
+    function connexion() {
+      var exec = true;
+      if (document.frm_connexion.username == "" || document.frm_connexion.password == "") {
+        exec = false;
+      }
+      return exec;
+    }
+    function isInt(value) {
+      return !isNaN(value) && 
+      parseInt(Number(value)) == value && 
+      !isNaN(parseInt(value, 10));
+    }
+    function isValidCP(cp) {
+      console.log(cp);
+      if (isInt(cp))
+      {
+        return /^\d{5}(-\d{4})?$/.test(cp);
+      }
+      else
+      {
+        return false;
+      }
+    }
+    function verifier_formulaire()
+    {
+      var msg = "";
+      var msg_intro = "Merci de vérifier les champs suivants : \n";
+      if($j("#choix_inscription").val() == "par")
+      {
                 //Verif pseudo
                 if($j("#pseudo").val().length < 3 || $j("#pseudo").val().length>35) {
-                    msg += "- Pseudo (Doit être compris entre 3 et 35 caracteres)\n";
-                    $j("#pseudo").css("background-color", "#FF0000");
+                  msg += "- Pseudo (Doit être compris entre 3 et 35 caracteres)\n";
+                  $j("#pseudo").css("background-color", "#FF0000");
                 }
                 else
                 {
-                    $j("#pseudo").css("background-color", "");
+                  $j("#pseudo").css("background-color", "");
                 }
                 //Verif password
                 if($j("#password").val().length < 5 || $j("#password").val().length > 25) {
-                    msg += "- Mot de passe (Doit être compris entre 5 et 25 caracteres) \n";
-                    $j("#password").css("background-color", "#FF0000");
+                  msg += "- Mot de passe (Doit être compris entre 5 et 25 caracteres) \n";
+                  $j("#password").css("background-color", "#FF0000");
                 }
                 else
                 {
-                    $j("#password").css("background-color", "");
+                  $j("#password").css("background-color", "");
                 }
-            }
-            else {
+              }
+              else {
               // Vérif du formulaire pour les pro
 
               //Verif pseudo
@@ -72,9 +72,9 @@
                 $j("#pseudo").css("background-color", "#FF0000");
               }
               else
-               {
-                 $j("#pseudo").css("background-color", "");
-               }
+              {
+               $j("#pseudo").css("background-color", "");
+             }
 
               //Verif ville
               if($j("#ville").val().length < 3 || $j("#ville").val().length>15) {
@@ -82,9 +82,9 @@
                 $j("#ville").css("background-color", "#FF0000");
               }
               else
-               {
-                 $j("#ville").css("background-color", "");
-               }
+              {
+               $j("#ville").css("background-color", "");
+             }
 
               //Verif code postal
               if($j("#code_postal").val().length != 5 || !isValidCP($j("#code_postal").val())) {
@@ -92,9 +92,9 @@
                 $j("#code_postal").css("background-color", "#FF0000");
               }
               else
-               {
-                 $j("#code_postal").css("background-color", "");
-               }
+              {
+               $j("#code_postal").css("background-color", "");
+             }
 
               //Verif adresse
               if($j("#adresse").val().length < 7 || $j("#adresse").val().length>25) {
@@ -102,9 +102,9 @@
                 $j("#adresse").css("background-color", "#FF0000");
               }
               else
-               {
-                 $j("#adresse").css("background-color", "");
-               }
+              {
+               $j("#adresse").css("background-color", "");
+             }
 
               //Verfi tel
               if($j("#tel").val().length != 10 || !isInt($j("#tel").val())) {
@@ -112,9 +112,9 @@
                 $j("#tel").css("background-color", "#FF0000");
               }
               else
-               {
-                 $j("#tel").css("background-color", "");
-               }
+              {
+               $j("#tel").css("background-color", "");
+             }
 
               //Verif mobile
               if($j("#mob").val().length != 10 || !isInt($j("#mob").val())) {
@@ -122,9 +122,9 @@
                 $j("#mob").css("background-color", "#FF0000");
               }
               else
-               {
-                 $j("#mob").css("background-color", "");
-               }
+              {
+               $j("#mob").css("background-color", "");
+             }
 
               //Verif mail
               if($j("#mail").val().length < 3 || $j("#mail").val().length > 255) {
@@ -132,9 +132,9 @@
                 $j("#mail").css("background-color", "#FF0000");
               }
               else
-               {
-                 $j("#mail").css("background-color", "");
-               }
+              {
+               $j("#mail").css("background-color", "");
+             }
 
               //Verif password
               if($j("#password").val().length < 5 || $j("#password").val().length > 25) {
@@ -142,21 +142,21 @@
                 $j("#password").css("background-color", "#FF0000");
               }
               else
-               {
-                 $j("#password").css("background-color", "");
-               }
-            }
+              {
+               $j("#password").css("background-color", "");
+             }
+           }
 
-            if(msg == "") {
-                return true;
-            }
-            else {
-                 alert(msg_intro + " \n" + msg);
-                return false;
-            }
-        }
+           if(msg == "") {
+            return true;
+          }
+          else {
+           alert(msg_intro + " \n" + msg);
+           return false;
+         }
+       }
 
-        function charger_bloc(nom_bloc) {
+       function charger_bloc(nom_bloc) {
             // Initialisation et suivant le paramètre entrant, on charge le formulaire du bloc correspondant
             var html = "";
             if (nom_bloc == "pro") {
@@ -226,8 +226,8 @@
                 html += "</div>";
 
                 $j("#afficher_btn_retour").css("display", "block");
-            }
-            if (nom_bloc == "par") {
+              }
+              if (nom_bloc == "par") {
                 // Chargement du formulaire d'inscription pour les par.
                 // Pseudo
                 html += "<div class='form-group'>";
@@ -246,79 +246,79 @@
                 html += "</div>";
 
                 $j("#afficher_btn_retour").css("display", "block");
-            }
-            if (nom_bloc == "choix")
-            {
+              }
+              if (nom_bloc == "choix")
+              {
                 $j("#afficher_btn_retour").css("display",  "none");
-               html += "Vous êtes : <br/> <input id='pro' type='radio' name='choix_inscription' onclick='charger_bloc(this.id);' value='pro'><label for='pro'>Un professionnel</label>";
+                html += "Vous êtes : <br/> <input id='pro' type='radio' name='choix_inscription' onclick='charger_bloc(this.id);' value='pro'><label for='pro'>Un professionnel</label>";
                 html += "<input id='par' type='radio' name='choix_inscription' onclick='charger_bloc(this.id);' value='par'><label for='par'>Un particulier</label><br/><br/>";
-            }
+              }
 
             // Remplissage html
             html += "<input type='hidden' name='choix_inscription' id='choix_inscription' value='" + nom_bloc + "'/>";
             $j("#content_inscription").empty();
             $j("#content_inscription").append(html+"<span style='color:Red;' id='form_error'></span>");
-        }
+          }
 
-        function mdp_oublie()
-        {
+          function mdp_oublie()
+          {
             var email_saisi = $j("#email_oublie").val();
 
             $j.ajax({
-                type: "GET",
-                url: host + "/projets/tweevent/api/q/req.php",
-                data: {action: "Utilisateur_Rein_Mdp", email: email_saisi},
-                dataType: 'json',
-                success: function (data) {
-                    if (data.confirmation) {
-                        $j(location).attr('href',"http://martinfrouin.fr/projets/tweevent/index.html#email_envoye");
-                        window.location.reload(true);
-                    }
-                    else {
-                        $j(location).attr('href',"http://martinfrouin.fr/projets/tweevent/index.html#email_nnenvoye");
-                        window.location.reload(true);
-                    }
+              type: "GET",
+              url: host + "/projets/tweevent/api/q/req.php",
+              data: {action: "Utilisateur_Rein_Mdp", email: email_saisi},
+              dataType: 'json',
+              success: function (data) {
+                if (data.confirmation) {
+                  $j(location).attr('href',"http://martinfrouin.fr/projets/tweevent/index.html#email_envoye");
+                  window.location.reload(true);
                 }
+                else {
+                  $j(location).attr('href',"http://martinfrouin.fr/projets/tweevent/index.html#email_nnenvoye");
+                  window.location.reload(true);
+                }
+              }
             });
-        }
+          }
 
-    </script>
-</head>
-<body class="">
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-toggle">
+        </script>
+      </head>
+      <body class="">
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
+          <div class="container">
+            <div class="navbar-header">
+              <a class="navbar-toggle">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-            </a>
-            <a class="navbar-brand" href="index.html"><img width="180" src="./img/logo.png"></a>
-        </div>
-        <div id="slidemenu">
-            <form class="navbar-form navbar-right" method="post" action="functions.php?action=connexion" name="frm_connexion">
+              </a>
+              <a class="navbar-brand" href="index.html"><img width="180" src="./img/logo.png"></a>
+            </div>
+            <div id="slidemenu">
+              <form class="navbar-form navbar-right" method="post" action="functions.php?action=connexion" name="frm_connexion">
                 <div class="form-group">
-                    <input type="text" id="connection_username" name="username" placeholder="Adresse email"
-                           class="form-control">
-                    <input type="password" id="connection_pwd" name="password" placeholder="Mot de passe"
-                           class="form-control">
+                  <input type="text" id="connection_username" name="username" placeholder="Adresse email"
+                  class="form-control">
+                  <input type="password" id="connection_pwd" name="password" placeholder="Mot de passe"
+                  class="form-control">
                 </div>
                 <button type="submit" id="connection_validation" class="btn btn-primary icon-user"
-                        onclick="return connexion()">Connexion
-                </button>
-                <button type="button" id="btn_mdp_oublie" class="btn btn-primary icon-user" >
-                    <a href="#mdp_oublie" role="button" data-toggle="modal" id="mdp_oublieBtn">Mdp oublié ? </a>
-                </button>
+                onclick="return connexion()">Connexion
+              </button>
+              <button type="button" id="btn_mdp_oublie" class="btn btn-primary icon-user" >
+                <a href="#mdp_oublie" role="button" data-toggle="modal" id="mdp_oublieBtn">Mdp oublié ? </a>
+              </button>
             </form>
+          </div>
         </div>
-    </div>
-</div>
-<div class="inverse" id="navbar-height-col"></div>
-<div class="block_home center vcenter" style="height: 641px;">
-    <div class="title_home inner">
-        <h1>Bienvenue sur<br>Tweevent</h1>
-        <div class="about">
+      </div>
+      <div class="inverse" id="navbar-height-col"></div>
+      <div class="block_home center vcenter" style="height: 641px;">
+        <div class="title_home inner">
+          <h1>Bienvenue sur<br>Tweevent</h1>
+          <div class="about">
             <h3><a href="#inscriptionModal" role="button" data-toggle="modal">S'inscrire</a></h3>
             <h3><a href="#errorModal" id="errorBtn" role="button" data-toggle="modal"></a></h3>
             <h3><a href="#errorModal2" id="errorBtn2" role="button" data-toggle="modal"></a></h3>
@@ -332,273 +332,278 @@
             <h3><a href="#erreur_captchaRequete" id="erreur_captchaRequeteBtn" role="button" data-toggle="modal"></a></h3>
             <h3><a href="#reinit_ok" id="mdpReinitOkBtn" role="button" data-toggle="modal"></a></h3>
             <h3><a href="#reinit_ko" id="mdpReinitKoBtn" role="button" data-toggle="modal"></a></h3>
+          </div>
+
         </div>
+      </div>
 
-    </div>
-</div>
-
-<script>
-    window.onload = function () {
-        if (window.jQuery) {
+      <script>
+        window.onload = function () {
+          if (window.jQuery) {
             $("#validationInscription").trigger("click");
-        }
-        if (window.location.hash) {
+          }
+          if (window.location.hash) {
             var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
             if (hash == "login_error") {
-                $("#errorBtn").trigger("click");
+              $("#errorBtn").trigger("click");
             }
 
             else if (hash == "insc_error") {
-                $("#errorBtn2").trigger("click");
+              $("#errorBtn2").trigger("click");
             }
             else if (hash == "insc_ok") {
-                $("#inscrBtn").trigger("click");
+              $("#inscrBtn").trigger("click");
             }
             else if (hash == "email_error") {
-                $("#errorMailBtn").trigger("click");
+              $("#errorMailBtn").trigger("click");
             }
             else if (hash == "email_invalide") {
-                $("#emailNonValideBtn").trigger("click");
+              $("#emailNonValideBtn").trigger("click");
             }
             else if (hash == "erreur_validation") {
-                $("#errorValidationBtn").trigger("click");
+              $("#errorValidationBtn").trigger("click");
             }
             else if (hash == "conf_validation") {
-                $("#confValidationBtn").trigger("click");
+              $("#confValidationBtn").trigger("click");
             }
             else if (hash == "erreur_captchaNonSaisi") {
-                $("#erreurCatpchaBtn").trigger("click");
+              $("#erreurCatpchaBtn").trigger("click");
             }
             else if (hash == "erreur_captchaRequete") {
-                $("#erreur_captchaRequeteBtn").trigger("click");
+              $("#erreur_captchaRequeteBtn").trigger("click");
             }
-           else if (hash == "email_envoye") {
-                $("#mdpReinitOkBtn").trigger("click");
+            else if (hash == "email_envoye") {
+              $("#mdpReinitOkBtn").trigger("click");
             }
-           else if (hash == "email_nnenvoye") {
-                $("#mdpReinitKoBtn").trigger("click");
+            else if (hash == "email_nnenvoye") {
+              $("#mdpReinitKoBtn").trigger("click");
             }
 
-        } else {
+          } else {
             // No hash found
+          }
         }
-    }
-</script><!-- Validation inscription modal -->
+      </script><!-- Validation inscription modal -->
 
-<!--inscription modal-->
-<div id="inscriptionModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+      <!--inscription modal-->
+      <div id="inscriptionModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h5>Formulaire d'inscription</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h5>Formulaire d'inscription</h5>
             </div>
             <div id="info_inscription">
 
             </div>
             <form class="form-horizontal" id="register_form" name="frm_ajout_utilisateur"
-                  action="functions.php?action=inscription" method="post" onsubmit="return verifier_formulaire();">
-                <!-- Chargement conditionnel du formulaire d'inscription en AJAX -->
-                <div id="content_inscription" class="form-group modal-body">
-                    Vous êtes : <br/>
-                    <input type="radio" id="pro" name="choix_inscription" onclick="charger_bloc(this.id);" value="pro"/><label for="pro">Un professionnel</label>
-                    <input type="radio" id="par" name="choix_inscription" onclick="charger_bloc(this.id);" value="par"/><label for="par">Un particulier</label> <br/>
-                </div>
-                <div class="g-recaptcha" data-sitekey="6LcDniETAAAAAFiX24Mw5sHqL2j0IqGJFGXqWkB0" style ="text-align: -moz-center;"></div>
-                <div class="modal-footer">
-                    <div>
-                        <div id="afficher_btn_retour" style="display: none;text-align: left;" class="col-md-1" >
-                        <input class="btn btn-default" type="button" onclick="charger_bloc('choix');" name="chk"
-                               value="Retour" />
-                        </div>
-                        <div>
-                            <input class="btn btn-default" type="submit" name="chk" value="Valider"/>
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!--error modal-->
-<div>
-    <div id="errorModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>Oups, une erruer est survenue. Merci de vérifier les données renseignées.(</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-    <div id="errorModal2" class="modal fade" tabindex="-2" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>Oups, cet email est déjà utilisé, merci d'en saisir un autre.</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-    <div id="inscrOk" class="modal fade" tabindex="-3" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>Votre compte a bien été créer et nous sommes heureux de vous accueilir ! Mais avant de commencer
-                        notre histoire, merci de valider votre adresse email en cliquant sur le lien reçu.</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-    <div id="errorEmail" class="modal fade" tabindex="-4" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>Une erreur est survenue lors de l'envoi de l'email de confirmation, et nous sommes désolés pour
-                        ce gêne.</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-    <div id="emailNonValide" class="modal fade" tabindex="-5" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>Merci de valider votre email pour pouvoir vous connecter.</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-    <div id="erreurValidation" class="modal fade" tabindex="-6" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>La clé saisie n'est pas correcte.</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-    <div id="erreurCatpcha" class="modal fade" tabindex="-7" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>Merci d'approuver le captcha !</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-    <div id="erreur_captchaNonSaisi" class="modal fade" tabindex="-8" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>Merci de valider que vous n'êtes pas un robot grâce au Re-Captcha de Google !</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-    <div id="erreur_captchaRequete" class="modal fade" tabindex="-9" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>Merci de valider que vous n'êtes pas un robot grâce au Re-Captcha de Google !</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-    <div id="confValidation" class="modal fade" tabindex="-10" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>Merci d'avoir validé votre email ! Vous pouvez désormais vous connecter</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-    <div id="mdp_oublie" class="modal fade" tabindex="-11" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>Merci de saisir votre email :</h5>
-                        <div class='form-group'>
-                            <input required class="form-control" type="email" id="email_oublie" name="email_oublie" value=""/> <br/>
-                            <button type="submit" id="mdp_oublie_btn" onclick="mdp_oublie();" class="btn btn-primary icon-user" >Envoyer</button>
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-    <div id="reinit_ok" class="modal fade" tabindex="-12" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>Votre mot de passe a bien été réinitialisé ! Merci de cliquer sur le lien dans l-email reçu afin de procéder au changement de mot de passe.</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-    <div id="reinit_ko" class="modal fade" tabindex="-13" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h5>Une erreur est survenue ! Est-ce que l'email saisi correspond bien à votre compte ?</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+            action="functions.php?action=inscription" method="post" onsubmit="return verifier_formulaire();">
+            <!-- Chargement conditionnel du formulaire d'inscription en AJAX -->
+            <div id="content_inscription" class="form-group modal-body">
+              Vous êtes : <br/>
+              <div class="col-xs-12">
+                <input type="radio" id="pro" name="choix_inscription" onclick="charger_bloc(this.id);" value="pro"/><label for="pro">Un professionnel</label>
+              </div>
+              <div class="col-xs-12">
 
-<script src="./js/jquery.min.js"></script>
-<script src="./js/scripts.js"></script>
-<!-- fin modal-->
+                <input type="radio" id="par" name="choix_inscription" onclick="charger_bloc(this.id);" value="par"/><label for="par">Un particulier</label> <br/>
+              </div>
+            </div>
+            <div class="g-recaptcha" data-sitekey="6LcDniETAAAAAFiX24Mw5sHqL2j0IqGJFGXqWkB0" style ="text-align: -moz-center;"></div>
+            <div class="modal-footer">
+              <div>
+                <div id="afficher_btn_retour" style="display: none;text-align: left;" class="col-md-1" >
+                  <input class="btn btn-default" type="button" onclick="charger_bloc('choix');" name="chk"
+                  value="Retour" />
+                </div>
+                <div>
+                  <input class="btn btn-default" type="submit" name="chk" value="Valider"/>
+                </div>
+                
+              </div>
+              
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--error modal-->
+    <div>
+      <div id="errorModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h5>Oups, une erruer est survenue. Merci de vérifier les données renseignées.(</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div id="errorModal2" class="modal fade" tabindex="-2" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h5>Oups, cet email est déjà utilisé, merci d'en saisir un autre.</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div id="inscrOk" class="modal fade" tabindex="-3" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h5>Votre compte a bien été créer et nous sommes heureux de vous accueilir ! Mais avant de commencer
+                notre histoire, merci de valider votre adresse email en cliquant sur le lien reçu.</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div id="errorEmail" class="modal fade" tabindex="-4" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h5>Une erreur est survenue lors de l'envoi de l'email de confirmation, et nous sommes désolés pour
+                  ce gêne.</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div id="emailNonValide" class="modal fade" tabindex="-5" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h5>Merci de valider votre email pour pouvoir vous connecter.</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div id="erreurValidation" class="modal fade" tabindex="-6" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h5>La clé saisie n'est pas correcte.</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div id="erreurCatpcha" class="modal fade" tabindex="-7" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h5>Merci d'approuver le captcha !</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div id="erreur_captchaNonSaisi" class="modal fade" tabindex="-8" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h5>Merci de valider que vous n'êtes pas un robot grâce au Re-Captcha de Google !</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div id="erreur_captchaRequete" class="modal fade" tabindex="-9" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h5>Merci de valider que vous n'êtes pas un robot grâce au Re-Captcha de Google !</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div id="confValidation" class="modal fade" tabindex="-10" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h5>Merci d'avoir validé votre email ! Vous pouvez désormais vous connecter</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div id="mdp_oublie" class="modal fade" tabindex="-11" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h5>Merci de saisir votre email :</h5>
+                  <div class='form-group'>
+                    <input required class="form-control" type="email" id="email_oublie" name="email_oublie" value=""/> <br/>
+                    <button type="submit" id="mdp_oublie_btn" onclick="mdp_oublie();" class="btn btn-primary icon-user" >Envoyer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div id="reinit_ok" class="modal fade" tabindex="-12" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h5>Votre mot de passe a bien été réinitialisé ! Merci de cliquer sur le lien dans l-email reçu afin de procéder au changement de mot de passe.</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div id="reinit_ko" class="modal fade" tabindex="-13" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h5>Une erreur est survenue ! Est-ce que l'email saisi correspond bien à votre compte ?</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<!-- Scripts -->
+        <script src="./js/jquery.min.js"></script>
+        <script src="./js/scripts.js"></script>
+        <!-- fin modal-->
 
-<!-- Scripts -->
-<script src="./js/jquery.min(1).js"></script>
-<script src="./js/bootstrap.min.js"></script> <!-- mal inclus -->
-<script src="js/md5.min.js"></script>
-<script type="text/javascript">
+        <!-- Scripts -->
 
-    $(document).ready(function () {
+        <!-- Scripts -->
+        <script src="./js/jquery.min(1).js"></script>
+        <script src="./js/bootstrap.min.js"></script> <!-- mal inclus -->
+        <script src="js/md5.min.js"></script>
+        <script type="text/javascript">
+
+          $(document).ready(function () {
         //stick in the fixed 100% height behind the navbar but don't wrap it
         $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
 
@@ -614,42 +619,42 @@
         var slideneg = '-80%';
 
         $("#slide-nav").on("click", toggler, function (e) {
-            var selected = $(this).hasClass('slide-active');
+          var selected = $(this).hasClass('slide-active');
 
-            $('#slidemenu').stop().animate({
-                left: selected ? menuneg : '0px'
-            });
+          $('#slidemenu').stop().animate({
+            left: selected ? menuneg : '0px'
+          });
 
-            $('#navbar-height-col').stop().animate({
-                left: selected ? slideneg : '0px'
-            });
+          $('#navbar-height-col').stop().animate({
+            left: selected ? slideneg : '0px'
+          });
 
-            $(pagewrapper).stop().animate({
-                left: selected ? '0px' : slidewidth
-            });
+          $(pagewrapper).stop().animate({
+            left: selected ? '0px' : slidewidth
+          });
 
-            $(navigationwrapper).stop().animate({
-                left: selected ? '0px' : slidewidth
-            });
-            $(this).toggleClass('slide-active', !selected);
-            $('#slidemenu').toggleClass('slide-active');
-            $('#page-content, .navbar, body, .navbar-header').toggleClass('slide-active');
+          $(navigationwrapper).stop().animate({
+            left: selected ? '0px' : slidewidth
+          });
+          $(this).toggleClass('slide-active', !selected);
+          $('#slidemenu').toggleClass('slide-active');
+          $('#page-content, .navbar, body, .navbar-header').toggleClass('slide-active');
         });
         var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
         $(function () {
-            $(window).resize(function () {
-                $('.block_home').height($(window).height() - $('.block_home').offset().top);
-            });
-            $(window).resize();
+          $(window).resize(function () {
+            $('.block_home').height($(window).height() - $('.block_home').offset().top);
+          });
+          $(window).resize();
 
-            $(window).on("resize", function () {
-                if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
-                    $(selected).removeClass('slide-active');
-                }
-            });
+          $(window).on("resize", function () {
+            if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
+              $(selected).removeClass('slide-active');
+            }
+          });
         });
-    });
-</script>
+      });
+    </script>
 
-</body>
-</html>
+  </body>
+  </html>
