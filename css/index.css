@@ -268,7 +268,11 @@ body.slide-active {
 }
 
 #content_inscription {
-	margin: 20px;
+	margin: 10px;
+}
+
+#content_inscription input[type="radio"] {
+	margin: 10px;
 }
 
 /* un fix the navbar when active so that all the menu items are accessible */
