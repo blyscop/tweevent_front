@@ -265,18 +265,18 @@
             var email_saisi = $j("#email_oublie").val();
 
             $j.ajax({
-                url: "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_Rein_Mdp&email=" +email_saisi,
-                type: "POST",
-                contentType: false,
-                cache: false,
-                processData: false,
+                type: "GET",
+                url: host + "/projets/tweevent/api/q/req.php",
+                data: {action: "Utilisateur_Rein_Mdp", email: email_saisi},
+                dataType: 'json',
                 success: function (data) {
-                    var json_data = JSON.parse(data);
-                    if (json_data.confirmation) {
-                        window.location = "http://martinfrouin.fr/projets/tweevent/index.html#mdp_reinit_ok";
+                    if (data.confirmation) {
+                        $j(location).attr('href',"http://martinfrouin.fr/projets/tweevent/index.html#email_envoye");
+                        window.location.reload(true);
                     }
                     else {
-                        window.location = "http://martinfrouin.fr/projets/tweevent/index.html#mdp_reinit_ko";
+                        $j(location).attr('href',"http://martinfrouin.fr/projets/tweevent/index.html#email_nnenvoye");
+                        window.location.reload(true);
                     }
                 }
             });
@@ -297,8 +297,7 @@
             <a class="navbar-brand" href="index.html"><img width="180" src="./img/logo.png"></a>
         </div>
         <div id="slidemenu">
-            <form class="navbar-form navbar-right" method="post" action="functions.php?action=connexion"
-                  name="frm_connexion">
+            <form class="navbar-form navbar-right" method="post" action="functions.php?action=connexion" name="frm_connexion">
                 <div class="form-group">
                     <input type="text" id="connection_username" name="username" placeholder="Adresse email"
                            class="form-control">
@@ -308,7 +307,7 @@
                 <button type="submit" id="connection_validation" class="btn btn-primary icon-user"
                         onclick="return connexion()">Connexion
                 </button>
-                <button type="submit" id="btn_mdp_oublie" class="btn btn-primary icon-user" >
+                <button type="button" id="btn_mdp_oublie" class="btn btn-primary icon-user" >
                     <a href="#mdp_oublie" role="button" data-toggle="modal" id="mdp_oublieBtn">Mdp oublié ? </a>
                 </button>
             </form>
@@ -331,8 +330,8 @@
             <h3><a href="#erreurCatpcha" id="erreurCatpchaBtn" role="button" data-toggle="modal"></a></h3>
             <h3><a href="#erreur_captchaNonSaisi" id="erreur_captchaNonSaisiBtn" role="button" data-toggle="modal"></a></h3>
             <h3><a href="#erreur_captchaRequete" id="erreur_captchaRequeteBtn" role="button" data-toggle="modal"></a></h3>
-            <h3><a href="#mdp_reinit_ok" id="mdp_reinit_okBtn" role="button" data-toggle="modal"></a></h3>
-            <h3><a href="#mdp_reinit_ko" id="mdp_reinit_koBtn" role="button" data-toggle="modal"></a></h3>
+            <h3><a href="#reinit_ok" id="mdpReinitOkBtn" role="button" data-toggle="modal"></a></h3>
+            <h3><a href="#reinit_ko" id="mdpReinitKoBtn" role="button" data-toggle="modal"></a></h3>
         </div>
 
     </div>
@@ -341,43 +340,43 @@
 <script>
     window.onload = function () {
         if (window.jQuery) {
-            $j("#validationInscription").trigger("click");
+            $("#validationInscription").trigger("click");
         }
         if (window.location.hash) {
             var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
             if (hash == "login_error") {
-                $j("#errorBtn").trigger("click");
+                $("#errorBtn").trigger("click");
             }
 
             else if (hash == "insc_error") {
-                $j("#errorBtn2").trigger("click");
+                $("#errorBtn2").trigger("click");
             }
             else if (hash == "insc_ok") {
-                $j("#inscrBtn").trigger("click");
+                $("#inscrBtn").trigger("click");
             }
             else if (hash == "email_error") {
-                $j("#errorMailBtn").trigger("click");
+                $("#errorMailBtn").trigger("click");
             }
             else if (hash == "email_invalide") {
-                $j("#emailNonValideBtn").trigger("click");
+                $("#emailNonValideBtn").trigger("click");
             }
             else if (hash == "erreur_validation") {
-                $j("#errorValidationBtn").trigger("click");
+                $("#errorValidationBtn").trigger("click");
             }
             else if (hash == "conf_validation") {
-                $j("#confValidationBtn").trigger("click");
+                $("#confValidationBtn").trigger("click");
             }
             else if (hash == "erreur_captchaNonSaisi") {
-                $j("#erreurCatpchaBtn").trigger("click");
+                $("#erreurCatpchaBtn").trigger("click");
             }
             else if (hash == "erreur_captchaRequete") {
-                $j("#erreur_captchaRequeteBtn").trigger("click");
+                $("#erreur_captchaRequeteBtn").trigger("click");
             }
-           else if (hash == "mdp_reinit_ok") {
-                $j("#mdp_reinit_okBtn").trigger("click");
+           else if (hash == "email_envoye") {
+                $("#mdpReinitOkBtn").trigger("click");
             }
-           else if (hash == "mdp_reinit_ko") {
-                $j("#mdp_reinit_koBtn").trigger("click");
+           else if (hash == "email_nnenvoye") {
+                $("#mdpReinitKoBtn").trigger("click");
             }
 
         } else {
@@ -553,19 +552,17 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h5>Merci de saisir votre email :</h5>
-                    <form name="frm_mdp_oublie" id="frm_mdp_oublie" onsubmit="return mdp_oublie();">
                         <div class='form-group'>
                             <input required class="form-control" type="email" id="email_oublie" name="email_oublie" value=""/> <br/>
-                            <button type="submit" id="mdp_oublie_btn" class="btn btn-primary icon-user" >Envoyer</button>
+                            <button type="submit" id="mdp_oublie_btn" onclick="mdp_oublie();" class="btn btn-primary icon-user" >Envoyer</button>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <div>
-    <div id="mdp_reinit_ok" class="modal fade" tabindex="-12" role="dialog" aria-hidden="true">
+    <div id="reinit_ok" class="modal fade" tabindex="-12" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -577,7 +574,7 @@
     </div>
 </div>
 <div>
-    <div id="mdp_reinit_ko" class="modal fade" tabindex="-13" role="dialog" aria-hidden="true">
+    <div id="reinit_ko" class="modal fade" tabindex="-13" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -601,11 +598,11 @@
 <script src="js/md5.min.js"></script>
 <script type="text/javascript">
 
-    $j(document).ready(function () {
+    $(document).ready(function () {
         //stick in the fixed 100% height behind the navbar but don't wrap it
-        $j('#slide-nav.navbar-inverse').after($j('<div class="inverse" id="navbar-height-col"></div>'));
+        $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
 
-        $j('#slide-nav.navbar-default').after($j('<div id="navbar-height-col"></div>'));
+        $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));
 
         // Enter your ids or classes
         var toggler = '.navbar-toggle';
@@ -616,38 +613,38 @@
         var menuneg = '-100%';
         var slideneg = '-80%';
 
-        $j("#slide-nav").on("click", toggler, function (e) {
-            var selected = $j(this).hasClass('slide-active');
+        $("#slide-nav").on("click", toggler, function (e) {
+            var selected = $(this).hasClass('slide-active');
 
-            $j('#slidemenu').stop().animate({
+            $('#slidemenu').stop().animate({
                 left: selected ? menuneg : '0px'
             });
 
-            $j('#navbar-height-col').stop().animate({
+            $('#navbar-height-col').stop().animate({
                 left: selected ? slideneg : '0px'
             });
 
-            $j(pagewrapper).stop().animate({
+            $(pagewrapper).stop().animate({
                 left: selected ? '0px' : slidewidth
             });
 
-            $j(navigationwrapper).stop().animate({
+            $(navigationwrapper).stop().animate({
                 left: selected ? '0px' : slidewidth
             });
-            $j(this).toggleClass('slide-active', !selected);
-            $j('#slidemenu').toggleClass('slide-active');
-            $j('#page-content, .navbar, body, .navbar-header').toggleClass('slide-active');
+            $(this).toggleClass('slide-active', !selected);
+            $('#slidemenu').toggleClass('slide-active');
+            $('#page-content, .navbar, body, .navbar-header').toggleClass('slide-active');
         });
         var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
-        $j(function () {
-            $j(window).resize(function () {
-                $j('.block_home').height($j(window).height() - $j('.block_home').offset().top);
+        $(function () {
+            $(window).resize(function () {
+                $('.block_home').height($(window).height() - $('.block_home').offset().top);
             });
-            $j(window).resize();
+            $(window).resize();
 
-            $j(window).on("resize", function () {
-                if ($j(window).width() > 767 && $j('.navbar-toggle').is(':hidden')) {
-                    $j(selected).removeClass('slide-active');
+            $(window).on("resize", function () {
+                if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
+                    $(selected).removeClass('slide-active');
                 }
             });
         });

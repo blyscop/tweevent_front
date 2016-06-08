@@ -1,6 +1,5 @@
 <?php
 // Fichier contenant toutes les fonctions utilisées par le front office
-
 // Gestion des sessions (appeler à chaque page)
 function check_session()
 {
@@ -37,13 +36,15 @@ function connexion()
             $redirection_actualite = true;
 
             // Création de la session en récupérant les infos comp. de la base
-            setcookie('utilisateur_id', $content['utilisateur']['id_tweevent_user'] > 0 ? $content['utilisateur']['id_tweevent_user'] : 0, time() + 3600);
-            setcookie('utilisateur_type', !empty($content['utilisateur']['type_tweevent_user']) ? $content['utilisateur']['type_tweevent_user'] : "", time() + 3600);
-            setcookie('utilisateur_connexion', $content['utilisateur']['id_tweevent_user'] > 0 ? $content['utilisateur']['id_tweevent_user'] : 0, time() + 3600);
-            setcookie('username', $content['utilisateur']['pseudo_tweevent_user'], time() + 3600);
-            setcookie('est_connecte', true, time() + 3600);
+            setcookie('utilisateur_id', $content['utilisateur']['id_tweevent_user'] > 0 ? $content['utilisateur']['id_tweevent_user'] : 0, time() + 365 * 24 * 3600);
+            setcookie('utilisateur_type', !empty($content['utilisateur']['type_tweevent_user']) ? $content['utilisateur']['type_tweevent_user'] : "", time() + 365 * 24 * 3600);
+            setcookie('utilisateur_connexion', $content['utilisateur']['id_tweevent_user'] > 0 ? $content['utilisateur']['id_tweevent_user'] : 0, time() + 365 * 24 * 3600);
+            setcookie('username', $content['utilisateur']['pseudo_tweevent_user'], time() + 365 * 24 * 3600);
+            setcookie('est_connecte', true, time() + 365 * 24 * 3600);
         } else if ($content['email_non_valide'])
             header('Location: index.html#email_invalide'); // redirection page accueil (adresse email pas encore validée)
+        else
+            header('Location: index.html#login_error'); // redirection page accueil (login / mdp invalide)
     } else {
         header('Location: index.html#login_error'); // redirection page accueil (pas de login et mdp fourni)
     }

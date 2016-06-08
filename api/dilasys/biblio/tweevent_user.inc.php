@@ -318,6 +318,8 @@ function Tweevent_users_chercher($args)
 		$condition .= " AND id_tweevent_user = '".$args['id_tweevent_user']."' ";
 	if (isset($args['pseudo_tweevent_user']) && $args['pseudo_tweevent_user'] != "*")
 		$condition .= " AND pseudo_tweevent_user LIKE '".Sql_prepareTexteStockage($args['pseudo_tweevent_user'])."' ";
+	if (isset($args['email_tweevent_user']) && $args['email_tweevent_user'] != "*")
+		$condition .= " AND email_tweevent_user = '".$args['email_tweevent_user']."' ";
 	if (isset($args['type_tweevent_user']) && $args['type_tweevent_user'] != "*")
 		$condition .= " AND type_tweevent_user LIKE '".Sql_prepareTexteStockage($args['type_tweevent_user'])."' ";
 	if (isset($args['date_de_naissance_tweevent_user']) && $args['date_de_naissance_tweevent_user'] != "*")
@@ -382,7 +384,7 @@ function Tweevent_users_chercher($args)
 			}
 		}
 
-		if (count($tab_result) == 1 && ($args['id_tweevent_user'] != '' && $args['id_tweevent_user'] != '*') || ($args['pseudo_tweevent_user'] != '' ))
+		if (count($tab_result) == 1 && (($args['id_tweevent_user'] != '' && $args['id_tweevent_user'] != '*') || ($args['pseudo_tweevent_user'] != '' ) || ($args['email_tweevent_user'] != '')))
 			$tab_result = array_pop($tab_result);
 	}
 

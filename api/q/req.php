@@ -241,6 +241,8 @@ function Utilisateur_SELECT($data_in = array())
                 $args_email_user_valid['id_tweevent_user'] = $tweevent_user['id_tweevent_user'];
                 $email_user_valid = Tweevent_email_validations_chercher($args_email_user_valid);
 
+                Lib_myLog("Validation de l'email recuperee avec l'id_user ".$args_email_user_valid['id_tweevent_user']." : ".$email_user_valid['est_valide']);
+
                 if($email_user_valid['est_valide'] == 1 || $email_user_valid['est_valide'] == '1' || $email_user_valid['est_valide']) {
                     $return['confirmation'] = true;
                     $return['message'] = "Utilisateur recupere !";
@@ -533,21 +535,23 @@ function Utilisateur_Rein_Mdp($data_in = array())
 
     // Recherche de l'utilisateur
     if(!empty($data_in['email'])) {
+        $args_mail_reinit['id_tweevent_user'] = '*';
         $args_mail_reinit['email_tweevent_user'] = $data_in['email'];
-        $mail_reinit = Tweevent_user_preferences_chercher($args_mail_reinit);
+        $mail_reinit = Tweevent_users_chercher($args_mail_reinit);
 
         if(!empty($mail_reinit)) {
             // Réinitialisation du mdp
             $time = time();
+            $time_crypte = md5($time);
             $user_reinit = Tweevent_user_recuperer($mail_reinit['id_tweevent_user']);
-            $user_reinit->password_tweevent_user = $time; // On met le timestamp en attendant que l'utilisateur change son mdp
+            $user_reinit->password_tweevent_user = $time_crypte; // On met le timestamp en attendant que l'utilisateur change son mdp
             $user_reinit->UPD();
 
             $lien_validation = "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Changement_Mdp&id=utilisateur=".$user_reinit->id_tweevent_user;
 
             $subject = "Changement de votre mot de passe sur Tweevent";
             $email = " Vous pouvez désormais vous connecter avec le mot de passe ci-dessous (pensez à le changer dans l'interface) : <br/>
-                           ".$time."> <br/>";
+                           ".$time." <br/> Attention à ne pas prendre en compte l'espace à la fin du mot de passe.";
             $headers   = array();
             $headers[] = "MIME-Version: 1.0";
             $headers[] = "Content-type: text/plain; charset=iso-8859-1";
@@ -556,9 +560,12 @@ function Utilisateur_Rein_Mdp($data_in = array())
             $headers[] = "X-Mailer: PHP/".phpversion();
             $headers[] = "Content-type: text/html; charset=UTF-8";
 
-            if(mail($data_in['mail'], $subject, $email, implode("\r\n", $headers))) {
+            if(mail($data_in['email'], $subject, $email, implode("\r\n", $headers))) {
                 $return['confirmation'] = true;
                 $return['message'] = "Email envoyé";
+            }
+            else {
+                $return['message'] = "Une erreur est survenue lors de l'envoi de l'email !";
             }
         }
         else {
@@ -569,6 +576,9 @@ function Utilisateur_Rein_Mdp($data_in = array())
     else {
         $return['message'] = "Aucun email passé en paramètre !";
     }
+
+    header('Access-Control-Allow-Origin: *');
+    echo json_encode($return);
 }
 
 //==================================================================================
