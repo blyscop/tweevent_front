@@ -11,13 +11,16 @@ check_session(); ?>
     <link href="./css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
     <link href="./css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="js/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+    <link rel="stylesheet" href="js/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
+    <link rel="stylesheet" href="js/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
     <link rel="stylesheet" href="./css/timelinestyle.css">
     <link rel="stylesheet" href="./css/jquery-ui.css">
     <script src="./js/jquery-1.10.2.js"></script>
 
     <script src="./js/jquery-ui.js"></script>
     <script src="js/functions.js"></script>
-    <?php include("functions_js.php"); ?>
+    <? include("functions_js.php"); ?>
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -79,9 +82,8 @@ check_session(); ?>
             };
         });
     </script>
-    <? include("functions_js.php"); ?>
 </head>
-<body onload="charger_preferences_utilisateur(); ReceiptPost();">
+<body onload="charger_preferences_utilisateur();">
 <div class="wrapper">
     <div class="box">
         <div class="row row-offcanvas row-offcanvas-left">
@@ -240,19 +242,42 @@ check_session(); ?>
 <script src="js/fileupload/jquery.fileupload-audio.js"></script>
 <script src="js/fileupload/jquery.fileupload-video.js"></script>
 <script src="js/fileupload/jquery.fileupload-validate.js"></script>
-<!-- Add mousewheel plugin (this is optional) -->
 <script type="text/javascript" src="js/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
-
-<!-- Add fancyBox -->
-<link rel="stylesheet" href="js/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
-
-<!-- Optionally add helpers - button, thumbnail and/or media -->
-<link rel="stylesheet" href="js/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
-
-<link rel="stylesheet" href="js/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
-
+<script type="text/javascript" src="./js/jquery.bpopup.min.js"></script>
 <script>
 
+    var _idUser =<?=$_COOKIE["utilisateur_id"] > 0 ? $_COOKIE["utilisateur_id"] : 0 ?>;
+
+    $j.ajax({
+        type: "GET",
+        url: host + "/projets/tweevent/api/q/req.php",
+        data: {action: "Utilisateur_Posts_SELECT", id_utilisateur: _idUser},
+        dataType: 'json',
+        success: function (msg) {
+            console.log(msg);
+            $j.each(msg.liste_actualites, function (i, item) {
+                $j('#cd-timeline').append(
+                    '<div class="cd-timeline-block">' +
+                    '<div class="cd-timeline-img cd-picture">' +
+                    '<a class="fancybox" rel="group" href="' + item.image + '">' +
+                    '<img src="' + item.image + '" alt=""/></a>' +
+                    '</div>' +
+                    '<div class="cd-timeline-content">' +
+                    '<h2>' + msg.utilisateur.nom_tweevent_user + ' a commenté</h2>' +
+                    '<p>' + item.message_tweevent_post + '</p>' +
+                    '<button class="cd-read-more" id="button_' + item.id_tweevent_post + '" >Voir</button>' +
+                    '<span class="cd-date">' + item.date_creation + '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div id="contenu_' + item.id_tweevent_post + '"><a class="b-close">x<a/>Content of popup</div>');
+                $j('#contenu_' + item.id_tweevent_post).css("display", "none");
+                $j('#button_' + item.id_tweevent_post).bind('click', function (e) {
+                    $('#contenu_' + item.id_tweevent_post).bPopup();
+                });
+            });
+        }
+    });
+    $j(".fancybox").fancybox();
     $j('.new_btn').on("click", function () {
         $j('#file').click();
     });

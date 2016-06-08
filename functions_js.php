@@ -3,6 +3,7 @@
 <script type="text/javascript" src="./js/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
 <script type="text/javascript" src="./js/fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
 <script type="text/javascript" src="./js/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+
 <script>
     var $j = jQuery.noConflict();
     function charger_preferences_utilisateur() {
@@ -301,35 +302,6 @@
                 }
             }
         });
-    }
-    function ReceiptPost() {
-        var _idUser =<?=$_COOKIE["utilisateur_id"] > 0 ? $_COOKIE["utilisateur_id"] : 0 ?>;
-
-        $j.ajax({
-            type: "GET",
-            url: host + "/projets/tweevent/api/q/req.php",
-            data: {action: "Utilisateur_Posts_SELECT", id_utilisateur: _idUser},
-            dataType: 'json',
-            success: function (msg) {
-                console.log(msg);
-                $j.each(msg.liste_actualites, function (i, item) {
-                    $j('#cd-timeline').append(
-                        '<div class="cd-timeline-block">' +
-                            '<div class="cd-timeline-img cd-picture">' +
-                                '<a class="fancybox" rel="group" href="'+item.image+'">' +
-                                    '<img src="'+item.image+'" alt=""/></a>' +
-                            '</div>' +
-                            '<div class="cd-timeline-content">' +
-                                '<h2>'+msg.utilisateur.nom_tweevent_user+' a commenté</h2>' +
-                                '<p>' + item.message_tweevent_post + '</p>' +
-                                '<a href="#" class="cd-read-more">Voir</a>' +
-                                '<span class="cd-date">' + item.date_creation + '</span>' +
-                            '</div>' +
-                        '</div>');
-                })
-            }
-        });
-        $j(".fancybox").fancybox();
     }
     // Modification des préférences de l'utilisateur, on requête le serveur d'API avec les cases cochées et il va nous répondre s'il a bien traiter notre demande (pour afficher un message à l'user)
     // Il faut penser à recharger le bloc en réappelant la fonction après l'UPD (s'il s'est bien déroulé)
