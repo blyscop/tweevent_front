@@ -523,6 +523,82 @@ function Utilisateur_Valider_Email($data_in = array())
     }
 }
 
+function Utilisateur_Rein_Mdp($data_in = array())
+{
+    Lib_myLog("action: " . $data_in['action']);
+    foreach ($GLOBALS['tab_globals'] as $global) global $$global;
+
+    $return = array();
+    $return['confirmation'] = false;
+
+    // Recherche de l'utilisateur
+    if(!empty($data_in['email'])) {
+        $args_mail_reinit['email_tweevent_user'] = $data_in['email'];
+        $mail_reinit = Tweevent_user_preferences_chercher($args_mail_reinit);
+
+        if(!empty($mail_reinit)) {
+            // Réinitialisation du mdp
+            $user_reinit = Tweevent_user_recuperer($mail_reinit['id_tweevent_user']);
+            $user_reinit->password_tweevent_user = time(); // On met le timestamp en attendant que l'utilisateur change son mdp
+            $user_reinit->nb_connect_tweevent_user = 99;
+            $user_reinit->UPD();
+
+            $lien_validation = "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Changement_Mdp&id=utilisateur=".$user_reinit->id_tweevent_user;
+
+            $subject = "Changement de votre mot de passe sur Tweevent";
+            $email = " Afin de modifier votre mot de passe, merci de vous rendre sur l'adresse suivante : <br/>
+                           <a href='".$lien_validation."'>Modifier mon mot de passe</a> <br/>";
+            $headers   = array();
+            $headers[] = "MIME-Version: 1.0";
+            $headers[] = "Content-type: text/plain; charset=iso-8859-1";
+            $headers[] = "From: Tweevent <admin@tweevent.fr>";
+            $headers[] = "Subject: {$subject}";
+            $headers[] = "X-Mailer: PHP/".phpversion();
+            $headers[] = "Content-type: text/html; charset=UTF-8";
+
+            if(mail($data_in['mail'], $subject, $email, implode("\r\n", $headers))) {
+                $return['confirmation'] = true;
+                $return['message'] = "Email envoyé";
+            }
+        }
+        else {
+            $return['message'] = "L'email fourni ne correspond à aucun compte utilisateur";
+        }
+
+    }
+    else {
+        $return['message'] = "Aucun email passé en paramètre !";
+    }
+}
+
+function Changement_Mdp($data_in = array())
+{
+    Lib_myLog("action: " . $data_in['action']);
+    foreach ($GLOBALS['tab_globals'] as $global) global $$global;
+
+    $return = array();
+    $return['confirmation'] = false;
+
+    if(!empty($data_in['id_utilisateur'])) {
+        $args_mail_reinit['id_tweevent_user'] = $data_in['id_utilisateur'];
+        $mail_reinit = Tweevent_user_preferences_chercher($args_mail_reinit);
+
+        if($mail_reinit['nb_connect_tweevent_user'] != 99) {
+            $return['message'] = "Vous ne pouvez pas réinitialiser le mot de passe !";
+        }
+        else {
+            $data_out['id_utilisateur'] = $mail_reinit['id_tweevent_user'];
+            $data_out['page'] = "api_form_reinit_mdp.php";
+        }
+    }
+    else {
+        $return['message'] = "Erreur : aucun id_utilisteur fourni !";
+    }
+
+    if(!empty($return['message']))
+        echo $return['message'];
+}
+
 //==================================================================================
 // DELETE
 //==================================================================================

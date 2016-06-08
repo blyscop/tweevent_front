@@ -273,7 +273,7 @@ function Tweevent_user_preferences_chercher($args)
 			}
 		}
 
-		if (count($tab_result) == 1 && ($args['id_tweevent_user_preference'] != '' && $args['id_tweevent_user_preference'] != '*'))
+		if (count($tab_result) == 1 && (($args['id_tweevent_user_preference'] != '' && $args['id_tweevent_user_preference'] != '*') || ($args['email_tweevent_user'] != '' )))
 			$tab_result = array_pop($tab_result);
 	}
 
