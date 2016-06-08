@@ -37,7 +37,7 @@ check_session(); ?>
                 </ul>
                 <ul class="nav hidden-xs" id="lg-menu">
                     <li>
-                        <a href="#" role="button"
+                        <a href="#preferenceModal" role="button"
                         data-toggle="modal">
                         <i class="glyphicon glyphicon-list-alt"></i>
                         Préferences
@@ -64,7 +64,7 @@ check_session(); ?>
             </ul>
             <ul class="list-unstyled hidden-xs" id="sidebar-footer">
                 <li>
-                    <a href=#">
+                    <a href="#">
                         <h3>Tweevent</h3>
                         <i class="glyphicon glyphicon-heart-empty"></i>
                         Events
@@ -75,7 +75,7 @@ check_session(); ?>
             <!-- tiny only nav-->
             <ul class="nav visible-xs" id="xs-menu">
                 <li>
-                    <a href="" class="text-center" role="button" data-toggle="modal">
+                    <a href="#preferenceModal" class="text-center" role="button" data-toggle="modal">
                         <i class="glyphicon glyphicon-list-alt"></i>
                     </a>
                 </li>
