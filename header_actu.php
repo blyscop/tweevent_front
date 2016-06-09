@@ -1,4 +1,5 @@
 <header>
+
     <div>
         <img style="" class="bloc-round" src="./img/profilpic.jpg"/><br/>
         <a style="" href="#imgModifModal" role="button" data-toggle="modal">Modifier mon image</a>
@@ -48,4 +49,5 @@
             </div>
         </div>
     </div>
+
 </header>

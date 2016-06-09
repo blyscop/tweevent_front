@@ -53,13 +53,7 @@
                         class_tag_i = categorie;
                     html += "<div id='" + categorie + "Preferences' class='col-md-4'> <i class='fa fa-" + class_tag_i + " fa-4x' aria-hidden='true'></i>";
                     $j.each(objet_preference, function (preference, droit) {
-                        var html_checkbox_preference = "";
-                        if (droit) {
-                            html += "<div><input type='checkbox' class='preferences' id='" + preference + "' name='" + preference + "' checked='checked'>" + preference + "</input></div>";
-                        }
-                        else {
-                            html += "<div><input type='checkbox' class='preferences' id='" + preference + "' name='" + preference + "'>" + preference + "</input></div>";
-                        }
+                        html += "<div><input type='checkbox' class='preferences_event' id='" + preference + "' name='" + preference + "'>" + preference + "</input></div>";
                     });
                     html += "</div>";
                 });
@@ -353,41 +347,41 @@
                     // Chargement du formulaire d'upd (mon profil) pour les pro.
                     // Pseudo
                     html += "<label for='pseudo'>Nom :<br />";
-                    html += "<input required type='text' id='pseudo' name='pseudo' value='"+pseudo+"'/>";
+                    html += "<input required type='text' id='pseudo' name='pseudo' value='" + pseudo + "'/>";
                     html += "</label><br />";
 
                     html += "<label for='email' >Email :<br />";
-                    html += "<input required type='email' id='email' name='email' value='"+email+"'/>";
+                    html += "<input required type='email' id='email' name='email' value='" + email + "'/>";
                     html += "</label><br />";
 
                     // ville
                     html += "<label for='ville'>Ville :<br />";
-                    html += "<input required type='text' id='ville' name='ville' value='"+ville+"'/>";
+                    html += "<input required type='text' id='ville' name='ville' value='" + ville + "'/>";
                     html += "</label><br />";
 
                     // Code postal
                     html += "<label for='code_postal'>Code postal:<br />";
-                    html += "<input required type='text' id='code_postal' name='code_postal' value='"+code_postal+"'/>";
+                    html += "<input required type='text' id='code_postal' name='code_postal' value='" + code_postal + "'/>";
                     html += "</label><br />";
 
                     // Adresse
                     html += "<label for='adresse'>Adresse :<br />";
-                    html += "<input required type='text' id='adresse' name='adresse' value='"+adresse+"'/>";
+                    html += "<input required type='text' id='adresse' name='adresse' value='" + adresse + "'/>";
                     html += "</label><br />";
 
                     // Téléphone
                     html += "<label for='telephone'>Téléphone :<br />";
-                    html += "<input required type='text' id='tel' name='tel' value='"+tel+"'/>";
+                    html += "<input required type='text' id='tel' name='tel' value='" + tel + "'/>";
                     html += "</label><br />";
 
                     // Téléphone cellulaire
                     html += "<label for='cellulaire'>Téléphone cellulaire :<br />";
-                    html += "<input required type='text' id='mob' name='mob' value='"+mob+"'/>";
+                    html += "<input required type='text' id='mob' name='mob' value='" + mob + "'/>";
                     html += "</label><br />";
 
                     // SIRET
                     html += "<label for='siret'>Code siret :<br />";
-                    html += "<input required type='text' id='siret' name='siret' value='"+siret+"'/>";
+                    html += "<input required type='text' id='siret' name='siret' value='" + siret + "'/>";
                     html += "</label><br />";
 
 
@@ -397,16 +391,16 @@
                     // Chargement du formulaire d'upd (mon profil) pour les par.
                     // Nom
                     html += "<label for='pseudo'>Nom :<br />";
-                    html += "<input required type='text' id='pseudo' name='pseudo' value='"+pseudo+"'/>";
+                    html += "<input required type='text' id='pseudo' name='pseudo' value='" + pseudo + "'/>";
                     html += "</label><br />";
 
                     // Pseudo
                     html += "<label for='pseudo'>Email :<br />";
-                    html += "<input required type='email' id='email' name='email' value='"+email+"'/>";
+                    html += "<input required type='email' id='email' name='email' value='" + email + "'/>";
                     html += "</label><br />";
 
                     html += "<label for='email' >Email :<br />";
-                    html += "<input required type='email' id='email' name='email' value='"+email+"'/>";
+                    html += "<input required type='email' id='email' name='email' value='" + email + "'/>";
                     html += "</label><br />";
 
                     $j("#afficher_btn_retour").css("display", "block");
@@ -615,6 +609,18 @@
         else
             $j("#eventDesc").css("background-color", "");
 
+        var au_moins_une_preference = $j('.preferences_event:checked').length;
+        var preferences = "";
+        $j(".preferences_event:checked").each(function () {
+            if (preferences == "")
+                preferences += this.name;
+            else
+                preferences += "," + this.name;
+        });
+
+        if (!au_moins_une_preference)
+            msg += "- Au moins une préférénce \n";
+
         if (msg == "") {
             var id_utilisateur = <?=$_COOKIE["utilisateur_id"] > 0 ? $_COOKIE["utilisateur_id"] : 0 ?> ;
             // Création de l'évènement grâce à une requête AJAX sur l'api
@@ -630,12 +636,16 @@
                     eventDateDebut: $j("#eventDateDebut").val(),
                     eventDateFin: $j("#eventDateFin").val(),
                     eventHeure: $j("#eventHeure").val(),
-                    eventDesc: $j("#eventDesc").val()
+                    eventDesc: $j("#eventDesc").val(),
+                    preferences: preferences
                 },
                 success: function (data) {
                     console.log(data);
                     if (data.confirmation) {
                         alert("Votre evenement a bien été ajouté !");
+                        $j(location).attr('href', "http://martinfrouin.fr/projets/tweevent/Calendrier");
+                        window.location.reload(true);
+
                     }
                     else {
                         alert("Une erreur est survenue lors de l'ajout de l'évènement : \n " + data.msg);

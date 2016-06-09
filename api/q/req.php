@@ -211,12 +211,14 @@ function Utilisateur_Evenement_ADD($data_in = array())
             $event->date_debut_tweevent_event = $data_in['eventDateDebut'];
             $event->date_fin_tweevent_event = $data_in['eventDateFin'];
             $event->lieu_tweevent_event = $data_in['eventLieu'];
+            $event->ids_posts_tweevent_event = $data_in['preferences'];
             $id_event = $event->ADD();
-            Lib_myLog("debut : " . $event->date_debut_tweevent_event . " et fin " . $event->date_fin_tweevent_event);
-            Lib_myLog("event : ", $event->getTab());
 
-            if ($id_event > 0)
-                $return['confirmation'] = true;
+            Lib_myLog("Date de debut : ".$event->date_debut_tweevent_event." et date de fin : ".$event->date_fin_tweevent_event);
+            // On ajoute l'évènement dans le calendrier de l'utilsateur qui a créer l'event !
+            $data_in['id_event'] = $id_event;
+            if(Utilisateur_Calendrier_Event_ADD($data_in))
+                    $return['confirmation'] = true;
             else
                 $return['msg'] = "Erreur lors de l'ajout de l'event !";
         } else {
@@ -230,6 +232,29 @@ function Utilisateur_Evenement_ADD($data_in = array())
     echo json_encode($return);
 }
 
+function Utilisateur_Calendrier_Event_ADD($data_in = array())
+{
+    Lib_myLog("action: " . $data_in['action']);
+    foreach ($GLOBALS['tab_globals'] as $global) global $$global;
+
+    $return = array();
+    $return['confirmation'] = false;
+
+    if($data_in['id_utilisateur'] > 0 && $data_in['id_event'] > 0) {
+        $user_event = new Tweevent_user_event();
+        $user_event->id_tweevent_user = $data_in['id_utilisateur'];
+        $user_event->id_tweevent_event = $data_in['id_event'];
+        $id_tweevent_user = $user_event->ADD();
+
+        if($id_tweevent_user > 0)
+            $return['confirmation'] = true;
+
+    }
+    else
+        $return['msg'] = "Il manque des informations dans la requête : id_utilisateur et id_event";
+
+    return $return['confirmation'];
+}
 // Permet d'initialiser les préférences de l'utilisateur, lors de la création
 function Utilisateur_Preferences_INIT($data_in = array())
 {
@@ -429,8 +454,8 @@ function Utilisateur_Calendrier_SELECT_ALL($data_in = array())
             // Recherche d'evenements pour le mois actuel du calendrier
             $args_evenements['tri_pour_calendrier'] = true;
             $args_evenements['tab_ids_tweevent_events'] = Lib_getValCol($liste_evenements_user, 'id_tweevent_event');
-            $args_evenements['date_debut_tweevent_event'] = Lib_enToFr($data_in['start']);
-            $args_evenements['date_fin_tweevent_event'] = Lib_enToFr($data_in['end']);
+            $args_evenements['date_debut_tweevent_event'] = $data_in['start'];
+            $args_evenements['date_fin_tweevent_event'] = $data_in['end'];
             $liste_evenements = Tweevent_events_chercher($args_evenements);
 
             if (!empty($liste_evenements)) {
@@ -438,6 +463,7 @@ function Utilisateur_Calendrier_SELECT_ALL($data_in = array())
                 $i = 0;
                 foreach ($liste_evenements as $id_evenement => $evenement) {
                     $return[$i] = $evenement;
+                    $i++;
                 }
 
             }
