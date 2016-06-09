@@ -67,6 +67,7 @@
     </div>
 </div>
 
+<? if($_COOKIE['utilisateur_type'] == "pro") { ?>
 <!-- POPUP AJOUT EVENEMENTS POUR LES PRO -->
 <div class="modal fade addEvent" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -75,7 +76,6 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h4>Ajouter Evenement</h4>
             </div>
-            <form>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="eventName">Nom de l'évènement</label>
@@ -90,16 +90,16 @@
                     <div class="col-md-6">
                         <label for="eventDateFin">Date de fin</label>
                         <input type="date" class="form-control" id="eventDateFin" placeholder="Date de fin">
-                        <label class="marge_label" for="exampleInputPassword1">Bonjour</label>
-                        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Bonjour">
+                        <label class="marge_label" for="eventHeure">Heure</label>
+                        <input type="time" class="form-control" id="eventHeure" placeholder="Heure de l'évènement">
                     </div>
                     <div class="form-group">
                         <label for="eventDesc">Description</label>
                         <textarea type="text" class="form-control" id="eventDesc" placeholder="Description"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-default">Enregistrer</button>
+                    <button type="button" onclick="ajouter_evenement();" class="btn btn-default">Enregistrer</button>
                 </div>
-            </form>
         </div>
     </div>
 </div>
+<? } ?>
