@@ -22,7 +22,7 @@ check_session(); ?>
     <![endif]-->
     <?php include("functions_js.php"); ?>
 </head>
-<body onload="charger_bloc_pro('<?php $_COOKIE['utilisateur_type'] ?>');">
+<body onload="charger_preferences_utilisateur(); _charger_preferences_utilisateur_ajout_event(); charger_bloc_pro('<?php $_COOKIE['utilisateur_type'] ?>');">
 <div class="wrapper">
     <div class="box">
         <div class="row row-offcanvas row-offcanvas-left">
