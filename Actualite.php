@@ -188,6 +188,8 @@ check_session(); ?>
                     '<div class="cd-timeline-content">' +
                     '<h2>' + msg.utilisateur.nom_tweevent_user + ' a commenté</h2>' +
                     '<p>' + item.message_tweevent_post + '</p>' +
+                    '<button class="btn btn-danger actu_button" name="' + item.id_tweevent_post + '" onclick="incrementer_post(this.name);" id="button_' + item.id_tweevent_post + '" >- ( ' + item.nb_moins + ')</button>' +
+                    '<button class="btn btn-success actu_button"  name="' + item.id_tweevent_post + '" onclick="decrementer_post(this.name);"  id="button_' + item.id_tweevent_post + '" >+ ( ' + item.nb_plus + ')</button>' +
                     '<span class="cd-date">' + item.date_creation + '</span>' +
                     '</div>' +
                     '</div>');
