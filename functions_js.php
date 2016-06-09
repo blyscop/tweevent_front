@@ -37,6 +37,38 @@
             }
         });
     }
+    function charger_preferences_utilisateur_ajout_event() {
+        $j.ajax({
+            type: "GET",
+            url: "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_Preferences_SELECT_ALL&id_utilisateur=<?=$_COOKIE['utilisateur_id'] > 0 ? $_COOKIE['utilisateur_id'] : 0?>",
+            dataType: 'json',
+            success: function (data) {
+                var html = "";
+                $j('#preferences_categories_event').empty();
+                $j.each(data, function (categorie, objet_preference) {
+                    var class_tag_i = "";
+                    if (categorie != "music")
+                        class_tag_i = "glass";
+                    else
+                        class_tag_i = categorie;
+                    html += "<div id='" + categorie + "Preferences' class='col-md-4'> <i class='fa fa-" + class_tag_i + " fa-4x' aria-hidden='true'></i>";
+                    $j.each(objet_preference, function (preference, droit) {
+                        var html_checkbox_preference = "";
+                        if (droit) {
+                            html += "<div><input type='checkbox' class='preferences' id='" + preference + "' name='" + preference + "' checked='checked'>" + preference + "</input></div>";
+                        }
+                        else {
+                            html += "<div><input type='checkbox' class='preferences' id='" + preference + "' name='" + preference + "'>" + preference + "</input></div>";
+                        }
+                    });
+                    html += "</div>";
+                });
+                html += "<table class='table borderles'></table>";
+                $j('#preferences_categories_event').append(html);
+            }
+        });
+    }
+
     function connexion() {
         var exec = true;
         if (document.frm_connexion.username == "" || document.frm_connexion.password == "") {

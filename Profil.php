@@ -18,10 +18,11 @@ check_session(); ?>
     <script src="js/functions.js"></script>
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <? include("functions_js.php"); ?>
+
     <![endif]-->
+    <?php include("functions_js.php"); ?>
 </head>
-<body onload="charger_bloc_pro('<?php $_COOKIE['utilisateur_type'] ?>')">
+<body onload="charger_bloc_pro('<?php $_COOKIE['utilisateur_type'] ?>');">
 <div class="wrapper">
     <div class="box">
         <div class="row row-offcanvas row-offcanvas-left">
@@ -55,8 +56,12 @@ check_session(); ?>
                                        value="Modifier"/>
                             </div>
                         </section> <!-- cd-timeline -->
-                        
-                        <form id="content_inscription_maj">
+
+                        <form class="form-horizontal" id="register_form" name="frm_ajout_utilisateur"
+                              action="functions.php?action=inscription" method="post" onsubmit="return verifier_formulaire();">
+                            <div id="content_inscription_maj"  class="form-group modal-body">
+
+                            </div>
                             </form>
 
 
