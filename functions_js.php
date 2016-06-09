@@ -103,14 +103,6 @@
             else {
                 $j("#email").css("background-color", "");
             }
-            //Verif password
-            if ($j("#password").val().length < 5 || $j("#password").val().length > 25) {
-                msg += "- Mot de passe (Doit être compris entre 5 et 25 caracteres) \n";
-                $j("#password").css("background-color", "#FF0000");
-            }
-            else {
-                $j("#password").css("background-color", "");
-            }
         }
         else {
             // Vérif du formulaire pour les pro
@@ -179,22 +171,14 @@
             }
 
             //Verif mail
-            if ($j("#mail").val().length < 3 || $j("#mail").val().length > 255) {
+            if ($j("#email").val().length < 3 || $j("#email").val().length > 255) {
                 msg += "- Mail invalide \n";
-                $j("#mail").css("background-color", "#FF0000");
+                $j("#email").css("background-color", "#FF0000");
             }
             else {
-                $j("#mail").css("background-color", "");
+                $j("#email").css("background-color", "");
             }
 
-            //Verif password
-            if ($j("#password").val().length < 5 || $j("#password").val().length > 25) {
-                msg += "- Mot de passe (Doit être compris entre 5 et 25 caracteres) \n";
-                $j("#password").css("background-color", "#FF0000");
-            }
-            else {
-                $j("#password").css("background-color", "");
-            }
         }
 
         if (msg == "") {
@@ -271,7 +255,7 @@
             html += "<div class='form-group'>";
             html += "<label for='email' class='col-sm-3 control-label'>Email :</label>";
             html += "<div class='col-sm-4'>";
-            html += "<input required class='form-control' type='email' id='mail' name='mail' value=''/>";
+            html += "<input required class='form-control' type='email' id='email' name='email' value=''/>";
             html += "</div>";
             html += "</div>";
             // Mot de passe
@@ -346,8 +330,8 @@
                 if (nom_bloc == "pro") {
                     // Chargement du formulaire d'upd (mon profil) pour les pro.
                     // Pseudo
-                    html += "<label for='pseudo'>Nom :<br />";
-                    html += "<input required type='text' id='pseudo' name='pseudo' value='" + pseudo + "'/>";
+                    html += "<label for='nom'>Nom :<br />";
+                    html += "<input required type='text' id='nom' name='nom' value='" + pseudo + "'/>";
                     html += "</label><br />";
 
                     html += "<label for='email' >Email :<br />";
@@ -660,9 +644,8 @@
             return false;
         }
     }
-    function adherer_evenement(id_event, id_user)
-    {
-        if(id_event > 0 && id_user > 0) {
+    function adherer_evenement(id_event, id_user) {
+        if (id_event > 0 && id_user > 0) {
             $j.ajax({
                 type: "POST",
                 url: "http://martinfrouin.fr/projets/tweevent/api/q/req.php",

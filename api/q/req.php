@@ -422,6 +422,7 @@ function Utilisateur_Posts_SELECT($data_in = array())
                 $return['liste_actualites'][$id_post]['type'] = "actualite";
                 $return['liste_actualites'][$id_post]['nb_plus'] = rand(0, 100);
                 $return['liste_actualites'][$id_post]['nb_moins'] = rand(0, 100);
+                $return['liste_actualites'][$id_post]['utilisateur'] = $utilisateur->nom_tweevent_user;
                 $return['liste_actualites'][$id_post]['date_creation'] = date("d-m-Y H:i", $post['date_add']);
 
                 $return['liste_actualites'][$id_post]['image'] = "";
@@ -488,6 +489,8 @@ function Utilisateur_Posts_SELECT($data_in = array())
                             $return['liste_evenements'][$id_tweevent_event]['type'] = "evenement";
                             $return['liste_evenements'][$id_tweevent_event]['date_creation'] = date("d-m-Y H:i", $evenement['date_add']);
                             $return['liste_evenements'][$id_tweevent_event]['id_utilisateur'] = $data_in['id_utilisateur'];
+
+                            $return['liste_evenements'][$id_tweevent_event]['utilisateur'] = $data_in['id_utilisateur'];
                         }
                     }
                 }
@@ -548,6 +551,8 @@ function Utilisateur_Posts_SELECT($data_in = array())
                         $return['liste_actualites'][$id_post]['nb_plus'] = rand(0, 100);
                         $return['liste_actualites'][$id_post]['nb_moins'] = rand(0, 100);
                         $return['liste_actualites'][$id_post]['date_creation'] = date("d-m-Y H:i", $post['date_add']);
+                        $us = Tweevent_user_recuperer($id_user);
+                        $return['liste_actualites'][$id_post]['utilisateur'] = $us->nom_tweevent_user;
 
                         $return['liste_actualites'][$id_post]['image'] = "";
                         if ($post['ids_imgs_tweevent_post'] > 0) {
