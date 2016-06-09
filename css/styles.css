@@ -107,6 +107,11 @@ hr {
   margin-top: 10px;
 }
 
+.popup_actu_img img {
+  height: 50%;
+  width: 100%;
+}
+
 .actu_button {
   float: right;
 }
