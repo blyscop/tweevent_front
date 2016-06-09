@@ -21,7 +21,7 @@ check_session(); ?>
     <? include("functions_js.php"); ?>
     <![endif]-->
 </head>
-<body>
+<body onload="charger_bloc_pro('<?php $_COOKIE['utilisateur_type'] ?>')">
 <div class="wrapper">
     <div class="box">
         <div class="row row-offcanvas row-offcanvas-left">
@@ -55,6 +55,9 @@ check_session(); ?>
                                        value="Modifier"/>
                             </div>
                         </section> <!-- cd-timeline -->
+                        
+                        <form id="content_inscription_maj">
+                            </form>
 
 
                     </div><!--/row-->

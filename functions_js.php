@@ -289,6 +289,123 @@
         $j("#content_inscription").append(html + "<span style='color:Red;' id='form_error'></span>");
     }
 
+    function charger_bloc_pro(nom_bloc) {
+        // Initialisation et suivant le paramètre entrant, on charge le formulaire du bloc correspondant
+        var html = "";
+        if (nom_bloc == "pro") {
+            // Chargement du formulaire d'inscription pour les pro.
+            // Nom
+            html += "<div class='form-group'>";
+            html += "<label for='nom' class='col-sm-3 control-label'>Nom de l'établissement :</label>";
+            html += "<div class='col-sm-4'>";
+            html += "<input required class='form-control' type='text' id='nom' name='nom' value=''/>";
+            html += "</div>";
+            html += "</div>";
+            // ville
+            html += "<div class='form-group'>";
+            html += "<label for='ville' class='col-sm-3 control-label'>Ville :</label>";
+            html += "<div class='col-sm-4'>";
+            html += "<input required class='form-control' type='text' id='ville' name='ville' value=''/>";
+            html += "</div>";
+            html += "</div>";
+
+            // Code postal
+            html += "<div class='form-group'>";
+            html += "<label for='code_postal' class='col-sm-3 control-label'>Code postal:</label>";
+            html += "<div class='col-sm-4'>";
+            html += "<input required class='form-control' type='text' id='code_postal' name='code_postal' value=''/>";
+            html += "</div>";
+            html += "</div>";
+
+            // Adresse
+            html += "<div class='form-group'>";
+            html += "<label for='adresse' class='col-sm-3 control-label'>Adresse :</label>";
+            html += "<div class='col-sm-4'>";
+            html += "<input required class='form-control' type='text' id='adresse' name='adresse' value=''/>";
+            html += "</div>";
+            html += "</div>";
+
+            // Téléphone
+            html += "<div class='form-group'>";
+            html += "<label for='telephone' class='col-sm-3 control-label'>Téléphone :</label>";
+            html += "<div class='col-sm-4'>";
+            html += "<input required class='form-control' type='text' id='tel' name='tel' value=''/>";
+            html += "</div>";
+            html += "</div>";
+
+            // Téléphone cellulaire
+            html += "<div class='form-group'>";
+            html += "<label for='cellulaire' class='col-sm-3 control-label'>Téléphone cellulaire :</label>";
+            html += "<div class='col-sm-4'>";
+            html += "<input required class='form-control' type='text' id='mob' name='mob' value=''/>";
+            html += "</div>";
+            html += "</div>";
+
+            // SIRET
+            html += "<div class='form-group'>";
+            html += "<label for='siret' class='col-sm-3 control-label'>Code siret :</label>";
+            html += "<div class='col-sm-4'>";
+            html += "<input required class='form-control' type='text' id='siret' name='siret' value=''/>";
+            html += "</div>";
+            html += "</div>";
+
+
+            // Pseudo
+            html += "<div class='form-group'>";
+            html += "<label for='email' class='col-sm-3 control-label'>Email :</label>";
+            html += "<div class='col-sm-4'>";
+            html += "<input required class='form-control' type='email' id='mail' name='mail' value=''/>";
+            html += "</div>";
+            html += "</div>";
+            // Mot de passe
+            html += "<div class='form-group'>";
+            html += "<label for='password' class='col-sm-3 control-label'>Password :</label>";
+            html += "<div class='col-sm-4'>";
+            html += "<input required class='form-control' type='password' id='password' name='password' value=''/>";
+            html += "</div>";
+            html += "</div>";
+
+            $j("#afficher_btn_retour").css("display", "block");
+        }
+        if (nom_bloc == "par") {
+            // Chargement du formulaire d'inscription pour les par.
+            // Pseudo
+            html += "<div class='form-group'>";
+            html += "<label for='pseudo' class='col-sm-3 control-label'>Nom :</label>";
+            html += "<div class='col-sm-4'>";
+            html += "<input required class='form-control' type='text' id='pseudo' name='pseudo' value=''/>";
+            html += "</div>";
+            html += "</div>";
+
+            html += "<div class='form-group'>";
+            html += "<label for='email' class='col-sm-3 control-label'>Email :</label>";
+            html += "<div class='col-sm-4'>";
+            html += "<input required class='form-control' type='email' id='email' name='email' value=''/>";
+            html += "</div>";
+            html += "</div>";
+
+            // Mot de passe
+            html += "<div class='form-group'>";
+            html += "<label for='password' class='col-sm-3 control-label'>Password :</label>";
+            html += "<div class='col-sm-4'>";
+            html += "<input required class='form-control' type='password' id='password' name='password' value=''/>";
+            html += "</div>";
+            html += "</div>";
+
+            $j("#afficher_btn_retour").css("display", "block");
+        }
+        if (nom_bloc == "choix") {
+            $j("#afficher_btn_retour").css("display", "none");
+            html += "Vous êtes : <br/> <input id='pro' type='radio' name='choix_inscription' onclick='charger_bloc(this.id);' value='pro'><label for='pro'>Un professionnel</label>";
+            html += "<input id='par' type='radio' name='choix_inscription' onclick='charger_bloc(this.id);' value='par'><label for='par'>Un particulier</label><br/><br/>";
+        }
+
+        // Remplissage html
+        html += "<input type='hidden' name='choix_inscription' id='choix_inscription' value='" + nom_bloc + "'/>";
+        $j("#content_inscription_maj").empty();
+        $j("#content_inscription_maj").append(html + "<span style='color:Red;' id='form_error'></span>");
+    }
+
     function mdp_oublie() {
         var email_saisi = $j("#email_oublie").val();
 
