@@ -94,8 +94,8 @@ function ADD()
 	$id_img_tweevent_event 			= is_numeric($this->id_img_tweevent_event) ? $this->id_img_tweevent_event : 0;
 	$id_img2_tweevent_event 		= is_numeric($this->id_img2_tweevent_event) ? $this->id_img2_tweevent_event : 0;
 	$ids_posts_tweevent_event 		= Sql_prepareTexteStockage($this->ids_posts_tweevent_event);
-	$date_debut_tweevent_event 	= Lib_frToEn($this->date_debut_tweevent_event);
-	$date_fin_tweevent_event 		= Lib_frToEn($this->date_fin_tweevent_event);
+	$date_debut_tweevent_event 		= $this->date_debut_tweevent_event;
+	$date_fin_tweevent_event 		= $this->date_fin_tweevent_event;
 	$lieu_tweevent_event 			= Sql_prepareTexteStockage($this->lieu_tweevent_event);
 	$infos_tweevent_event 			= Sql_prepareTexteStockage($this->infos_tweevent_event);
 	$etat 								= $this->etat != '' ? $this->etat : 'actif';
@@ -115,6 +115,8 @@ function ADD()
 					'$date_add', '$info_tweevent_event'
 					)";
 
+	Lib_myLog("sql : ".$sql);
+	Lib_myLog("date debut :".$date_debut_tweevent_event." et fin : ".$date_debut_tweevent_event);
 	if (!Sql_exec($sql)) $this->setError(ERROR);
 
 	if (!$this->isError()) {
@@ -223,8 +225,8 @@ function Tweevent_event_recuperer($id_tweevent_event)
 		$tweevent_event->id_img_tweevent_event			= $row['id_img_tweevent_event'];
 		$tweevent_event->id_img2_tweevent_event		= $row['id_img2_tweevent_event'];
 		$tweevent_event->ids_posts_tweevent_event		= Sql_prepareTexteAffichage($row['ids_posts_tweevent_event']);
-		$tweevent_event->date_debut_tweevent_event	= Lib_enToFr($row['date_debut_tweevent_event']);
-		$tweevent_event->date_fin_tweevent_event		= Lib_enToFr($row['date_fin_tweevent_event']);
+		$tweevent_event->date_debut_tweevent_event	= $row['date_debut_tweevent_event'];
+		$tweevent_event->date_fin_tweevent_event		= $row['date_fin_tweevent_event'];
 		$tweevent_event->lieu_tweevent_event			= Sql_prepareTexteAffichage($row['lieu_tweevent_event']);
 		$tweevent_event->infos_tweevent_event			= Sql_prepareTexteAffichage($row['infos_tweevent_event']);
 		$tweevent_event->etat								= $row['etat'];
@@ -313,8 +315,8 @@ function Tweevent_events_chercher($args)
 					$tab_result[$id]["id_img_tweevent_event"]			= $row['id_img_tweevent_event'];
 					$tab_result[$id]["id_img2_tweevent_event"]		= $row['id_img2_tweevent_event'];
 					$tab_result[$id]["ids_posts_tweevent_event"]		= Sql_prepareTexteAffichage($row['ids_posts_tweevent_event']);
-					$tab_result[$id]["date_debut_tweevent_event"]	= Lib_enToFr($row['date_debut_tweevent_event']);
-					$tab_result[$id]["date_fin_tweevent_event"]		= Lib_enToFr($row['date_fin_tweevent_event']);
+					$tab_result[$id]["date_debut_tweevent_event"]	= $row['date_debut_tweevent_event'];
+					$tab_result[$id]["date_fin_tweevent_event"]		= $row['date_fin_tweevent_event'];
 					$tab_result[$id]["lieu_tweevent_event"]			= Sql_prepareTexteAffichage($row['lieu_tweevent_event']);
 					$tab_result[$id]["infos_tweevent_event"]			= Sql_prepareTexteAffichage($row['infos_tweevent_event']);
 					$tab_result[$id]["etat"]								= $row['etat'];
