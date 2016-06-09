@@ -144,7 +144,7 @@ if (!defined('__TWEEVENT_USER_INC__')) {
 					date_add, info_tweevent_user
 					)
 				VALUES 
-					 ('$pseudo_tweevent_user', '$nom_tweevent_user', $password_tweevent_user', '$type_tweevent_user',
+					 ('$pseudo_tweevent_user', '$nom_tweevent_user', '$password_tweevent_user', '$type_tweevent_user',
 					'$email_tweevent_user', '$date_de_naissance_tweevent_user', '$nb_jetons_tweevent_user', 
 					'$nb_connect_tweevent_user', '$ville_tweevent_user', '$code_postal_tweevent_user', 
 					'$adresse_1_tweevent_user', '$adresse_2_tweevent_user', '$tel_tweevent_user', 

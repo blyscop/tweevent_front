@@ -193,6 +193,43 @@ function Post_ADD($data_in = array())
     echo json_encode($return);
 }
 
+// Ajout d'évènement pour un pro
+function Utilisateur_Evenement_ADD($data_in = array())
+{
+    Lib_myLog("action: " . $data_in['action']);
+    foreach ($GLOBALS['tab_globals'] as $global) global $$global;
+
+    $return = array();
+    $return['confirmation'] = false;
+
+    if($data_in['id_utilisateur'] > 0) {
+        $user_tweevent['id_tweevent_user'] = $data_in['id_utilisateur'];
+        $test_user_tweevent = Tweevent_users_chercher($user_tweevent);
+
+        if (!empty($test_user_tweevent)) {
+            $event = new Tweevent_event();
+            $event->nom_tweevent_event = $data_in['eventName']." (".$data_in['eventHeure'].")";
+            $event->date_debut_tweevent_event = $data_in['eventDateDebut'];
+            $event->date_fin_tweevent_event = $data_in['eventDateFin'];
+            $event->lieu_tweevent_event = $data_in['eventLieu'];
+            $id_event = $event->ADD();
+
+            if($id_event > 0)
+                $return['confirmation'] = true;
+            else
+                $return['msg'] = "Erreur lors de l'ajout de l'event !";
+        }
+        else {
+            $return['msg'] = "Erreur lors de la récupération de l'utilisateur !";
+        }
+    }
+    else {
+        $return['msg'] = "Aucun id_utilisateur fourni !";
+    }
+
+    header('Access-Control-Allow-Origin: *');
+    echo json_encode($return);
+}
 // Permet d'initialiser les préférences de l'utilisateur, lors de la création
 function Utilisateur_Preferences_INIT($data_in = array())
 {

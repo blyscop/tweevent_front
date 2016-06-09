@@ -331,7 +331,6 @@
                 alert("Vos préférences ont bien été mise à jour !");
             }
         });
-
     }
 
 
@@ -432,6 +431,86 @@
         }
         else {
             alert(msg_intro + msg);
+        }
+    }
+
+    function ajouter_evenement() {
+        var msg = "";
+        var msg_intro = "Champs requis : \n";
+
+        if ($j("#eventName").val() == "") {
+            msg += "- Nom de l'évènement \n";
+            $j("#eventName").css("background-color", "#FF0000");
+        }
+        else
+            $j("#eventName").css("background-color", "");
+
+        if ($j("#eventLieu").val() == "") {
+            msg += "- Lieu de l'évènement \n";
+            $j("#eventLieu").css("background-color", "#FF0000");
+        }
+        else
+            $j("#eventLieu").css("background-color", "");
+
+        if ($j("#eventDateDebut").val() == "") {
+            msg += "- Date de début de l'évènement \n";
+            $j("#eventDateDebut").css("background-color", "#FF0000");
+        }
+        else
+            $j("#eventDateDebut").css("background-color", "");
+
+        if ($j("#eventDateFin").val() == "") {
+            msg += "- Date de fin de l'évènement \n";
+            $j("#eventDateFin").css("background-color", "#FF0000");
+        }
+        else
+            $j("#eventDateFin").css("background-color", "");
+
+        if ($j("#eventHeure").val() == "") {
+            msg += "- Heure de l'évènement \n";
+            $j("#eventHeure").css("background-color", "#FF0000");
+        }
+        else
+            $j("#eventHeure").css("background-color", "");
+
+        if ($j("#eventDesc").val() == "") {
+            msg += "- Description de l'évènement \n";
+            $j("#eventDesc").css("background-color", "#FF0000");
+        }
+        else
+            $j("#eventDesc").css("background-color", "");
+
+        if (msg == "") {
+            var id_utilisateur = <?=$_COOKIE["utilisateur_id"] > 0 ? $_COOKIE["utilisateur_id"] : 0 ?> ;
+            // Création de l'évènement grâce à une requête AJAX sur l'api
+            $j.ajax({
+                type: "POST",
+                url: "http://martinfrouin.fr/projets/tweevent/api/q/req.php",
+                dataType: 'json',
+                data: {
+                    action: "Utilisateur_Evenement_ADD",
+                    id_utilisateur: id_utilisateur,
+                    eventName: $j("#eventName").val(),
+                    eventLieu: $j("#eventLieu").val(),
+                    eventDateDebut: $j("#eventDateDebut").val(),
+                    eventDateFin: $j("#eventDateFin").val(),
+                    eventHeure: $j("#eventHeure").val(),
+                    eventDesc: $j("#eventDesc").val()
+                },
+                success: function (data) {
+                    console.log(data);
+                    if(data.confirmation) {
+                        alert("Votre evenement a bien été ajouté !");
+                    }
+                    else {
+                        alert("Une erreur est survenue lors de l'ajout de l'évènement : \n "+data.msg);
+                    }
+                }
+            });
+        }
+        else {
+            alert(msg_intro + msg);
+            return false;
         }
     }
 </script>

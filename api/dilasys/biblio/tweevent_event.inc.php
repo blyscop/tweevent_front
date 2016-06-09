@@ -136,8 +136,8 @@ function UPD()
 	$id_img_tweevent_event 			= is_numeric($this->id_img_tweevent_event) ? $this->id_img_tweevent_event : 0;
 	$id_img2_tweevent_event 		= is_numeric($this->id_img2_tweevent_event) ? $this->id_img2_tweevent_event : 0;
 	$ids_posts_tweevent_event 		= Sql_prepareTexteStockage($this->ids_posts_tweevent_event);
-	$date_debut_tweevent_event 	= Lib_frToEn($this->date_debut_tweevent_event);
-	$date_fin_tweevent_event 		= Lib_frToEn($this->date_fin_tweevent_event);
+	$date_debut_tweevent_event 	= $this->date_debut_tweevent_event;
+	$date_fin_tweevent_event 		= $this->date_fin_tweevent_event;
 	$lieu_tweevent_event 			= Sql_prepareTexteStockage($this->lieu_tweevent_event);
 	$infos_tweevent_event 			= Sql_prepareTexteStockage($this->infos_tweevent_event);
 	$etat 								= $this->etat;
