@@ -50,6 +50,20 @@ hr {
   color: #666;
 }
 
+.popup_actu {
+  position: fixed;
+  left: 0 !important;
+  right: 0 !important;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  height: 80%;
+  top: 10% !important;
+  bottom: 10% !important;
+  border-radius: 10px 10px 10px 10px;
+  border: 2px solid #FFB347;
+}
+
 .wrapper, .row {
  height: 100%;
  margin-left:0;
