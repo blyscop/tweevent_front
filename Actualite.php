@@ -99,10 +99,7 @@ check_session(); ?>
                     <div class="full-actu col-sm-12">
                         <!-- content -->
                         <div class="row">
-                            <header>
-                                <img class="bloc-round" src="./img/profilpic.jpg"/>
-                                <h1 class="username_actu">Bonjour <?php echo ucfirst($_COOKIE['username']); ?></h1>
-                            </header>
+                            <? include('header_actu.php'); ?>
 
                             <section id="suggestions" class="suggestions">
                             <button type="button" id="suggest_close" class="close">×

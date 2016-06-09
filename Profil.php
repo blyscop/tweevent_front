@@ -40,10 +40,7 @@ check_session(); ?>
                     <div class="row">
 
 
-                        <header>
-                            <img class="bloc-round" src="./img/profilpic.jpg"/>
-                            <h1>Bonjour <?= ucfirst($_COOKIE['username']); ?></h1>
-                        </header>
+                        <? include('header_actu.php'); ?>
                         <section id="cd-timeline" class="cd-container">
                             <div class="cd-timeline-block">
                                 <h1 id="infos_mdp_upd">Modifier vos informations </h1>
