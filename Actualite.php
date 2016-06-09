@@ -152,8 +152,8 @@ check_session(); ?>
         success: function (msg) {
             console.log(msg);
             $j.each(msg.liste_actualites, function (i, item) {
-                var bloc_image = "";
-                var bloc_popup = bloc_popup = '<div id="contenu_' + item.id_tweevent_post + '"><a class="b-close">x<a/>Url de l"image : ' + item.image + ' | Date de creation : ' + item.date_creation + '</div>';
+                var bloc_image = bloc_popup = "";
+                bloc_popup = '<div id="contenu_' + item.id_tweevent_post + '"><a class="b-close">x<a/>Url de l"image : ' + item.image + ' | Date de creation : ' + item.date_creation + '</div>';
                 if (item.possede_image) {
                     bloc_image = '<a class="fancybox" rel="group" href="' + item.image + '">' +
                         '<div class="cd-timeline-img cd-picture" style="background-image:' + item.image + '; background-size: cover;">' +
