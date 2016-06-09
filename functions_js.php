@@ -177,10 +177,9 @@
         var html = "";
         if (nom_bloc == "pro") {
             // Chargement du formulaire d'inscription pour les pro.
-            // Chargement du formulaire d'inscription pour les pro.
-            // Pseudo
+            // Nom
             html += "<div class='form-group'>";
-            html += "<label for='pseudo' class='col-sm-3 control-label'>Nom de l'établissement :</label>";
+            html += "<label for='nom' class='col-sm-3 control-label'>Nom de l'établissement :</label>";
             html += "<div class='col-sm-4'>";
             html += "<input required class='form-control' type='text' id='nom' name='nom' value=''/>";
             html += "</div>";
@@ -236,7 +235,7 @@
 
             // Pseudo
             html += "<div class='form-group'>";
-            html += "<label for='pseudo' class='col-sm-3 control-label'>Email :</label>";
+            html += "<label for='email' class='col-sm-3 control-label'>Email :</label>";
             html += "<div class='col-sm-4'>";
             html += "<input required class='form-control' type='email' id='mail' name='mail' value=''/>";
             html += "</div>";
@@ -255,9 +254,16 @@
             // Chargement du formulaire d'inscription pour les par.
             // Pseudo
             html += "<div class='form-group'>";
-            html += "<label for='pseudo' class='col-sm-3 control-label'>Email :</label>";
+            html += "<label for='pseudo' class='col-sm-3 control-label'>Nom :</label>";
             html += "<div class='col-sm-4'>";
-            html += "<input required class='form-control' type='email' id='pseudo' name='pseudo' value=''/>";
+            html += "<input required class='form-control' type='text' id='pseudo' name='pseudo' value=''/>";
+            html += "</div>";
+            html += "</div>";
+
+            html += "<div class='form-group'>";
+            html += "<label for='email' class='col-sm-3 control-label'>Email :</label>";
+            html += "<div class='col-sm-4'>";
+            html += "<input required class='form-control' type='email' id='email' name='email' value=''/>";
             html += "</div>";
             html += "</div>";
 

@@ -66,17 +66,15 @@ function inscription()
     $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $_POST['g-recaptcha-response'] . "&remoteip=" . $ip);
     $responseKeys = json_decode($response, true);
 
-
     // Professionels
-    if ($_POST['choix_inscription'] == "pro" && !empty($captcha)) {
-        $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_ADD&type=pro';
-        $url .= '&pseudo=' . $_POST['pseudo'];
-        $url .= '&password=' . md5($_POST['password']);
-        $url .= '&ville=' . $_POST['ville'];
-        $url .= '&code_postal=' . $_POST['code_postal'];
-        $url .= '&adresse=' . $_POST['adresse'];
-        $url .= '&tel=' . $_POST['tel'];
-        $url .= '&mob=' . $_POST['mob'];
+    if ($_POST['choix_inscription'] == "pro" && $responseKeys['success']) {
+        // Préparation des champs
+        $index_a_upd = array("nom" => "nom", "ville" => "ville", "code_postal" => "code_postal", "adresse" => "adresse", "tel" => "tel", "mob" => "mob", "siret" => "siret");
+        foreach($_POST as $index => $value)
+            if (isset($index_a_upd[$index]))
+                $_POST[$index] = urlencode($value);
+
+        $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_ADD&type=pro&pseudo=pro&mail=' . $_POST['mail'].'&nom=' . $_POST['nom'].'&password=' . md5($_POST['password']).'&ville=' . $_POST['ville'].'&code_postal=' . $_POST['code_postal'].'&adresse=' . $_POST['adresse'].'&tel=' . $_POST['tel'].'&mob=' . $_POST['mob'].'&siret=' . $_POST['siret'];
 
         $obj = file_get_contents($url);
         $content = json_decode($obj, true);
@@ -90,8 +88,13 @@ function inscription()
     }
 
     // Particuliers
-    if ($_POST['choix_inscription'] == "par" && !empty($captcha)) {
-        $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_ADD&type=par&pseudo=' . $_POST['pseudo'] . '&password=' . md5($_POST['password']);
+    if ($_POST['choix_inscription'] == "par" && $responseKeys['success']) {
+
+        $index_a_upd = array("pseudo" => "pseudo");
+        foreach($_POST as $index => $value)
+            if (isset($index_a_upd[$index]))
+                $_POST[$index] = urlencode($value);
+        $url = 'http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_ADD&type=par&email='.$_POST['email'].'&pseudo=' . $_POST['pseudo'] . '&password=' . md5($_POST['password']);
         $obj = file_get_contents($url);
         $content = json_decode($obj, true);
 

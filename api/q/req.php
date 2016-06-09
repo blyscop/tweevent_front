@@ -75,8 +75,9 @@ function Utilisateur_ADD($data_in = array())
                 Lib_myLog("Ajout d'un pro... ", $utilisateur_add->getTab());
             } else {
                 $utilisateur_add = new Tweevent_user();
-                $utilisateur_add->pseudo_tweevent_user = $data_in['pseudo'];
-                $utilisateur_add->email_tweevent_user = $data_in['pseudo'];
+                $utilisateur_add->pseudo_tweevent_user = $data_in['email'];
+                $utilisateur_add->email_tweevent_user = $data_in['email'];
+                $utilisateur_add->nom_tweevent_user = $data_in['pseudo'];
                 $utilisateur_add->password_tweevent_user = $data_in['password'];
                 $utilisateur_add->type_tweevent_user = "par";
                 $id_utilisateur = $utilisateur_add->ADD();
