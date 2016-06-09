@@ -321,99 +321,121 @@
         $j("#content_inscription").append(html + "<span style='color:Red;' id='form_error'></span>");
     }
 
-    function charger_bloc_pro(nom_bloc) {
-        // Initialisation et suivant le paramètre entrant, on charge le formulaire du bloc correspondant
+    function charger_bloc_modif_profil(nom_bloc, id_utilisateur) {
+        // Initialisation et suivant le paramètre entrant, on charge le formulaire de modif du bloc correspondant
         var html = "";
-        if (nom_bloc == "pro") {
-            // Chargement du formulaire d'inscription pour les pro.
-            // Pseudo
-            html += "<label for='pseudo'>Nom :<br />";
-            html += "<input required type='text' id='pseudo' name='pseudo' value=''/>";
-            html += "</label><br />";
 
-            html += "<label for='email' >Email :<br />";
-            html += "<input required type='email' id='email' name='email' value=''/>";
-            html += "</label><br />";
+        $j.ajax({
+            type: "GET",
+            url: host + "/projets/tweevent/api/q/req.php",
+            data: {action: "Utilisateur_GET", id_utilisateur: id_utilisateur},
+            dataType: 'json',
+            success: function (data) {
+                var nom = data.utilisateur.nom_tweevent_user;
+                var pseudo = data.utilisateur.pseudo_tweevent_user;
+                var email = data.utilisateur.email_tweevent_user;
+                var ville = data.utilisateur.ville_tweevent_user;
+                var code_postal = data.utilisateur.code_postal_tweevent_user;
+                var adresse = data.utilisateur.adresse_1_tweevent_user;
+                var tel = data.utilisateur.tel_tweevent_user;
+                var mob = data.utilisateur.mob_tweevent_user;
+                var siret = data.utilisateur.siret_tweevent_user;
 
-            // ville
-            html += "<label for='ville'>Ville :<br />";
-            html += "<input required type='text' id='ville' name='ville' value=''/>";
-            html += "</label><br />";
+                if (nom_bloc == "pro") {
+                    // Chargement du formulaire d'upd (mon profil) pour les pro.
+                    // Pseudo
+                    html += "<label for='pseudo'>Nom :<br />";
+                    html += "<input required type='text' id='pseudo' name='pseudo' value='"+pseudo+"'/>";
+                    html += "</label><br />";
 
-            // Code postal
-            html += "<label for='code_postal'>Code postal:<br />";
-            html += "<input required type='text' id='code_postal' name='code_postal' value=''/>";
-            html += "</label><br />";
+                    html += "<label for='email' >Email :<br />";
+                    html += "<input required type='email' id='email' name='email' value='"+email+"'/>";
+                    html += "</label><br />";
 
-            // Adresse
-            html += "<label for='adresse'>Adresse :<br />";
-            html += "<input required type='text' id='adresse' name='adresse' value=''/>";
-            html += "</label><br />";
+                    // ville
+                    html += "<label for='ville'>Ville :<br />";
+                    html += "<input required type='text' id='ville' name='ville' value='"+ville+"'/>";
+                    html += "</label><br />";
 
-            // Téléphone
-            html += "<label for='telephone'>Téléphone :<br />";
-            html += "<input required type='text' id='tel' name='tel' value=''/>";
-            html += "</label><br />";
+                    // Code postal
+                    html += "<label for='code_postal'>Code postal:<br />";
+                    html += "<input required type='text' id='code_postal' name='code_postal' value='"+code_postal+"'/>";
+                    html += "</label><br />";
 
-            // Téléphone cellulaire
-            html += "<label for='cellulaire'>Téléphone cellulaire :<br />";
-            html += "<input required type='text' id='mob' name='mob' value=''/>";
-            html += "</label><br />";
+                    // Adresse
+                    html += "<label for='adresse'>Adresse :<br />";
+                    html += "<input required type='text' id='adresse' name='adresse' value='"+adresse+"'/>";
+                    html += "</label><br />";
 
-            // SIRET
-            html += "<label for='siret'>Code siret :<br />";
-            html += "<input required type='text' id='siret' name='siret' value=''/>";
-            html += "</label><br />";
+                    // Téléphone
+                    html += "<label for='telephone'>Téléphone :<br />";
+                    html += "<input required type='text' id='tel' name='tel' value='"+tel+"'/>";
+                    html += "</label><br />";
+
+                    // Téléphone cellulaire
+                    html += "<label for='cellulaire'>Téléphone cellulaire :<br />";
+                    html += "<input required type='text' id='mob' name='mob' value='"+mob+"'/>";
+                    html += "</label><br />";
+
+                    // SIRET
+                    html += "<label for='siret'>Code siret :<br />";
+                    html += "<input required type='text' id='siret' name='siret' value='"+siret+"'/>";
+                    html += "</label><br />";
 
 
-            $j("#afficher_btn_retour").css("display", "block");
-        }
-        if (nom_bloc == "par") {
-            // Chargement du formulaire d'inscription pour les par.
-            // Pseudo
-            html += "<label for='pseudo'>Nom :<br />";
-            html += "<input required type='text' id='pseudo' name='pseudo' value=''/>";
-            html += "</label><br />";
+                    $j("#afficher_btn_retour").css("display", "block");
+                }
+                if (nom_bloc == "par") {
+                    // Chargement du formulaire d'upd (mon profil) pour les par.
+                    // Pseudo
+                    html += "<label for='pseudo'>Nom :<br />";
+                    html += "<input required type='text' id='pseudo' name='pseudo' value='"+pseudo+"'/>";
+                    html += "</label><br />";
 
-            html += "<label for='email' >Email :<br />";
-            html += "<input required type='email' id='email' name='email' value=''/>";
-            html += "</label><br />";
+                    html += "<label for='email' >Email :<br />";
+                    html += "<input required type='email' id='email' name='email' value='"+email+"'/>";
+                    html += "</label><br />";
 
-            // ville
-            html += "<label for='ville'>Ville :<br />";
-            html += "<input required type='text' id='ville' name='ville' value=''/>";
-            html += "</label><br />";
+                    // ville
+                    html += "<label for='ville'>Ville :<br />";
+                    html += "<input required type='text' id='ville' name='ville' value='"+ville+"'/>";
+                    html += "</label><br />";
 
-            // Code postal
-            html += "<label for='code_postal'>Code postal:<br />";
-            html += "<input required type='text' id='code_postal' name='code_postal' value=''/>";
-            html += "</label><br />";
+                    // Code postal
+                    html += "<label for='code_postal'>Code postal:<br />";
+                    html += "<input required type='text' id='code_postal' name='code_postal' value='"+code_postal+"'/>";
+                    html += "</label><br />";
 
-            // Adresse
-            html += "<label for='adresse'>Adresse :<br />";
-            html += "<input required type='text' id='adresse' name='adresse' value=''/>";
-            html += "</label><br />";
+                    // Adresse
+                    html += "<label for='adresse'>Adresse :<br />";
+                    html += "<input required type='text' id='adresse' name='adresse' value='"+adresse+"'/>";
+                    html += "</label><br />";
 
-            // Téléphone
-            html += "<label for='telephone'>Téléphone :<br />";
-            html += "<input required type='text' id='tel' name='tel' value=''/>";
-            html += "</label><br />";
+                    // Téléphone
+                    html += "<label for='telephone'>Téléphone :<br />";
+                    html += "<input required type='text' id='tel' name='tel' value='"+tel+"'/>";
+                    html += "</label><br />";
 
-            // Téléphone cellulaire
-            html += "<label for='cellulaire'>Téléphone cellulaire :<br />";
-            html += "<input required type='text' id='mob' name='mob' value=''/>";
-            html += "</label><br />";
+                    // Téléphone cellulaire
+                    html += "<label for='cellulaire'>Téléphone cellulaire :<br />";
+                    html += "<input required type='text' id='mob' name='mob' value='"+mob+"'/>";
+                    html += "</label><br />";
 
-            $j("#afficher_btn_retour").css("display", "block");
-        }
-        
+                    $j("#afficher_btn_retour").css("display", "block");
+                }
 
-        // Remplissage html
-        html += "<input type='hidden' name='choix_inscription' id='choix_inscription' value='" + nom_bloc + "'/>";
-        $j("#content_inscription_maj").empty();
-        $j("#content_inscription_maj").append(html + "<span style='color:Red;' id='form_error'></span>");
+
+                // Remplissage html
+                html += "<input type='hidden' name='choix_inscription' id='choix_inscription' value='" + nom_bloc + "'/>";
+                $j("#content_inscription_maj").empty();
+                $j("#content_inscription_maj").append(html + "<span style='color:Red;' id='form_error'></span>");
+            }
+        });
     }
 
+    function modifier_infos_utilisateur() {
+        alert("btn");
+    }
     function mdp_oublie() {
         var email_saisi = $j("#email_oublie").val();
 
@@ -624,11 +646,11 @@
                 },
                 success: function (data) {
                     console.log(data);
-                    if(data.confirmation) {
+                    if (data.confirmation) {
                         alert("Votre evenement a bien été ajouté !");
                     }
                     else {
-                        alert("Une erreur est survenue lors de l'ajout de l'évènement : \n "+data.msg);
+                        alert("Une erreur est survenue lors de l'ajout de l'évènement : \n " + data.msg);
                     }
                 }
             });

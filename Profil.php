@@ -23,7 +23,8 @@ check_session(); ?>
     <?php include("functions_js.php"); ?>
 </head>
 
-<body onload="charger_preferences_utilisateur(); charger_preferences_utilisateur_ajout_event(); charger_bloc_pro('<?= $_COOKIE['utilisateur_type']; ?>');">
+<body
+    onload="charger_bloc_modif_profil('<?= $_COOKIE['utilisateur_type']; ?>', <?=$_COOKIE['utilisateur_id'] > 0 ? $_COOKIE['utilisateur_id'] : 0 ?>); charger_preferences_utilisateur(); charger_preferences_utilisateur_ajout_event(); ">
 <div class="wrapper">
     <div class="box">
         <div class="row row-offcanvas row-offcanvas-left">
@@ -45,6 +46,13 @@ check_session(); ?>
                         </header>
                         <section id="cd-timeline" class="cd-container">
                             <div class="cd-timeline-block">
+                                <h1 id="infos_mdp_upd">Modifier vos informations </h1>
+                                <div id="content_inscription_maj"></div>
+                                    <input type="button" name="modifier" id="modifier" onclick="if(verifier_formulaire()) { modifier_infos_utilisateur(<?=$_COOKIE['utilisateur_type']?>); }"
+                                           value="Modifier"/>
+                            </div>
+
+                            <div class="cd-timeline-block">
                                 <h1 id="infos_mdp_upd">Modifier votre mot de passe</h1>
                                 <label for="old_password">Ancien mot de passe :<br/>
                                     <input type="password" name="old_password" id="old_password"/></label><br/>
@@ -55,9 +63,6 @@ check_session(); ?>
                                            id="new_password_conf"/></label><br/>
                                 <input type="button" name="modifier" id="modifier" onclick="changer_password();"
                                        value="Modifier"/>
-                            </div>
-                            <div id="content_inscription_maj">
-
                             </div>
                         </section> <!-- cd-timeline -->
 
@@ -71,7 +76,6 @@ check_session(); ?>
                             </form>
                         </div>
                         </section>  -->
-
 
 
                     </div><!--/row-->
