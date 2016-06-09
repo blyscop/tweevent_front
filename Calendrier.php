@@ -21,7 +21,7 @@ check_session(); ?>
     <![endif]-->
 
 </head>
-<body onload="charger_preferences_utilisateur(); ">
+<body onload="charger_preferences_utilisateur(); charger_preferences_utilisateur_ajout_event(); ">
 <div class="wrapper">
     <div class="box">
         <div class="row row-offcanvas row-offcanvas-left">

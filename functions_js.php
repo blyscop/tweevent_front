@@ -326,103 +326,83 @@
         var html = "";
         if (nom_bloc == "pro") {
             // Chargement du formulaire d'inscription pour les pro.
-            // Nom
-            html += "<div class='form-group'>";
-            html += "<label for='nom' class='col-sm-3 control-label'>Nom de l'établissement :</label>";
-            html += "<div class='col-sm-4'>";
-            html += "<input required class='form-control' type='text' id='nom' name='nom' value=''/>";
-            html += "</div>";
-            html += "</div>";
+            // Pseudo
+            html += "<label for='pseudo'>Nom :<br />";
+            html += "<input required type='text' id='pseudo' name='pseudo' value=''/>";
+            html += "</label><br />";
+
+            html += "<label for='email' >Email :<br />";
+            html += "<input required type='email' id='email' name='email' value=''/>";
+            html += "</label><br />";
+
             // ville
-            html += "<div class='form-group'>";
-            html += "<label for='ville' class='col-sm-3 control-label'>Ville :</label>";
-            html += "<div class='col-sm-4'>";
-            html += "<input required class='form-control' type='text' id='ville' name='ville' value=''/>";
-            html += "</div>";
-            html += "</div>";
+            html += "<label for='ville'>Ville :<br />";
+            html += "<input required type='text' id='ville' name='ville' value=''/>";
+            html += "</label><br />";
 
             // Code postal
-            html += "<div class='form-group'>";
-            html += "<label for='code_postal' class='col-sm-3 control-label'>Code postal:</label>";
-            html += "<div class='col-sm-4'>";
-            html += "<input required class='form-control' type='text' id='code_postal' name='code_postal' value=''/>";
-            html += "</div>";
-            html += "</div>";
+            html += "<label for='code_postal'>Code postal:<br />";
+            html += "<input required type='text' id='code_postal' name='code_postal' value=''/>";
+            html += "</label><br />";
 
             // Adresse
-            html += "<div class='form-group'>";
-            html += "<label for='adresse' class='col-sm-3 control-label'>Adresse :</label>";
-            html += "<div class='col-sm-4'>";
-            html += "<input required class='form-control' type='text' id='adresse' name='adresse' value=''/>";
-            html += "</div>";
-            html += "</div>";
+            html += "<label for='adresse'>Adresse :<br />";
+            html += "<input required type='text' id='adresse' name='adresse' value=''/>";
+            html += "</label><br />";
 
             // Téléphone
-            html += "<div class='form-group'>";
-            html += "<label for='telephone' class='col-sm-3 control-label'>Téléphone :</label>";
-            html += "<div class='col-sm-4'>";
-            html += "<input required class='form-control' type='text' id='tel' name='tel' value=''/>";
-            html += "</div>";
-            html += "</div>";
+            html += "<label for='telephone'>Téléphone :<br />";
+            html += "<input required type='text' id='tel' name='tel' value=''/>";
+            html += "</label><br />";
 
             // Téléphone cellulaire
-            html += "<div class='form-group'>";
-            html += "<label for='cellulaire' class='col-sm-3 control-label'>Téléphone cellulaire :</label>";
-            html += "<div class='col-sm-4'>";
-            html += "<input required class='form-control' type='text' id='mob' name='mob' value=''/>";
-            html += "</div>";
-            html += "</div>";
+            html += "<label for='cellulaire'>Téléphone cellulaire :<br />";
+            html += "<input required type='text' id='mob' name='mob' value=''/>";
+            html += "</label><br />";
 
             // SIRET
-            html += "<div class='form-group'>";
-            html += "<label for='siret' class='col-sm-3 control-label'>Code siret :</label>";
-            html += "<div class='col-sm-4'>";
-            html += "<input required class='form-control' type='text' id='siret' name='siret' value=''/>";
-            html += "</div>";
-            html += "</div>";
+            html += "<label for='siret'>Code siret :<br />";
+            html += "<input required type='text' id='siret' name='siret' value=''/>";
+            html += "</label><br />";
 
-
-            // Pseudo
-            html += "<div class='form-group'>";
-            html += "<label for='email' class='col-sm-3 control-label'>Email :</label>";
-            html += "<div class='col-sm-4'>";
-            html += "<input required class='form-control' type='email' id='mail' name='mail' value=''/>";
-            html += "</div>";
-            html += "</div>";
-            // Mot de passe
-            html += "<div class='form-group'>";
-            html += "<label for='password' class='col-sm-3 control-label'>Password :</label>";
-            html += "<div class='col-sm-4'>";
-            html += "<input required class='form-control' type='password' id='password' name='password' value=''/>";
-            html += "</div>";
-            html += "</div>";
 
             $j("#afficher_btn_retour").css("display", "block");
         }
         if (nom_bloc == "par") {
             // Chargement du formulaire d'inscription pour les par.
             // Pseudo
-            html += "<div class='form-group'>";
-            html += "<label for='pseudo' class='col-sm-3 control-label'>Nom :</label>";
-            html += "<div class='col-sm-4'>";
-            html += "<input required class='form-control' type='text' id='pseudo' name='pseudo' value=''/>";
-            html += "</div>";
-            html += "</div>";
+            html += "<label for='pseudo'>Nom :<br />";
+            html += "<input required type='text' id='pseudo' name='pseudo' value=''/>";
+            html += "</label><br />";
 
-            html += "<div class='form-group'>";
-            html += "<label for='email' class='col-sm-3 control-label'>Email :</label>";
-            html += "<div class='col-sm-4'>";
-            html += "<input required class='form-control' type='email' id='email' name='email' value=''/>";
-            html += "</div>";
-            html += "</div>";
+            html += "<label for='email' >Email :<br />";
+            html += "<input required type='email' id='email' name='email' value=''/>";
+            html += "</label><br />";
 
-            // Mot de passe
-            html += "<div class='form-group'>";
-            html += "<label for='password' class='col-sm-3 control-label'>Password :</label>";
-            html += "<div class='col-sm-4'>";
-            html += "<input required class='form-control' type='password' id='password' name='password' value=''/>";
-            html += "</div>";
-            html += "</div>";
+            // ville
+            html += "<label for='ville'>Ville :<br />";
+            html += "<input required type='text' id='ville' name='ville' value=''/>";
+            html += "</label><br />";
+
+            // Code postal
+            html += "<label for='code_postal'>Code postal:<br />";
+            html += "<input required type='text' id='code_postal' name='code_postal' value=''/>";
+            html += "</label><br />";
+
+            // Adresse
+            html += "<label for='adresse'>Adresse :<br />";
+            html += "<input required type='text' id='adresse' name='adresse' value=''/>";
+            html += "</label><br />";
+
+            // Téléphone
+            html += "<label for='telephone'>Téléphone :<br />";
+            html += "<input required type='text' id='tel' name='tel' value=''/>";
+            html += "</label><br />";
+
+            // Téléphone cellulaire
+            html += "<label for='cellulaire'>Téléphone cellulaire :<br />";
+            html += "<input required type='text' id='mob' name='mob' value=''/>";
+            html += "</label><br />";
 
             $j("#afficher_btn_retour").css("display", "block");
         }

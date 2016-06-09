@@ -22,7 +22,8 @@ check_session(); ?>
     <![endif]-->
     <?php include("functions_js.php"); ?>
 </head>
-<body onload="charger_bloc_pro('<?= $_COOKIE['utilisateur_type']; ?>');">
+
+<body onload="charger_preferences_utilisateur(); charger_preferences_utilisateur_ajout_event(); charger_bloc_pro('<?= $_COOKIE['utilisateur_type']; ?>');">
 <div class="wrapper">
     <div class="box">
         <div class="row row-offcanvas row-offcanvas-left">
@@ -55,14 +56,22 @@ check_session(); ?>
                                 <input type="button" name="modifier" id="modifier" onclick="changer_password();"
                                        value="Modifier"/>
                             </div>
-                        </section> <!-- cd-timeline -->
-
-                        <form class="form-horizontal" id="register_form" name="frm_ajout_utilisateur"
-                              action="functions.php?action=inscription" method="post" onsubmit="return verifier_formulaire();">
-                            <div id="content_inscription_maj"  class="form-group modal-body">
+                            <div id="content_inscription_maj">
 
                             </div>
+                        </section> <!-- cd-timeline -->
+
+                        <!--<section id="cd-timeline" class="cd-container">
+                        <div class="cd-timeline-block">
+                            <form id="register_form" name="frm_ajout_utilisateur"
+                                  action="functions.php?action=inscription" method="post" onsubmit="return verifier_formulaire();">
+                                <div id="content_inscription_maj" >
+
+                                </div>
                             </form>
+                        </div>
+                        </section>  -->
+
 
 
                     </div><!--/row-->
