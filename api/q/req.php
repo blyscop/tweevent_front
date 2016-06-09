@@ -420,6 +420,8 @@ function Utilisateur_Posts_SELECT($data_in = array())
                     $image_post = Tweevent_img_recuperer($post['ids_imgs_tweevent_post']);
                     Lib_myLog("IMAGE : ", $image_post->getTab());
                     $return['liste_actualites'][$id_post]['image'] = $image_post->url_tweevent_img;
+                    $return['liste_actualites'][$id_post]['nb_plus'] = 10;
+                    $return['liste_actualites'][$id_post]['nb_moins'] = 1;
                     $return['liste_actualites'][$id_post]['possede_image'] = 1;
                 }
             }
