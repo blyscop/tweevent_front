@@ -42,7 +42,7 @@
                 <div class="modal-header">
                     <form id="modifImgForm">
                         <input type="file"/>
-                        <h4 id='loading'>Chargement ...</h4>
+                        <h4 id='loading_profil'>Chargement ...</h4>
                         <input type="submit"/>
                     </form>
                 </div>
