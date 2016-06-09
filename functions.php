@@ -1,4 +1,4 @@
-<?php
+<?
 // Fichier contenant toutes les fonctions utilisées par le front office
 // Gestion des sessions (appeler à chaque page)
 function check_session()
@@ -11,11 +11,11 @@ function check_session()
 
 function disconnect()
 {
-    setcookie("est_connecte", "", time()-3600);
-    setcookie("username", "", time()-3600);
-    setcookie("utilisateur_connexion", "", time()-3600);
-    setcookie("utilisateur_id", "", time()-3600);
-    setcookie("utilisateur_type", "", time()-3600);
+    setcookie("est_connecte", "", time() - 3600);
+    setcookie("username", "", time() - 3600);
+    setcookie("utilisateur_connexion", "", time() - 3600);
+    setcookie("utilisateur_id", "", time() - 3600);
+    setcookie("utilisateur_type", "", time() - 3600);
     header('Location: index.php'); // redirection page accueil
 }
 
@@ -85,7 +85,7 @@ function inscription()
             $redirection_accueil = true;
         else if ($content['erreur_envoi_email'])
             header('Location: http://martinfrouin.fr/projets/tweevent/index.php#email_error'); // redirection page accueil (erreur lors de l'envoi de l'email)
-        else if(!$content['confirmation'])
+        else if (!$content['confirmation'])
             header('Location: index.php#insc_error'); // redirection page accueil (nom d'utilisateur déjà utilisé)
     }
 

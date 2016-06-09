@@ -1,4 +1,4 @@
-<?php include("functions.php");
+<? include("functions.php");
 check_session(); ?>
 <!DOCTYPE html>
 <html class="no-js">
@@ -18,14 +18,14 @@ check_session(); ?>
     <script src="js/functions.js"></script>
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <?php include("functions_js.php"); ?>
+    <? include("functions_js.php"); ?>
     <![endif]-->
 </head>
 <body>
 <div class="wrapper">
     <div class="box">
         <div class="row row-offcanvas row-offcanvas-left">
-           <!--            INCLURE LE NAVBAR_LEFT ICI-->
+            <!--            INCLURE LE NAVBAR_LEFT ICI-->
             <? include("navbar_left.php"); ?>
             <!-- main right col -->
             <div class="column col-sm-10 col-xs-11" id="main">
@@ -39,7 +39,7 @@ check_session(); ?>
 
                         <header>
                             <img class="bloc-round" src="./img/profilpic.jpg"/>
-                            <h1>Bonjour <?php echo ucfirst($_COOKIE['username']); ?></h1>
+                            <h1>Bonjour <?= ucfirst($_COOKIE['username']); ?></h1>
                         </header>
                         <section id="cd-timeline" class="cd-container">
                             <div class="cd-timeline-block">
@@ -64,6 +64,7 @@ check_session(); ?>
                 </div>
             </div>
         </div>
+        <? include('popups.php'); ?>
     </div>
 </div>
 

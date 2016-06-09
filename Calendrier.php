@@ -21,144 +21,38 @@ check_session(); ?>
     <![endif]-->
 
 </head>
-<body onload="charger_preferences_utilisateur(); ReceiptPost();">
-    <div class="wrapper">
-        <div class="box">
-            <div class="row row-offcanvas row-offcanvas-left">
+<body onload="charger_preferences_utilisateur(); ">
+<div class="wrapper">
+    <div class="box">
+        <div class="row row-offcanvas row-offcanvas-left">
             <!--            INCLURE LE NAVBAR_LEFT ICI-->
             <? include("navbar_left.php"); ?>
-                
-        <!-- main right col -->
-        <div class="column col-sm-10 col-xs-11" id="main">
-            <!-- top nav -->
-            <? include('navbar_header.php'); ?>
-            <!-- /top nav -->
-            <div class="full-actu col-sm-12">
-                <!-- content -->
-                <div class="row">
-                    <!-- Contenu du template -->
-                    <div id='calendar'></div>
-                    <!-- Fin contenu template -->
-                </div><!--/row-->
-                <div><!--colsm9-content-->
+
+            <!-- main right col -->
+            <div class="column col-sm-10 col-xs-11" id="main">
+                <!-- top nav -->
+                <? include('navbar_header.php'); ?>
+                <!-- /top nav -->
+                <div class="full-actu col-sm-12">
+                    <!-- content -->
+                    <div class="row">
+                        <!-- Contenu du template -->
+                        <div id='calendar'></div>
+                        <!-- Fin contenu template -->
+                    </div><!--/row-->
+                    <div><!--colsm9-content-->
+                    </div>
+                    <!-- /main -->
                 </div>
-                <!-- /main -->
             </div>
         </div>
-    </div>
-
-
-    <!--post modal-->
-    <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="send_post" name="send_post" enctype="multipart/form-data">
-                    <div class="modal-header">
-                        <button type="button" id="close_post_area" class="close" data-dismiss="modal"
-                        aria-hidden="true">×
-                    </button>
-                    <h4 id='loading'>Chargement ...</h4>
-                    <div id="message_image"></div>
-                    <div id="ajout_publication_infos">Update Status</div>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <textarea id="message" class="form-control input-lg" name="message" autofocus=""
-                        placeholder="Que voulez-vous partager?"></textarea>
-
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <div>
-                        <button id="send_post" class="btn btn-primary">Publier
-                        </button>
-                        <ul class="pull-left list-inline">
-                            <li>
-                                <div class="upload_photo">
-                                    <div id="image_preview" style="display: none;">
-                                        <img id="previewing" src="img/noimage.png" height="70%" width="70%"/>
-                                    </div>
-                                    <div id="selectImage">
-                                        <i class="glyphicon glyphicon-camera new_btn"></i>
-                                        <input type="file" name="file" id="file"/>
-                                    </div>
-
-                                </div>
-                            </li>
-                            <li>
-                                <i onclick="localiser()" class="glyphicon glyphicon-map-marker"></i>
-                                <div id="localisation"></div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </form>
-        </div>
+        <? include('popups.php'); ?>
     </div>
 </div>
 
-<!--PREFERENCES-->
 
-
-<div id="preferenceModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content col-md-12 preferences">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4>Vos Préférences</h4>
-            </div>
-            <div id="info_preferences_upd"></div> <!-- AJAX message d'informations sur l'UPD -->
-            <form name="preferences_upd" id="preferences_upd" action="functions.php?action=preferences_upd">
-                <div id="preferences_categories"></div>
-                <!-- AJAX bloc de préférence par catégorie avec checkbox -->
-                <input type="hidden" id="id_utilisateur" name="id_utilisateur"
-                value="<?= $_COOKIE['id_utilisateur'] > 0 ? $_COOKIE['id_utilisateur'] : 0; ?>"/>
-            </form>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-
-<div class="modal fade addEvent" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content col-md-12 preferences">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4>Ajouter Evenement</h4>
-            </div>
-            <form>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="eventName">Nom de l'évènement</label>
-                        <input type="text" class="form-control" id="eventName" placeholder="Nom de l'évènement">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="eventDateDebut">Date de début</label>
-                        <input type="date" class="form-control" id="eventDateDebut" placeholder="Date de début">
-                        <label class="marge_label" for="eventLieu">Lieu</label>
-                        <input type="text" class="form-control" id="eventLieu" placeholder="Lieu de l'évènement">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="eventDateFin">Date de fin</label>
-                        <input type="date" class="form-control" id="eventDateFin" placeholder="Date de fin">
-                        <label class="marge_label" for="exampleInputPassword1">Bonjour</label>
-                        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Bonjour">
-                    </div>
-                    <div class="form-group">
-                        <label for="eventDesc">Description</label>
-                        <textarea type="text" class="form-control" id="eventDesc" placeholder="Description"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-default">Enregistrer</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 <!-- script references -->
-
 <script src="./js/jquery.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/scripts.js"></script>
@@ -185,25 +79,25 @@ check_session(); ?>
         'use strict';
         // Change this to the location of your server-side upload handler:
         var url = window.location.hostname === 'blueimp.github.io' ?
-        '//jquery-file-upload.appspot.com/' : 'server/php/',
-        uploadButton = $('<button/>')
-        .addClass('btn btn-primary')
-        .prop('disabled', true)
-        .text('Processing...')
-        .on('click', function () {
-            var $this = $(this),
-            data = $this.data();
-            $this
-            .off('click')
-            .text('Abort')
-            .on('click', function () {
-                $this.remove();
-                data.abort();
-            });
-            data.submit().always(function () {
-                $this.remove();
-            });
-        });
+                '//jquery-file-upload.appspot.com/' : 'server/php/',
+            uploadButton = $('<button/>')
+                .addClass('btn btn-primary')
+                .prop('disabled', true)
+                .text('Processing...')
+                .on('click', function () {
+                    var $this = $(this),
+                        data = $this.data();
+                    $this
+                        .off('click')
+                        .text('Abort')
+                        .on('click', function () {
+                            $this.remove();
+                            data.abort();
+                        });
+                    data.submit().always(function () {
+                        $this.remove();
+                    });
+                });
         $('#file').fileupload({
             url: url,
             dataType: 'json',
@@ -211,7 +105,7 @@ check_session(); ?>
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
             maxFileSize: 9999000,
             disableImageResize: /Android(?!.*Chrome)|Opera/
-            .test(window.navigator.userAgent),
+                .test(window.navigator.userAgent),
             previewMaxWidth: 100,
             previewMaxHeight: 100,
             previewCrop: true
@@ -219,63 +113,63 @@ check_session(); ?>
             data.context = $('<div/>').appendTo('#files');
             $.each(data.files, function (index, file) {
                 var node = $('<p/>')
-                .append($('<span/>').text(file.name));
+                    .append($('<span/>').text(file.name));
                 if (!index) {
                     node
-                    .append('<br>')
-                    .append(uploadButton.clone(true).data(data));
+                        .append('<br>')
+                        .append(uploadButton.clone(true).data(data));
                 }
                 node.appendTo(data.context);
             });
         }).on('fileuploadprocessalways', function (e, data) {
             var index = data.index,
-            file = data.files[index],
-            node = $(data.context.children()[index]);
+                file = data.files[index],
+                node = $(data.context.children()[index]);
             if (file.preview) {
                 node
-                .prepend('<br>')
-                .prepend(file.preview);
+                    .prepend('<br>')
+                    .prepend(file.preview);
             }
             if (file.error) {
                 node
-                .append('<br>')
-                .append($('<span class="text-danger"/>').text(file.error));
+                    .append('<br>')
+                    .append($('<span class="text-danger"/>').text(file.error));
             }
             if (index + 1 === data.files.length) {
                 data.context.find('button')
-                .text('Upload')
-                .prop('disabled', !!data.files.error);
+                    .text('Upload')
+                    .prop('disabled', !!data.files.error);
             }
         }).on('fileuploadprogressall', function (e, data) {
             var progress = parseInt(data.loaded / data.total * 100, 10);
             $('#progress .progress-bar').css(
                 'width',
                 progress + '%'
-                );
+            );
         }).on('fileuploaddone', function (e, data) {
             $.each(data.result.files, function (index, file) {
                 if (file.url) {
                     var link = $('<a>')
-                    .attr('target', '_blank')
-                    .prop('href', file.url);
+                        .attr('target', '_blank')
+                        .prop('href', file.url);
                     $(data.context.children()[index])
-                    .wrap(link);
+                        .wrap(link);
                 } else if (file.error) {
                     var error = $('<span class="text-danger"/>').text(file.error);
                     $(data.context.children()[index])
-                    .append('<br>')
-                    .append(error);
+                        .append('<br>')
+                        .append(error);
                 }
             });
         }).on('fileuploadfail', function (e, data) {
             $.each(data.files, function (index) {
                 var error = $('<span class="text-danger"/>').text('File upload failed.');
                 $(data.context.children()[index])
-                .append('<br>')
-                .append(error);
+                    .append('<br>')
+                    .append(error);
             });
         }).prop('disabled', !$.support.fileInput)
-        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+            .parent().addClass($.support.fileInput ? undefined : 'disabled');
     });
 
     $(document).ready(function () {
