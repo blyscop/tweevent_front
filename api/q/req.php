@@ -370,7 +370,7 @@ function Utilisateur_Preferences_SELECT($data_in = array())
 
         if (!empty($liste_preferences_utilisateur)) {
             // Création de la liste de retour des préférences en liant les id_preference de la table user_preference vers la table preference
-            $args_preferences['tab_ids_tweevent_preferences'] = Lib_getValCol($liste_preferences_utilisateur, 'id_preference');
+            $args_preferences['tab_ids_tweevent_preferences'] = Lib_getValCol($liste_preferences_utilisateur, 'id_tweevent_preference');
             $liste_preferences = Tweevent_preferences_chercher($args_preferences);
 
             if (!empty($liste_preferences)) {
@@ -429,10 +429,11 @@ function Utilisateur_Posts_SELECT($data_in = array())
             // Recherche d'évènements auquel l'utilisateur peut adhérer
             $args_tweevent_user_preferences['id_tweevent_user'] = $data_in['id_utilisateur'];
             $liste_preferences_user = Tweevent_user_preferences_chercher($args_tweevent_user_preferences);
+            Lib_myLog("Preferences : ",$liste_preferences_user);
 
             if(!empty($liste_preferences_user)) {
                 // Création de la liste de retour des préférences en liant les id_preference de la table user_preference vers la table preference
-                $args_preferences['tab_ids_tweevent_preferences'] = Lib_getValCol($liste_preferences_user, 'id_preference');
+                $args_preferences['tab_ids_tweevent_preferences'] = Lib_getValCol($liste_preferences_user, 'id_tweevent_preference');
                 $liste_preferences = Tweevent_preferences_chercher($args_preferences);
 
                 $liste_pref = array();
@@ -732,6 +733,34 @@ function Utilisateur_Changer_Mdp($data_in = array())
 
     header('Access-Control-Allow-Origin: *');
     echo json_encode($return);
+}
+
+function Utilisateur_Modifier_Infos($data_in = array())
+{
+    Lib_myLog("action: " . $data_in['action']);
+    foreach ($GLOBALS['tab_globals'] as $global) global $$global;
+
+    if (!empty($data_in['id_utilisateur'])) {
+        $user_upd = Tweevent_user_recuperer($data_in['id_utilisateur']);
+
+        if($data_in['type_utilisateur'] == "pro") {
+            $user_upd->pseudo_tweevent_user = $data_in['pseudo'] != $user_upd->pseudo_tweevent_user ? $data_in['pseudo'] : $user_upd->pseudo_tweevent_user;
+        }
+        else {
+
+        }
+
+        $user_upd->UPD();
+        $return['confirmation'] = true;
+    }
+    $return = array();
+    $return['confirmation'] = false;
+
+
+    header('Access-Control-Allow-Origin: *');
+    echo json_encode($return);
+
+
 }
 
 //==================================================================================
