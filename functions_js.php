@@ -662,7 +662,6 @@
     }
     function adherer_evenement(id_event, id_user)
     {
-        alert("c'est parti "+id_event+" et "+id_user);
         if(id_event > 0 && id_user > 0) {
             $j.ajax({
                 type: "POST",
