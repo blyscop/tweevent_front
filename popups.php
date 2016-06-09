@@ -54,7 +54,7 @@
         <div class="modal-content col-md-12 preferences">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4>Vos Préférences</h4>
+                <h4>Vos Préférences - Créez vos réseaux sociaux en sélectionnant des préférences</h4>
             </div>
             <div id="info_preferences_upd"></div> <!-- AJAX message d'informations sur l'UPD -->
             <form name="preferences_upd" id="preferences_upd" action="functions.php?action=preferences_upd">

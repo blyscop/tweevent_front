@@ -418,6 +418,8 @@ function Utilisateur_Posts_SELECT($data_in = array())
             foreach ($posts as $id_post => $post) {
                 $return['liste_actualites'][$id_post] = $post;
                 $return['liste_actualites'][$id_post]['type'] = "actualite";
+                $return['liste_actualites'][$id_post]['nb_plus'] = rand(0, 100);
+                $return['liste_actualites'][$id_post]['nb_moins'] = rand(0, 100);
                 $return['liste_actualites'][$id_post]['date_creation'] = date("d-m-Y H:i", $post['date_add']);
 
                 $return['liste_actualites'][$id_post]['image'] = "";
@@ -426,8 +428,6 @@ function Utilisateur_Posts_SELECT($data_in = array())
                     $image_post = Tweevent_img_recuperer($post['ids_imgs_tweevent_post']);
                     Lib_myLog("IMAGE : ", $image_post->getTab());
                     $return['liste_actualites'][$id_post]['image'] = $image_post->url_tweevent_img;
-                    $return['liste_actualites'][$id_post]['nb_plus'] = 10;
-                    $return['liste_actualites'][$id_post]['nb_moins'] = 1;
                     $return['liste_actualites'][$id_post]['possede_image'] = 1;
                 }
             }
@@ -436,13 +436,11 @@ function Utilisateur_Posts_SELECT($data_in = array())
             $args_tweevent_user_preferences['id_tweevent_user'] = $data_in['id_utilisateur'];
             $args_tweevent_user_preferences['etat'] = 'actif';
             $liste_preferences_user = Tweevent_user_preferences_chercher($args_tweevent_user_preferences);
-            Lib_myLog("liste",$liste_preferences_user);
 
             if (!empty($liste_preferences_user)) {
                 // Création de la liste de retour des préférences en liant les id_preference de la table user_preference vers la table preference
                 $args_preferences['tab_ids_tweevent_preferences'] = Lib_getValCol($liste_preferences_user, 'id_tweevent_preference');
                 $liste_preferences = Tweevent_preferences_chercher($args_preferences);
-                Lib_myLog("pref",$liste_preferences);
 
                 $liste_pref = array();
                 if (!empty($liste_preferences)) {
@@ -454,7 +452,6 @@ function Utilisateur_Posts_SELECT($data_in = array())
                         $liste_pref['liste_preferences'][$preference_libelle] = $preference_libelle;
                     }
                 }
-                Lib_myLog("preferences de l'utilisateur acutel __ :",$liste_pref);
 
                 if (!empty($liste_pref)) {
                     $args_event['id_tweevent_event'] = '*';
@@ -463,11 +460,13 @@ function Utilisateur_Posts_SELECT($data_in = array())
                     $args_events_user['id_tweevent_user_event'] = '*';
                     $args_events_user['id_tweevent_user'] = $data_in['id_utilisateur'];
                     $liste_events_utilisateurs_tmp = Tweevent_user_events_chercher($args_events_user);
+                    Lib_myLog("tmp:",$liste_events_utilisateurs_tmp);
 
                     $liste_events_utilisateurs = array();
-                    foreach($liste_events_utilisateurs as $event_utilisateur)
+                    foreach($liste_events_utilisateurs_tmp as $event_utilisateur)
                         $liste_events_utilisateurs[$event_utilisateur['id_tweevent_user']][$event_utilisateur['id_tweevent_event']] = 1;
 
+                    Lib_myLog("tmp:",$liste_events_utilisateurs);
                     if (!empty($liste_events)) {
                         foreach ($liste_events as $id_tweevent_event => $evenement) {
                             if(isset($liste_events_utilisateurs[$data_in['id_utilisateur']][$id_tweevent_event])) continue; // l'utilisateur a déjà adhérer à cet évenement

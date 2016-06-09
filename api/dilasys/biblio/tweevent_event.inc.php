@@ -303,7 +303,7 @@ function Tweevent_events_chercher($args)
 					$id = $row['id_tweevent_event'];
 					$tab_result[$id]["allDay"] = "";
 					$tab_result[$id]["id"] = $id;
-					$tab_result[$id]["title"] = Sql_prepareTexteAffichage($row['nom_tweevent_event']);
+					$tab_result[$id]["title"] = Sql_prepareTexteAffichage($row['nom_tweevent_event'])." - ".$row['infos_tweevent_event']."h ";
 					$tab_result[$id]["start"] = $row['date_debut_tweevent_event']." 00:00:00";
 					$tab_result[$id]["end"] = $row['date_fin_tweevent_event']." 00:00:00";
 

@@ -14,6 +14,12 @@ check_session(); ?>
     <link href="./css/styles.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/timelinestyle.css">
     <link rel='stylesheet' href='./css/fullcalendar.min.css'/>
+    <!-- Style personnalisé pour afficher plus de texte dans le calendrier -->
+    <style>
+        .fc-time{
+            display : none;
+        }
+    </style>
     <? include("functions_js.php"); ?>
 
     <!--[if lt IE 9]>
