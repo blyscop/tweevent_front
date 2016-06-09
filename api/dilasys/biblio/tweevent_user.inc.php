@@ -329,6 +329,8 @@ if (!defined('__TWEEVENT_USER_INC__')) {
 
         if (isset($args['id_tweevent_user']) && $args['id_tweevent_user'] != "*")
             $condition .= " AND id_tweevent_user = '" . $args['id_tweevent_user'] . "' ";
+        if (isset($args['not_id_tweevent_user']) && $args['not_id_tweevent_user'] != "*")
+            $condition .= " AND id_tweevent_user != '" . $args['not_id_tweevent_user'] . "' ";
         if (isset($args['pseudo_tweevent_user']) && $args['pseudo_tweevent_user'] != "*")
             $condition .= " AND pseudo_tweevent_user LIKE '" . Sql_prepareTexteStockage($args['pseudo_tweevent_user']) . "' ";
         if (isset($args['email_tweevent_user']) && $args['email_tweevent_user'] != "*")
@@ -399,7 +401,7 @@ if (!defined('__TWEEVENT_USER_INC__')) {
                 }
             }
 
-            if (count($tab_result) == 1 && (($args['id_tweevent_user'] != '' && $args['id_tweevent_user'] != '*') || ($args['pseudo_tweevent_user'] != '') || ($args['email_tweevent_user'] != '')))
+            if (count($tab_result) == 1 && (($args['id_tweevent_user'] != '' && $args['id_tweevent_user'] != '*') || ($args['pseudo_tweevent_user'] != '') || ($args['email_tweevent_user'] != '') || ($args['not_id_tweevent_user'] != '')))
                 $tab_result = array_pop($tab_result);
         }
 

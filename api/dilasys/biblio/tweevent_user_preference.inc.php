@@ -237,6 +237,10 @@ function Tweevent_user_preferences_chercher($args)
 		$ids = implode(",", $args['tab_ids_tweevent_user_preferences']);
 		$condition .= " AND id_tweevent_user_preference IN (0".$ids.") ";
 	}
+	if (isset($args['tab_ids_tweevent_users']) && $args['tab_ids_tweevent_users'] != "*") {
+		$ids = implode(",", $args['tab_ids_tweevent_users']);
+		$condition .= " AND id_tweevent_user IN (0".$ids.") ";
+	}
 	$sql .= $condition;
 
 	if (isset($args['order_by']) && !isset($args['asc_desc']))

@@ -228,6 +228,10 @@ function Tweevent_user_events_chercher($args)
 		$ids = implode(",", $args['tab_ids_tweevent_user_events']);
 		$condition .= " AND id_tweevent_user_event IN (0".$ids.") ";
 	}
+	if (isset($args['tab_ids_tweevent_users']) && $args['tab_ids_tweevent_users'] != "*") {
+		$ids = implode(",", $args['tab_ids_tweevent_users']);
+		$condition .= " AND id_tweevent_user IN (0".$ids.") ";
+	}
 	if (!isset($args['etat']))
 		$condition .= " AND etat != 'supprime' ";
 
