@@ -5,7 +5,7 @@
         <a style="" href="#imgModifModal" role="button" data-toggle="modal">Modifier mon image</a>
         
     </div>
-    <h1>Bonjour <?php echo ucfirst($_COOKIE['username']); ?></h1>
+    <h1 class="username_actu">Bonjour <?php echo ucfirst($_COOKIE['username']); ?></h1>
     <script>
          var $j = jQuery.noConflict();
         $j(document).ready(function (e) {
