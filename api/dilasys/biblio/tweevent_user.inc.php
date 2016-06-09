@@ -103,6 +103,7 @@ if (!defined('__TWEEVENT_USER_INC__')) {
             $tab['tel_tweevent_user'] = $this->tel_tweevent_user;
             $tab['mob_tweevent_user'] = $this->mob_tweevent_user;
             $tab['derniere_ip_tweevent_user'] = $this->derniere_ip_tweevent_user;
+            $tab['siret'] = $this->siret;
             $tab['etat'] = $this->etat;
             $tab['date_add'] = $this->date_add;
             $tab['date_upd'] = $this->date_upd;

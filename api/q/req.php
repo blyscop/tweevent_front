@@ -179,11 +179,10 @@ function Post_ADD($data_in = array())
             $post_add->ids_imgs_tweevent_post = $sql_image->id_tweevent_img > 0 ? $sql_image->id_tweevent_img : $id_image;
 
             // Si l'ajout de post avec/sans image s'est bien déroulé, on retoure vrai pour l'affichage. Sinon, le front affichera $return['msg'] en cas d'erreur
-            if ($post_add && ((!empty($_FILES['file']['name']) && $id_image > 0) || empty($_FILES['file']['name'])) ) {
+            if ($post_add && ((!empty($_FILES['file']['name']) && $id_image > 0) || empty($_FILES['file']['name']))) {
                 $post_add->ADD();
                 $return['confirmation'] = true;
-            }
-            else
+            } else
                 $return['message'] = "Erreur lors de l'ajout du post !";
         }
     } else
@@ -202,34 +201,35 @@ function Utilisateur_Evenement_ADD($data_in = array())
     $return = array();
     $return['confirmation'] = false;
 
-    if($data_in['id_utilisateur'] > 0) {
+    if ($data_in['id_utilisateur'] > 0) {
         $user_tweevent['id_tweevent_user'] = $data_in['id_utilisateur'];
         $test_user_tweevent = Tweevent_users_chercher($user_tweevent);
 
         if (!empty($test_user_tweevent)) {
             $event = new Tweevent_event();
-            $event->nom_tweevent_event = $data_in['eventName']." (".$data_in['eventHeure'].")";
+            $event->nom_tweevent_event = $data_in['eventName'] . " (" . $data_in['eventHeure'] . ")";
             $event->date_debut_tweevent_event = $data_in['eventDateDebut'];
             $event->date_fin_tweevent_event = $data_in['eventDateFin'];
             $event->lieu_tweevent_event = $data_in['eventLieu'];
             $id_event = $event->ADD();
+            Lib_myLog("debut : " . $event->date_debut_tweevent_event . " et fin " . $event->date_fin_tweevent_event);
+            Lib_myLog("event : ", $event->getTab());
 
-            if($id_event > 0)
+            if ($id_event > 0)
                 $return['confirmation'] = true;
             else
                 $return['msg'] = "Erreur lors de l'ajout de l'event !";
-        }
-        else {
+        } else {
             $return['msg'] = "Erreur lors de la récupération de l'utilisateur !";
         }
-    }
-    else {
+    } else {
         $return['msg'] = "Aucun id_utilisateur fourni !";
     }
 
     header('Access-Control-Allow-Origin: *');
     echo json_encode($return);
 }
+
 // Permet d'initialiser les préférences de l'utilisateur, lors de la création
 function Utilisateur_Preferences_INIT($data_in = array())
 {
@@ -295,6 +295,36 @@ function Utilisateur_SELECT($data_in = array())
     Lib_myLog("return : ", $return);
     Lib_myLog("user : ", $tweevent_user);
     Lib_myLog("valid : ", $email_user_valid);
+    // permet d'éxecuter la requete sur le post client qui est sur un serveur différent (client en local - api en ligne)
+    header('Access-Control-Allow-Origin: *');
+    echo json_encode($return);
+
+}
+
+function Utilisateur_GET($data_in = array())
+{
+    Lib_myLog("action: " . $data_in['action']);
+    foreach ($GLOBALS['tab_globals'] as $global) global $$global;
+
+    $return = array();
+    $return['confirmation'] = false;
+    if (!empty($data_in['id_utilisateur'])) {
+        $args_tweevent_user['id_tweevent_user'] = $data_in['id_utilisateur'];
+        $tweevent_user = Tweevent_users_chercher($args_tweevent_user);
+
+        if (!empty($tweevent_user)) {
+            $return['confirmation'] = true;
+            $return['message'] = "Utilisateur recupere !";
+            $return['utilisateur'] = $tweevent_user;
+        } else {
+            $return['email_non_valide'] = true;
+            $return['message'] = "Erreur ! L'utilisateur n'a pas validé son email";
+        }
+
+    } else
+        $return['message'] = "Le pseudo et/ou mot de passe est vide !";
+
+    Lib_myLog("alex : ",$return);
     // permet d'éxecuter la requete sur le post client qui est sur un serveur différent (client en local - api en ligne)
     header('Access-Control-Allow-Origin: *');
     echo json_encode($return);

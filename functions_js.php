@@ -37,6 +37,38 @@
             }
         });
     }
+    function charger_preferences_utilisateur_ajout_event() {
+        $j.ajax({
+            type: "GET",
+            url: "http://martinfrouin.fr/projets/tweevent/api/q/req.php?action=Utilisateur_Preferences_SELECT_ALL&id_utilisateur=<?=$_COOKIE['utilisateur_id'] > 0 ? $_COOKIE['utilisateur_id'] : 0?>",
+            dataType: 'json',
+            success: function (data) {
+                var html = "";
+                $j('#preferences_categories_event').empty();
+                $j.each(data, function (categorie, objet_preference) {
+                    var class_tag_i = "";
+                    if (categorie != "music")
+                        class_tag_i = "glass";
+                    else
+                        class_tag_i = categorie;
+                    html += "<div id='" + categorie + "Preferences' class='col-md-4'> <i class='fa fa-" + class_tag_i + " fa-4x' aria-hidden='true'></i>";
+                    $j.each(objet_preference, function (preference, droit) {
+                        var html_checkbox_preference = "";
+                        if (droit) {
+                            html += "<div><input type='checkbox' class='preferences' id='" + preference + "' name='" + preference + "' checked='checked'>" + preference + "</input></div>";
+                        }
+                        else {
+                            html += "<div><input type='checkbox' class='preferences' id='" + preference + "' name='" + preference + "'>" + preference + "</input></div>";
+                        }
+                    });
+                    html += "</div>";
+                });
+                html += "<table class='table borderles'></table>";
+                $j('#preferences_categories_event').append(html);
+            }
+        });
+    }
+
     function connexion() {
         var exec = true;
         if (document.frm_connexion.username == "" || document.frm_connexion.password == "") {
@@ -63,11 +95,19 @@
         if ($j("#choix_inscription").val() == "par") {
             //Verif pseudo
             if ($j("#pseudo").val().length < 3 || $j("#pseudo").val().length > 35) {
-                msg += "- Pseudo (Doit être compris entre 3 et 35 caracteres)\n";
+                msg += "- Nom (Doit être compris entre 3 et 35 caracteres)\n";
                 $j("#pseudo").css("background-color", "#FF0000");
             }
             else {
                 $j("#pseudo").css("background-color", "");
+            }
+            //Verif email
+            if ($j("#email").val().length < 3 || $j("#email").val().length > 35) {
+                msg += "- Email (Doit être compris entre 3 et 35 caracteres)\n";
+                $j("#email").css("background-color", "#FF0000");
+            }
+            else {
+                $j("#email").css("background-color", "");
             }
             //Verif password
             if ($j("#password").val().length < 5 || $j("#password").val().length > 25) {
@@ -289,6 +329,101 @@
         $j("#content_inscription").append(html + "<span style='color:Red;' id='form_error'></span>");
     }
 
+    function charger_bloc_modif_profil(nom_bloc, id_utilisateur) {
+        // Initialisation et suivant le paramètre entrant, on charge le formulaire de modif du bloc correspondant
+        var html = "";
+
+        $j.ajax({
+            type: "GET",
+            url: host + "/projets/tweevent/api/q/req.php",
+            data: {action: "Utilisateur_GET", id_utilisateur: id_utilisateur},
+            dataType: 'json',
+            success: function (data) {
+                var nom = data.utilisateur.nom_tweevent_user;
+                var pseudo = data.utilisateur.pseudo_tweevent_user;
+                var email = data.utilisateur.email_tweevent_user;
+                var ville = data.utilisateur.ville_tweevent_user;
+                var code_postal = data.utilisateur.code_postal_tweevent_user;
+                var adresse = data.utilisateur.adresse_1_tweevent_user;
+                var tel = data.utilisateur.tel_tweevent_user;
+                var mob = data.utilisateur.mob_tweevent_user;
+                var siret = data.utilisateur.siret;
+
+                if (nom_bloc == "pro") {
+                    // Chargement du formulaire d'upd (mon profil) pour les pro.
+                    // Pseudo
+                    html += "<label for='pseudo'>Nom :<br />";
+                    html += "<input required type='text' id='pseudo' name='pseudo' value='"+pseudo+"'/>";
+                    html += "</label><br />";
+
+                    html += "<label for='email' >Email :<br />";
+                    html += "<input required type='email' id='email' name='email' value='"+email+"'/>";
+                    html += "</label><br />";
+
+                    // ville
+                    html += "<label for='ville'>Ville :<br />";
+                    html += "<input required type='text' id='ville' name='ville' value='"+ville+"'/>";
+                    html += "</label><br />";
+
+                    // Code postal
+                    html += "<label for='code_postal'>Code postal:<br />";
+                    html += "<input required type='text' id='code_postal' name='code_postal' value='"+code_postal+"'/>";
+                    html += "</label><br />";
+
+                    // Adresse
+                    html += "<label for='adresse'>Adresse :<br />";
+                    html += "<input required type='text' id='adresse' name='adresse' value='"+adresse+"'/>";
+                    html += "</label><br />";
+
+                    // Téléphone
+                    html += "<label for='telephone'>Téléphone :<br />";
+                    html += "<input required type='text' id='tel' name='tel' value='"+tel+"'/>";
+                    html += "</label><br />";
+
+                    // Téléphone cellulaire
+                    html += "<label for='cellulaire'>Téléphone cellulaire :<br />";
+                    html += "<input required type='text' id='mob' name='mob' value='"+mob+"'/>";
+                    html += "</label><br />";
+
+                    // SIRET
+                    html += "<label for='siret'>Code siret :<br />";
+                    html += "<input required type='text' id='siret' name='siret' value='"+siret+"'/>";
+                    html += "</label><br />";
+
+
+                    $j("#afficher_btn_retour").css("display", "block");
+                }
+                if (nom_bloc == "par") {
+                    // Chargement du formulaire d'upd (mon profil) pour les par.
+                    // Nom
+                    html += "<label for='pseudo'>Nom :<br />";
+                    html += "<input required type='text' id='pseudo' name='pseudo' value='"+pseudo+"'/>";
+                    html += "</label><br />";
+
+                    // Pseudo
+                    html += "<label for='pseudo'>Email :<br />";
+                    html += "<input required type='email' id='email' name='email' value='"+email+"'/>";
+                    html += "</label><br />";
+
+                    html += "<label for='email' >Email :<br />";
+                    html += "<input required type='email' id='email' name='email' value='"+email+"'/>";
+                    html += "</label><br />";
+
+                    $j("#afficher_btn_retour").css("display", "block");
+                }
+
+
+                // Remplissage html
+                html += "<input type='hidden' name='choix_inscription' id='choix_inscription' value='" + nom_bloc + "'/>";
+                $j("#content_inscription_maj").empty();
+                $j("#content_inscription_maj").append(html + "<span style='color:Red;' id='form_error'></span>");
+            }
+        });
+    }
+
+    function modifier_infos_utilisateur() {
+        alert("btn");
+    }
     function mdp_oublie() {
         var email_saisi = $j("#email_oublie").val();
 
@@ -499,11 +634,11 @@
                 },
                 success: function (data) {
                     console.log(data);
-                    if(data.confirmation) {
+                    if (data.confirmation) {
                         alert("Votre evenement a bien été ajouté !");
                     }
                     else {
-                        alert("Une erreur est survenue lors de l'ajout de l'évènement : \n "+data.msg);
+                        alert("Une erreur est survenue lors de l'ajout de l'évènement : \n " + data.msg);
                     }
                 }
             });
