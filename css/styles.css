@@ -33,12 +33,12 @@ hr {
 }
 
 .bar {
-    height: 18px;
-    background: green;
+  height: 18px;
+  background: green;
 }
 
 #selectImage input[type=file] {
-    display: none !important;
+  display: none !important;
 }
 
 .files {
@@ -56,12 +56,71 @@ hr {
   right: 0 !important;
   margin-left: auto;
   margin-right: auto;
-  width: 80%;
+  width: 50%;
   height: 80%;
   top: 10% !important;
   bottom: 10% !important;
   border-radius: 10px 10px 10px 10px;
   border: 2px solid #FFB347;
+}
+
+@media screen and (max-width: 900px) {
+  .popup_actu {
+   width: 80%;
+ }
+}
+
+.username_actu {
+  margin-bottom: 0;
+}
+
+.suggestions h3, .suggestions h4 {
+  margin: 0;
+  padding: 20px;
+  line-height: 25px;
+}
+
+.suggest_title {
+  font-weight: bold;
+}
+
+.suggestions p {
+  font-size: 14px;
+  padding-left: 5%;
+  padding-right: 5%;
+  text-align: justify;
+}
+
+.suggestions {
+  background-color: #726C7A;
+  color: #FFF;
+  overflow: auto;
+}
+
+.suggestions input {
+  margin: 10px;
+  float: right;
+}
+
+.suggestions button {
+  margin-right: 15px;
+  margin-top: 10px;
+}
+
+.actu_button {
+  float: right;
+}
+
+.f-left {
+  float: left;
+}
+
+.no-p-left {
+  padding-left: 5px !important;
+}
+
+.no-p-right {
+  padding-right: 5px !important;
 }
 
 .wrapper, .row {
@@ -110,7 +169,7 @@ hr {
 }
 
 .modal-dialog, .modal-header {
-    border-radius: 10px 10px 0px 0px;
+  border-radius: 10px 10px 0px 0px;
 
 }
 
@@ -182,11 +241,11 @@ hr {
 }
 
 .logo_tw {
-      /*padding: 9px 10px;*/
-    margin-top: 10px;
-    margin-right: 15px;
-    margin-bottom: 8px;
-    margin-left: 15px;
+  /*padding: 9px 10px;*/
+  margin-top: 10px;
+  margin-right: 15px;
+  margin-bottom: 8px;
+  margin-left: 15px;
 }
 
 #sidebar {
@@ -370,9 +429,9 @@ small.text-muted {
    top:0;
    width:100%;
    position:relative;
- }*/
+   }*/
 
-}
+ }
 
 
 /*
