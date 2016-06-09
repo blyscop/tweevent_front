@@ -648,4 +648,7 @@
             return false;
         }
     }
+    $j(document).ready(function (e) {
+        $j('#loading').hide();
+    });
 </script>

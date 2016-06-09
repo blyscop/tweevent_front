@@ -102,5 +102,30 @@ check_session(); ?>
 <script src="js/fileupload/jquery.fileupload-audio.js"></script>
 <script src="js/fileupload/jquery.fileupload-video.js"></script>
 <script src="js/fileupload/jquery.fileupload-validate.js"></script>
+<script>
+
+    var _idUser =<?=$_COOKIE["utilisateur_id"] > 0 ? $_COOKIE["utilisateur_id"] : 0 ?>;
+
+
+    $j('.new_btn').on("click", function () {
+        $j('#file').click();
+    });
+
+    $j('#suggest_close').on("click", function () {
+        $j('#suggestions').hide();
+    });
+
+
+    $(document).ready(function () {
+        $('[data-toggle=offcanvas]').click(function () {
+            $(this).toggleClass('visible-xs text-center');
+            $(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-left');
+            $('.row-offcanvas').toggleClass('active');
+            $('#lg-menu').toggleClass('hidden-xs').toggleClass('visible-xs');
+            $('#xs-menu').toggleClass('visible-xs').toggleClass('hidden-xs');
+            $('#btnShow').toggle();
+        });
+    });
+</script>
 </body>
 </html>
