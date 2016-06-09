@@ -394,11 +394,7 @@
 
             $j("#afficher_btn_retour").css("display", "block");
         }
-        if (nom_bloc == "choix") {
-            $j("#afficher_btn_retour").css("display", "none");
-            html += "Vous êtes : <br/> <input id='pro' type='radio' name='choix_inscription' onclick='charger_bloc(this.id);' value='pro'><label for='pro'>Un professionnel</label>";
-            html += "<input id='par' type='radio' name='choix_inscription' onclick='charger_bloc(this.id);' value='par'><label for='par'>Un particulier</label><br/><br/>";
-        }
+        
 
         // Remplissage html
         html += "<input type='hidden' name='choix_inscription' id='choix_inscription' value='" + nom_bloc + "'/>";
