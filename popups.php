@@ -95,7 +95,7 @@
                     </div>
                     <div class="form-group">
                         <label for="eventDesc">Description</label>
-                        <textarea type="text" class="form-control" id="eventDesc" placeholder="Description"></textarea>
+                        <textarea class="form-control" id="eventDesc" placeholder="Description"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="preferences_event">Préférences de l'évènement :</label>

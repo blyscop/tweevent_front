@@ -458,6 +458,8 @@
             },
             success: function (msg) {
                 alert("Vos préférences ont bien été mise à jour !");
+                $j(location).attr('href', "http://martinfrouin.fr/projets/tweevent/Actualite");
+                window.location.reload(true);
             }
         });
     }
@@ -656,6 +658,35 @@
         else {
             alert(msg_intro + msg);
             return false;
+        }
+    }
+    function adherer_evenement(id_event, id_user)
+    {
+        alert("c'est parti "+id_event+" et "+id_user);
+        if(id_event > 0 && id_user > 0) {
+            $j.ajax({
+                type: "POST",
+                url: "http://martinfrouin.fr/projets/tweevent/api/q/req.php",
+                dataType: 'json',
+                data: {
+                    action: "Utilisateur_Calendrier_Event_ADD",
+                    id_utilisateur: id_user,
+                    id_event: id_event,
+                    appel_ajax: true // Vu que cette fonction est utilisée sans retour json, on ajoute un paramètre pour spécifier au serveur de nous renvoyer le résultat en json
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.confirmation) {
+                        alert("L'évènement a bien été ajouté à votre calendrier !");
+                        $j(location).attr('href', "http://martinfrouin.fr/projets/tweevent/Calendrier");
+                        window.location.reload(true);
+
+                    }
+                    else {
+                        alert("Une erreur est survenue lors de l'ajout de l'évènement : \n " + data.msg);
+                    }
+                }
+            });
         }
     }
     $j(document).ready(function (e) {

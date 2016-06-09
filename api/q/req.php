@@ -207,7 +207,9 @@ function Utilisateur_Evenement_ADD($data_in = array())
 
         if (!empty($test_user_tweevent)) {
             $event = new Tweevent_event();
-            $event->nom_tweevent_event = $data_in['eventName'] . " (" . $data_in['eventHeure'] . ")";
+            $event->nom_tweevent_event = $data_in['eventName'];
+            $event->info_tweevent_event = $data_in['eventDesc'];
+            $event->infos_tweevent_event = $data_in['eventHeure'];
             $event->date_debut_tweevent_event = $data_in['eventDateDebut'];
             $event->date_fin_tweevent_event = $data_in['eventDateFin'];
             $event->lieu_tweevent_event = $data_in['eventLieu'];
@@ -252,6 +254,10 @@ function Utilisateur_Calendrier_Event_ADD($data_in = array())
     } else
         $return['msg'] = "Il manque des informations dans la requête : id_utilisateur et id_event";
 
+    if($data_in['appel_ajax']) {
+        header('Access-Control-Allow-Origin: *');
+        echo json_encode($return);
+    }
     return $return['confirmation'];
 }
 
@@ -430,11 +436,13 @@ function Utilisateur_Posts_SELECT($data_in = array())
             $args_tweevent_user_preferences['id_tweevent_user'] = $data_in['id_utilisateur'];
             $args_tweevent_user_preferences['etat'] = 'actif';
             $liste_preferences_user = Tweevent_user_preferences_chercher($args_tweevent_user_preferences);
+            Lib_myLog("liste",$liste_preferences_user);
 
             if (!empty($liste_preferences_user)) {
                 // Création de la liste de retour des préférences en liant les id_preference de la table user_preference vers la table preference
                 $args_preferences['tab_ids_tweevent_preferences'] = Lib_getValCol($liste_preferences_user, 'id_tweevent_preference');
                 $liste_preferences = Tweevent_preferences_chercher($args_preferences);
+                Lib_myLog("pref",$liste_preferences);
 
                 $liste_pref = array();
                 if (!empty($liste_preferences)) {
@@ -446,35 +454,50 @@ function Utilisateur_Posts_SELECT($data_in = array())
                         $liste_pref['liste_preferences'][$preference_libelle] = $preference_libelle;
                     }
                 }
+                Lib_myLog("preferences de l'utilisateur acutel __ :",$liste_pref);
 
                 if (!empty($liste_pref)) {
                     $args_event['id_tweevent_event'] = '*';
                     $liste_events = Tweevent_events_chercher($args_event);
 
+                    $args_events_user['id_tweevent_user_event'] = '*';
+                    $args_events_user['id_tweevent_user'] = $data_in['id_utilisateur'];
+                    $liste_events_utilisateurs_tmp = Tweevent_user_events_chercher($args_events_user);
+
+                    $liste_events_utilisateurs = array();
+                    foreach($liste_events_utilisateurs as $event_utilisateur)
+                        $liste_events_utilisateurs[$event_utilisateur['id_tweevent_user']][$event_utilisateur['id_tweevent_event']] = 1;
+
                     if (!empty($liste_events)) {
                         foreach ($liste_events as $id_tweevent_event => $evenement) {
+                            if(isset($liste_events_utilisateurs[$data_in['id_utilisateur']][$id_tweevent_event])) continue; // l'utilisateur a déjà adhérer à cet évenement
                             $possede_preference = false;
                             $tab_preferences = explode(',', $evenement['ids_posts_tweevent_event']);
                             $liste_preferences_actuelle = array();
                             foreach ($tab_preferences as $index => $tmp_pref)
                                 $liste_preferences_actuelle[str_replace(",", "", $tmp_pref)] = str_replace(",", "", $tmp_pref);
-                            Lib_myLog("pref: ", $liste_preferences_actuelle);
                             foreach ($liste_preferences_actuelle as $index_pref => $ref) {
-                                if (isset($liste_preferences_actuelle[$index_pref])) {
+                                if (isset($liste_pref['liste_preferences'][$index_pref])) {
                                     $possede_preference = true;
                                 }
                             }
                             if ($possede_preference) {
+                                Lib_myLog("Possede ".$liste_preferences_actuelle[$index_pref]);
+                                Lib_myLog(":",$liste_preferences_actuelle);
+                                Lib_myLog(",",$tab_preferences);
                                 $return['liste_evenements'][$id_tweevent_event] = $evenement;
+                                $return['liste_evenements'][$id_tweevent_event]['date_debut_tweevent_event'] = Lib_enToFr($evenement['date_debut_tweevent_event']);
+                                $return['liste_evenements'][$id_tweevent_event]['date_fin_tweevent_event'] = Lib_enToFr($evenement['date_fin_tweevent_event']);
                                 $return['liste_evenements'][$id_tweevent_event]['type'] = "evenement";
                                 $return['liste_evenements'][$id_tweevent_event]['date_creation'] = date("d-m-Y H:i", $evenement['date_add']);
+                                $return['liste_evenements'][$id_tweevent_event]['id_utilisateur'] = $data_in['id_utilisateur'];
                             }
                         }
                     }
                 }
             }
 
-            Lib_myLog("Liste des préférences : ", $liste_pref);
+            Lib_myLog("Liste des préférences : ", $liste_preferences_actuelle);
 
 
             $return['confirmation'] = true;

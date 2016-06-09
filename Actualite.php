@@ -85,7 +85,7 @@ check_session(); ?>
         });
     </script>
 </head>
-<body onload="charger_preferences_utilisateur(); charger_preferences_utilisateur_ajout_event();">
+<body onload="charger_preferences_utilisateur(); charger_preferences_utilisateur_ajout_event(); ">
 <div class="wrapper">
     <div class="box">
         <div class="row row-offcanvas row-offcanvas-left">
@@ -101,19 +101,7 @@ check_session(); ?>
                     <div class="row">
                         <? include('header_actu.php'); ?>
 
-                        <section id="suggestions" class="suggestions">
-                            <button type="button" id="suggest_close" class="close">×
-                            </button>
-                            <div class="col-md-12">
-                                <h3 class="f-left no-p-right suggest_title">UNKNOWN -</h3>
-                                <h4 class="f-left no-p-left">DATE DE LEVENT</h4>
-                            </div>
-                            <p class="f-left">Description DE LEVENT DESCRIPTION DE LEVENT DESCRIPTION DE LEVENT
-                                DESCRIPTION DE LEVENT DESCRIPTION DE LEVENT DESCRIPTION DE LEVENT DESCRIPTION DE LEVENT
-                                DESCRIPTION DE LEVENT DESCRIPTION DE LEVENT DESCRIPTION DE LEVENT DESCRIPTION DE
-                                LEVENT </p>
-                            <input type="submit" class="btn btn-default" value="Suivre l'évènement"/>
-                        </section>
+                      <div id="propositions_evenements"></div>
 
                         <section id="cd-timeline" class="cd-container">
                             <!-- Chargement en AJAX de la liste des actualités -->
@@ -161,13 +149,34 @@ check_session(); ?>
 
     }
 
+    $j("#propositions_evenements").empty(); // on vide le bloc des propositons d'évènements
     $j.ajax({
         type: "GET",
         url: host + "/projets/tweevent/api/q/req.php",
         data: {action: "Utilisateur_Posts_SELECT", id_utilisateur: _idUser},
         dataType: 'json',
         success: function (msg) {
-            console.log(msg);
+            if(msg.liste_evenements) {
+                // CHARGEMENTS DES PROPOSITIONS D'EVENEMENTS
+                $j.each(msg.liste_evenements, function (i, item) {
+                    var bloc_proposition_evenement =
+                        '<section id="bloc_'+item.id_tweevent_event+'" class="suggestions">' +
+                            '<button type="button" id="'+item.id_tweevent_event+'" class="close fermer_bloc_suggestion">×</button>' +
+                            '<div class="col-md-12">' +
+                                '<h3 class="f-left no-p-right suggest_title">'+item.lieu_tweevent_event+' à '+item.infos_tweevent_event+' du '+item.date_debut_tweevent_event+' au '+item.date_fin_tweevent_event+'</h3>' +
+                            '</div>' +
+                            '<p class="f-left"><u>'+item.nom_tweevent_event+'</u></br>' + item.info_tweevent_event +'</p>' +
+                                '<input type="submit" class="btn btn-default" onclick="adherer_evenement(' + item.id_tweevent_event + ', ' + item.id_utilisateur + ');" value="Ajouter au calendrier"/>' +
+                        '</section>';
+                    $j("#propositions_evenements").append(bloc_proposition_evenement);
+                    $j('.fermer_bloc_suggestion').on("click", function () {
+                        var _id = "#bloc_"+this.id;
+                        $j(_id).hide();
+                    });
+                });
+            }
+            // CHARGEMENT DES ACTUALITES
+
             $j.each(msg.liste_actualites, function (i, item) {
                 var url_img = "'http://martinfrouin.fr/projets/tweevent/"+item.image+"'";
                 var bloc_image = image = "";
@@ -200,10 +209,6 @@ check_session(); ?>
     $j(".fancybox").fancybox();
     $j('.new_btn').on("click", function () {
         $j('#file').click();
-    });
-
-    $j('#suggest_close').on("click", function () {
-        $j('#suggestions').hide();
     });
 
 
