@@ -443,7 +443,7 @@
     function modifier_preferences_utilisateur(params) {
         var preferences_cochees = "";
         var id_utilisateur = <?=$_COOKIE["utilisateur_id"] > 0 ? $_COOKIE["utilisateur_id"] : 0 ?> ;
-        $j('input[type=checkbox]').each(function () {
+        $j('.preferences').each(function () {
             var est_cochee = (this.checked ? "1" : "0");
             preferences_cochees += (preferences_cochees == "" ? est_cochee + "_" + this.name : "|" + est_cochee + "_" + this.name);
         });

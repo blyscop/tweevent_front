@@ -425,6 +425,30 @@ function Utilisateur_Posts_SELECT($data_in = array())
                     $return['liste_actualites'][$id_post]['possede_image'] = 1;
                 }
             }
+
+            // Recherche d'évènements auquel l'utilisateur peut adhérer
+            $args_tweevent_user_preferences['id_tweevent_user'] = $data_in['id_utilisateur'];
+            $liste_preferences_user = Tweevent_user_preferences_chercher($args_tweevent_user_preferences);
+
+            if(!empty($liste_preferences_user)) {
+                // Création de la liste de retour des préférences en liant les id_preference de la table user_preference vers la table preference
+                $args_preferences['tab_ids_tweevent_preferences'] = Lib_getValCol($liste_preferences_user, 'id_preference');
+                $liste_preferences = Tweevent_preferences_chercher($args_preferences);
+
+                $liste_pref = array();
+                if (!empty($liste_preferences)) {
+                    $return['liste_preferences'] = array(); // Initialisation du tableau de retour
+                    foreach ($liste_preferences_user as $id_preference_utilisateur => $preference_utilisateur) {
+                        // Lien avec l'autre table
+                        $preference = !empty($liste_preferences[$preference_utilisateur['id_preference']]) ? $liste_preferences[$preference_utilisateur['id_preference']] : array();
+                        $liste_pref['liste_preferences'][] = $preference;
+                    }
+                }
+            }
+
+            Lib_myLog("Liste des préférences : ",$liste_pref);
+
+
             $return['confirmation'] = true;
         } else
             $return['message'] = "Aucun post pour l'utilisateur ";

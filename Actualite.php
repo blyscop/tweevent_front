@@ -169,13 +169,14 @@ check_session(); ?>
         success: function (msg) {
             console.log(msg);
             $j.each(msg.liste_actualites, function (i, item) {
+                var url_img = "'http://martinfrouin.fr/projets/tweevent/"+item.image+"'";
                 var bloc_image = image = "";
                 if (item.possede_image) {
                     image = '<img src="' + item.image + '"/>';
                 }
                 if (item.possede_image) {
                     bloc_image = '<a class="fancybox" rel="group" href="' + item.image + '">' +
-                        '<div class="cd-timeline-img cd-picture" style="background-image:' + item.image + '; background-size: cover;">' +
+                        '<div class="cd-timeline-img cd-picture" style="background-image: url(' + url_img + '); background-size: cover;">' +
                         '</div>' +
                         '</a>';
                 }
